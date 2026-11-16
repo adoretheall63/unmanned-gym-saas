@@ -1,0 +1,3383 @@
+openapi: 3.0.3
+info:
+  title: 无人健身房 SaaS 首个业务闭环
+  version: 1.1.0
+  description: 2026-11-12。时段付费、模拟支付、Mock通行、实际到店和超时结算。数据库支持卡权益，但本接口版本不提供卡购买或卡预约；不得把未实现业务伪装为零元现金订单。所有受保护接口验证账号状态与token_version。详见首个业务闭环接口说明。
+    数据库审查修复：当前读、设备领取fencing、同设备引用及只追加事实权限见数据库事务与查询约定v1.1；接口路径不变。
+servers:
+- url: http://localhost:8080/api/v1
+  description: 本地开发；部署环境必须使用HTTPS
+security:
+- bearerAuth: []
+tags:
+- name: 认证
+- name: 门店
+- name: 订单
+- name: 通行
+- name: 到店
+- name: 结算
+- name: 后台
+- name: 开发
+paths:
+  /app/auth/wechat-login:
+    post:
+      operationId: wechatLogin
+      summary: 微信登录
+      tags:
+      - 认证
+      description: 后端调用微信换取身份；首版模拟支付不代表允许模拟微信登录。微信服务不可用返回503。
+      parameters: []
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: &id001
+                    type: string
+                    description: 带时区的ISO8601时间点，UTC示例
+                    format: date-time
+                    example: '2026-11-12T10:00:00.000Z'
+                  data:
+                    $ref: '#/components/schemas/CustomerToken'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q009 Q016
+      x-idempotent: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WechatLoginRequest'
+      security: []
+  /dev/auth/customer-login:
+    post:
+      operationId: devCustomerLogin
+      summary: 开发测试顾客登录
+      tags:
+      - 开发
+      description: 仅local/mock-demo且显式开启开发入口；校验X-Dev-Key及预置fixture，非白名单环境不注册路由并返回404。限流，不接受任意用户ID。
+      parameters: []
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/CustomerToken'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q009
+      x-idempotent: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DevLoginRequest'
+      security:
+      - devKey: []
+  /admin/auth/login:
+    post:
+      operationId: adminLogin
+      summary: 后台登录
+      tags:
+      - 认证
+      description: 用户名密码校验BCrypt，返回本商家身份；账号停用403，失败统一401并限流。
+      parameters: []
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/AdminToken'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q014–Q016
+      x-idempotent: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminLoginRequest'
+      security: []
+  /app/auth/logout:
+    post:
+      operationId: appLogout
+      summary: 退出全部已有登录
+      tags:
+      - 认证
+      description: 数据库token_version递增，本主体旧JWT全部失效；成功后不再使用旧JWT重试，响应丢失时401也视为已退出。顾客和后台主体不混用。
+      parameters: []
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Ack'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q016
+      x-idempotent: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyRequest'
+      security:
+      - bearerAuth: []
+  /admin/auth/logout:
+    post:
+      operationId: adminLogout
+      summary: 退出全部已有登录
+      tags:
+      - 认证
+      description: 数据库token_version递增，本主体旧JWT全部失效；成功后不再使用旧JWT重试，响应丢失时401也视为已退出。顾客和后台主体不混用。
+      parameters: []
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Ack'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q016
+      x-idempotent: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyRequest'
+      security:
+      - bearerAuth: []
+  /app/stores:
+    get:
+      operationId: listStores
+      summary: 公开营业门店列表
+      tags:
+      - 门店
+      description: 只返回启用商家的公开营业门店。每张卡片显示商家名；不返回员工、密钥或敏感设备数据。
+      parameters:
+      - &id003
+        name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: ''
+      - &id004
+        name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/StorePage'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q002 Q028
+      x-idempotent: false
+      security: []
+  /app/stores/{storeId}:
+    get:
+      operationId: getStore
+      summary: 门店详情
+      tags:
+      - 门店
+      description: 只允许公开可展示门店；停用或不可见资源404。
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        schema: &id002
+          type: string
+          description: Java Long正整数ID字符串，范围1..9223372036854775807；后端需校验上界，不转换成JS Number
+          pattern: ^[1-9][0-9]{0,18}$
+          maxLength: 19
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/StoreDetail'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q019–Q029
+      x-idempotent: false
+      security: []
+  /app/stores/{storeId}/slots:
+    get:
+      operationId: listSlots
+      summary: 查询某日时段
+      tags:
+      - 门店
+      description: 返回尚未开始的时段；不可售时段可列出原因。date超范围422；跨日营业以时段startAt的本地日期归类，不截断跨日时段。
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Asia/Shanghai日期，含今天未来七个自然日
+          format: date
+        description: ''
+      - name: storeId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/SlotList'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q020–Q026
+      x-idempotent: false
+      security: []
+  /app/orders:
+    post:
+      operationId: createOrder
+      summary: 创建待支付预约
+      tags:
+      - 订单
+      description: 身份和商家从登录与slot归属推导；锁用户后检查黑名单、信用、该商家欠费、跨店重叠，再占容量及写订单。服务端生成金额、截止和快照。
+      parameters:
+      - &id005
+        name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          description: 逻辑写操作的唯一键；同键不同请求409
+          minLength: 8
+          maxLength: 64
+          pattern: ^[A-Za-z0-9_-]+$
+        description: ''
+      responses:
+        '201':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q030–Q039
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      security:
+      - bearerAuth: []
+    get:
+      operationId: listMyOrders
+      summary: 本人跨商家订单
+      tags:
+      - 订单
+      description: 只查当前顾客；按created_at、id倒序。
+      parameters:
+      - *id003
+      - *id004
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          description: ''
+          enum:
+          - PENDING_PAYMENT
+          - RESERVED
+          - IN_USE
+          - FINISHED
+          - CANCEL_PENDING
+          - CANCELLED
+          - NO_SHOW_PENDING
+          - NO_SHOW
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/OrderPage'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q002 Q013
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/orders/{orderId}:
+    get:
+      operationId: getMyOrder
+      summary: 本人订单详情
+      tags:
+      - 订单
+      description: 他人订单统一404，不泄露存在性。
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q013
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/orders/{orderId}/mock-payment:
+    post:
+      operationId: confirmMockPayment
+      summary: 模拟支付预约费
+      tags:
+      - 订单
+      description: 仅模拟支付模式开放；锁内再次检查截止及订单状态，金额从订单取。首次确认写流水、RESERVED、凭证同步任务；换键重复确认返回原结果，不重复收费。零元不建现金流水。
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/OrderConfirmation'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q034–Q037 Q085
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyRequest'
+      security:
+      - bearerAuth: []
+  /app/orders/{orderId}/cancellation:
+    post:
+      operationId: cancelMyOrder
+      summary: 申请取消预约
+      tags:
+      - 订单
+      description: 未支付立即CANCELLED并释放；已确认未开始未入场转CANCEL_PENDING，冻结目标入场、生成撤权目标。先撤权再退款释放；轮询订单查进度。已完成取消仍202返回当前订单。
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '202':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q068–Q074
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+      security:
+      - bearerAuth: []
+  /app/access-points/{scanCode}:
+    get:
+      operationId: resolveAccessPoint
+      summary: 解析入口二维码
+      tags:
+      - 通行
+      description: 须登录，只解析启用门店的ENTRY设备；不返回供应商设备秘密。扫码只能定位设备，不能证明有入场权。
+      parameters:
+      - name: scanCode
+        in: path
+        required: true
+        schema:
+          type: string
+          description: ''
+          minLength: 8
+          maxLength: 64
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/AccessPoint'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q049–Q051 Q092
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/orders/{orderId}/open-requests:
+    post:
+      operationId: requestOpen
+      summary: 申请扫码开门
+      tags:
+      - 通行
+      description: 校验本人订单、当前窗口、商家限制、门店准入、入口归属和已验证能力。持久化OPEN任务后返回202；不直接创建到店。相同订单有未决或成功可消费任务时返回已有任务，不因换幂等键重复开门。
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '202':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/DeviceOperation'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q049–Q060 Q086
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenRequest'
+      security:
+      - bearerAuth: []
+  /app/device-operations/{operationId}:
+    get:
+      operationId: getMyOperation
+      summary: 查询本人开门结果
+      tags:
+      - 通行
+      description: 只允许查询本人OPEN操作，其他任务404；只有可靠执行成功且窗口仍有效时canConfirmEntry为真。UNKNOWN不等于失败，不自动重试。
+      parameters:
+      - name: operationId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/DeviceOperation'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q049 Q051 Q059
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/visits:
+    post:
+      operationId: confirmEntry
+      summary: 本人确认入场
+      tags:
+      - 到店
+      description: 近五分钟关联开门成功、本人有效订单、入场窗口和准入校验通过后创建到店及NOT_READY结算；来源SELF_CONFIRM，时间由服务端生成。已有该操作对应到店时返回原到店，不创建第二次。
+      parameters:
+      - *id005
+      responses:
+        '201':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Visit'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q049–Q051 Q059
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmEntryRequest'
+      security:
+      - bearerAuth: []
+    get:
+      operationId: listMyVisits
+      summary: 本人到店记录
+      tags:
+      - 到店
+      description: 本人跨店历史，按entry_at、id倒序。
+      parameters:
+      - *id003
+      - *id004
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/VisitPage'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q048 Q102
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/visits/current:
+    get:
+      operationId: getCurrentVisit
+      summary: 查询指定门店当前到店
+      tags:
+      - 到店
+      description: 查当前用户该店的IN_STORE；没有则data.visit=null，不随意选一个跨店未决记录。
+      parameters:
+      - name: storeId
+        in: query
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/CurrentVisit'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q048 Q058
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/visits/{visitId}:
+    get:
+      operationId: getMyVisit
+      summary: 本人到店详情
+      tags:
+      - 到店
+      description: usedOrderIds仅含已实际覆盖时段的订单，未来段不提前标记已用。
+      parameters:
+      - name: visitId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Visit'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q040–Q048
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/visits/{visitId}/finish:
+    post:
+      operationId: finishVisit
+      summary: 结束锻炼并结算
+      tags:
+      - 到店
+      description: 服务端时间确认离场，重建遗漏的连续时段实际覆盖，订单与到店结束；一次计算超时。无争议直接PAYMENT_DUE或SETTLED，有争议LEFT+REVIEW_REQUIRED。撤权任务异步，不因撤权失败阻止出门。
+      parameters:
+      - name: visitId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/FinishResult'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q042 Q052–Q064 Q089
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyRequest'
+      security:
+      - bearerAuth: []
+  /app/visits/{visitId}/settlement:
+    get:
+      operationId: getMySettlement
+      summary: 查询预估或最终账单
+      tags:
+      - 结算
+      description: 在场返回实时预估，isEstimate=true且不最终扣款；已离场返回当前确认版本，需复核时禁止自动补缴。
+      parameters:
+      - name: visitId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Settlement'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q061–Q067
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /app/visits/{visitId}/mock-overtime-payment:
+    post:
+      operationId: payOvertime
+      summary: 模拟补缴当前超时欠费
+      tags:
+      - 结算
+      description: 仅LEFT+PAYMENT_DUE且无未决复核时，由后端计算当前剩余金额。锁到店结算，业务键包含结算版本；同版本换键不能重复收费。无剩余则返回现有结果，payment可空。
+      parameters:
+      - name: visitId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/OvertimePayment'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q065–Q067
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyRequest'
+      security:
+      - bearerAuth: []
+  /admin/orders:
+    get:
+      operationId: adminListOrders
+      summary: 本商家订单列表
+      tags:
+      - 后台
+      description: merchantId来自后台登录，storeId须属于本商家；需要ORDER_READ权限或ADMIN。
+      parameters:
+      - *id003
+      - *id004
+      - name: storeId
+        in: query
+        required: false
+        schema: *id002
+        description: ''
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          description: ''
+          enum:
+          - PENDING_PAYMENT
+          - RESERVED
+          - IN_USE
+          - FINISHED
+          - CANCEL_PENDING
+          - CANCELLED
+          - NO_SHOW_PENDING
+          - NO_SHOW
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/OrderPage'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q013 Q014
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /admin/orders/{orderId}:
+    get:
+      operationId: adminGetOrder
+      summary: 本商家订单详情
+      tags:
+      - 后台
+      description: 需要ORDER_READ或ADMIN，跨商家404。
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q013 Q014
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /admin/visits:
+    get:
+      operationId: adminListVisits
+      summary: 本商家到店列表
+      tags:
+      - 后台
+      description: 需要VISIT_READ或ADMIN；不提供跨商家查询。
+      parameters:
+      - *id003
+      - *id004
+      - name: storeId
+        in: query
+        required: false
+        schema: *id002
+        description: ''
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          description: ''
+          enum:
+          - IN_STORE
+          - LEFT
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/VisitPage'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q013 Q014 Q102
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /admin/visits/{visitId}/settlement:
+    get:
+      operationId: adminGetSettlement
+      summary: 本商家账单详情
+      tags:
+      - 后台
+      description: 需要ORDER_READ或ADMIN；设备和用户敏感资料不随账单返回。
+      parameters:
+      - name: visitId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/Settlement'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q065 Q092
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /admin/review-tasks:
+    get:
+      operationId: adminListReviewTasks
+      summary: 本商家异常待办列表
+      tags:
+      - 后台
+      description: 需要REVIEW_READ或ADMIN。首闭环提供查看，人工修改金额、信用、卡退卡等交互另行定义，不能绕过已有规则处理。
+      parameters:
+      - *id003
+      - *id004
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          description: ''
+          enum:
+          - OPEN
+          - PROCESSING
+          - RESOLVED
+        description: ''
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/ReviewPage'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q072 Q093–Q099
+      x-idempotent: false
+      security:
+      - bearerAuth: []
+  /dev/mock/devices/{deviceId}/scenario:
+    put:
+      operationId: setMockScenario
+      summary: 设置单台Mock设备场景
+      tags:
+      - 开发
+      description: 仅local/mock-demo、开发开关开启、X-Dev-Key匹配且本商家ADMIN；仅provider=MOCK设备。场景只影响后续命令，不修改订单/资金/历史事实。real环境路由404。
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '200':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/MockScenarioResult'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q059 Q085–Q089
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MockScenarioRequest'
+      security: &id006
+      - bearerAuth: []
+        devKey: []
+  /dev/mock/devices/{deviceId}/events:
+    post:
+      operationId: injectMockEvent
+      summary: 注入Mock设备事件
+      tags:
+      - 开发
+      description: 与真实事件共用收件箱和处理服务；只能向本商家MOCK设备注入。ENTRY/EXIT要求userId和orderId，OPEN_RESULT要求operationId和result，其他事件不得混入身份字段。occurredAt只用于测试，真实业务入口不接受回填。
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema: *id002
+        description: ''
+      - *id005
+      responses:
+        '202':
+          description: 操作成功；具体业务状态见data
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - code
+                - message
+                - requestId
+                - serverTime
+                - data
+                properties:
+                  code:
+                    type: string
+                    description: ''
+                    enum:
+                    - OK
+                  message:
+                    type: string
+                    description: ''
+                  requestId:
+                    type: string
+                    description: ''
+                  serverTime: *id001
+                  data:
+                    $ref: '#/components/schemas/MockEventResult'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      x-business-rules: Q049 Q052 Q057 Q059
+      x-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MockEventRequest'
+      security: *id006
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    devKey:
+      type: apiKey
+      in: header
+      name: X-Dev-Key
+      description: 仅开发配置，不入仓库，不放正式小程序
+  schemas:
+    FieldError:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        field:
+          type: string
+          description: ''
+        message:
+          type: string
+          description: ''
+      required:
+      - field
+      - message
+    Error:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        code:
+          type: string
+          description: 稳定业务错误码
+          enum:
+          - VALIDATION_ERROR
+          - UNAUTHENTICATED
+          - FORBIDDEN
+          - NOT_FOUND
+          - STATE_CONFLICT
+          - IDEMPOTENCY_CONFLICT
+          - SLOT_FULL
+          - SLOT_STARTED
+          - TIME_OVERLAP
+          - PAYMENT_EXPIRED
+          - BENEFIT_NOT_SUPPORTED
+          - BLOCKED
+          - CREDIT_RESTRICTED
+          - OUTSTANDING_BALANCE
+          - ADMISSION_PAUSED
+          - OCCUPANCY_UNKNOWN
+          - ENTRY_WINDOW_CLOSED
+          - OPEN_REQUIRED
+          - OPEN_RESULT_UNKNOWN
+          - OPEN_ALREADY_CONSUMED
+          - REVIEW_REQUIRED
+          - RETRY_UNSAFE
+          - DEV_DISABLED
+          - RATE_LIMITED
+          - DEPENDENCY_UNAVAILABLE
+        message:
+          type: string
+          description: 可展示说明
+        requestId:
+          type: string
+          description: ''
+        serverTime: *id001
+        fieldErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldError'
+      required:
+      - code
+      - message
+      - requestId
+      - serverTime
+      - fieldErrors
+    Customer:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        nickname:
+          type: string
+          description: ''
+          nullable: true
+        phoneVerified:
+          type: boolean
+      required:
+      - id
+      - nickname
+      - phoneVerified
+    Admin:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        merchantId: *id002
+        username:
+          type: string
+          description: ''
+        role:
+          type: string
+          description: ''
+          enum:
+          - ADMIN
+          - OPERATOR
+        permissions:
+          type: array
+          items:
+            type: string
+            description: ''
+      required:
+      - id
+      - merchantId
+      - username
+      - role
+      - permissions
+    CustomerToken:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        accessToken:
+          type: string
+          description: JWT，不写日志或幂等快照
+        tokenType:
+          type: string
+          description: ''
+          enum:
+          - Bearer
+        expiresIn:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 秒
+        customer:
+          $ref: '#/components/schemas/Customer'
+      required:
+      - accessToken
+      - tokenType
+      - expiresIn
+      - customer
+    AdminToken:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        accessToken:
+          type: string
+          description: JWT
+        tokenType:
+          type: string
+          description: ''
+          enum:
+          - Bearer
+        expiresIn:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 秒
+        admin:
+          $ref: '#/components/schemas/Admin'
+      required:
+      - accessToken
+      - tokenType
+      - expiresIn
+      - admin
+    WechatLoginRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        code:
+          type: string
+          description: wx.login得到的临时code，后端换取身份
+          minLength: 1
+          maxLength: 256
+      required:
+      - code
+    DevLoginRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        fixtureKey:
+          type: string
+          description: 服务端预置身份，不接受任意userId/openid
+          enum:
+          - CUSTOMER_A
+          - CUSTOMER_B
+      required:
+      - fixtureKey
+    AdminLoginRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        username:
+          type: string
+          description: ''
+          minLength: 1
+          maxLength: 64
+        password:
+          type: string
+          description: 不写日志
+          format: password
+          minLength: 1
+          maxLength: 128
+      required:
+      - username
+      - password
+    Ack:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        accepted:
+          type: boolean
+      required:
+      - accepted
+    StoreSummary:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        merchantId: *id002
+        merchantName:
+          type: string
+          description: ''
+        name:
+          type: string
+          description: ''
+        address:
+          type: string
+          description: ''
+        status:
+          type: string
+          description: ''
+          enum:
+          - OPEN
+          - CLOSED
+          - DISABLED
+        slotPriceCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 当前默认价格
+        estimatedOccupancy:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 按确认进出计算，未知为null
+          nullable: true
+        occupancySource:
+          type: string
+          description: ''
+          enum:
+          - CONFIRMED_RECORDS
+          - UNKNOWN
+        deviceSource:
+          type: string
+          description: ''
+          enum:
+          - MOCK
+          - EZVIZ
+          - MIXED
+          - UNKNOWN
+      required:
+      - id
+      - merchantId
+      - merchantName
+      - name
+      - address
+      - status
+      - slotPriceCent
+      - estimatedOccupancy
+      - occupancySource
+      - deviceSource
+    StoreDetail:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        store:
+          $ref: '#/components/schemas/StoreSummary'
+        description:
+          type: string
+          description: ''
+          nullable: true
+        images:
+          type: array
+          items:
+            type: string
+            description: ''
+        latitude:
+          type: number
+          nullable: true
+        longitude:
+          type: number
+          nullable: true
+        openTime:
+          type: string
+          description: ''
+          pattern: ^\d{2}:\d{2}:\d{2}$
+        closeTime:
+          type: string
+          description: ''
+          pattern: ^\d{2}:\d{2}:\d{2}$
+        is24h:
+          type: boolean
+        endsNextDay:
+          type: boolean
+        timezone:
+          type: string
+          description: ''
+          enum:
+          - Asia/Shanghai
+        slotMinutes:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 固定60
+        bookingDays:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 含当天共7天
+        overtimePriceCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        overtimeCapCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        admissionPaused:
+          type: boolean
+        pauseReason:
+          type: string
+          description: ''
+          nullable: true
+        entryGraceMinutes:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 固定0
+        exitGraceMinutes:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 固定0
+      required:
+      - store
+      - description
+      - images
+      - latitude
+      - longitude
+      - openTime
+      - closeTime
+      - is24h
+      - endsNextDay
+      - timezone
+      - slotMinutes
+      - bookingDays
+      - overtimePriceCent
+      - overtimeCapCent
+      - admissionPaused
+      - pauseReason
+      - entryGraceMinutes
+      - exitGraceMinutes
+    StorePage:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreSummary'
+        page:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页码
+        pageSize:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页大小
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 总数
+      required:
+      - items
+      - page
+      - pageSize
+      - total
+    Slot:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        storeId: *id002
+        startAt: *id001
+        endAt: *id001
+        capacity:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 容量
+        remaining:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 可预约余量，非实际空位
+        priceCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        status:
+          type: string
+          description: ''
+          enum:
+          - OPEN
+          - CLOSED
+        bookable:
+          type: boolean
+        unavailableReason:
+          type: string
+          description: 开始、停店或不可售等原因
+          nullable: true
+      required:
+      - id
+      - storeId
+      - startAt
+      - endAt
+      - capacity
+      - remaining
+      - priceCent
+      - status
+      - bookable
+      - unavailableReason
+    SlotList:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        storeId: *id002
+        date:
+          type: string
+          description: 北京时间日期
+          format: date
+        lastBookableDate:
+          type: string
+          description: ''
+          format: date
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Slot'
+      required:
+      - storeId
+      - date
+      - lastBookableDate
+      - items
+    RuleSnapshot:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        version:
+          type: string
+          description: ''
+          enum:
+          - v1.0
+        slotMinutes:
+          type: integer
+          enum:
+          - 60
+        entryGraceMinutes:
+          type: integer
+          enum:
+          - 0
+        exitGraceMinutes:
+          type: integer
+          enum:
+          - 0
+        overtimePriceCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        overtimeCapCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        rounding:
+          type: string
+          description: ''
+          enum:
+          - CEIL_MINUTE
+        timezone:
+          type: string
+          description: ''
+          enum:
+          - Asia/Shanghai
+        merchantName:
+          type: string
+          description: ''
+        storeName:
+          type: string
+          description: ''
+      required:
+      - version
+      - slotMinutes
+      - entryGraceMinutes
+      - exitGraceMinutes
+      - overtimePriceCent
+      - overtimeCapCent
+      - rounding
+      - timezone
+      - merchantName
+      - storeName
+    Order:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        orderNo:
+          type: string
+          description: ''
+        merchantId: *id002
+        storeId: *id002
+        storeName:
+          type: string
+          description: ''
+        slotId: *id002
+        startAt: *id001
+        endAt: *id001
+        benefitType:
+          type: string
+          description: ''
+          enum:
+          - TIME_FEE
+        baseAmountCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        payDeadline: *id001
+        status:
+          type: string
+          description: ''
+          enum:
+          - PENDING_PAYMENT
+          - RESERVED
+          - IN_USE
+          - FINISHED
+          - CANCEL_PENDING
+          - CANCELLED
+          - NO_SHOW_PENDING
+          - NO_SHOW
+        capacityHeld:
+          type: boolean
+        confirmedAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        cancelStage:
+          type: string
+          description: ''
+          enum:
+          - NONE
+          - REVOKE_PENDING
+          - RETURN_PENDING
+          - COMPLETED
+        cancelRequestedAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        cancelledAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        cancelReason:
+          type: string
+          description: ''
+          nullable: true
+        reviewRequired:
+          type: boolean
+        ruleSnapshot:
+          $ref: '#/components/schemas/RuleSnapshot'
+        paymentMode:
+          type: string
+          description: ''
+          enum:
+          - MOCK
+      required:
+      - id
+      - orderNo
+      - merchantId
+      - storeId
+      - storeName
+      - slotId
+      - startAt
+      - endAt
+      - benefitType
+      - baseAmountCent
+      - payDeadline
+      - status
+      - capacityHeld
+      - confirmedAt
+      - cancelStage
+      - cancelRequestedAt
+      - cancelledAt
+      - cancelReason
+      - reviewRequired
+      - ruleSnapshot
+      - paymentMode
+    OrderPage:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        page:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页码
+        pageSize:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页大小
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 总数
+      required:
+      - items
+      - page
+      - pageSize
+      - total
+    CreateOrderRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        slotId: *id002
+        benefitType:
+          type: string
+          description: 首个闭环仅时段付费；卡接口后续交付
+          enum:
+          - TIME_FEE
+      required:
+      - slotId
+      - benefitType
+    EmptyRequest:
+      type: object
+      additionalProperties: false
+      description: JSON空对象，不接受客户端金额、身份、状态和时间
+      properties: {}
+    CancelRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        reason:
+          type: string
+          description: ''
+          minLength: 1
+          maxLength: 255
+      required:
+      - reason
+    Payment:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties: &id007
+        id: *id002
+        paymentNo:
+          type: string
+          description: ''
+        kind:
+          type: string
+          description: ''
+          enum:
+          - RECEIPT
+          - REFUND
+        channel:
+          type: string
+          description: ''
+          enum:
+          - MOCK
+        amountCent:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 正数金额
+        status:
+          type: string
+          description: ''
+          enum:
+          - PENDING
+          - SUCCEEDED
+          - FAILED
+        completedAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+      required: &id008
+      - id
+      - paymentNo
+      - kind
+      - channel
+      - amountCent
+      - status
+      - completedAt
+    OrderConfirmation:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        order:
+          $ref: '#/components/schemas/Order'
+        payment:
+          type: object
+          additionalProperties: false
+          description: ''
+          properties: *id007
+          required: *id008
+          nullable: true
+        zeroAmount:
+          type: boolean
+      required:
+      - order
+      - payment
+      - zeroAmount
+    AccessPoint:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        deviceId: *id002
+        storeId: *id002
+        merchantId: *id002
+        name:
+          type: string
+          description: ''
+        direction:
+          type: string
+          description: ''
+          enum:
+          - ENTRY
+        provider:
+          type: string
+          description: ''
+          enum:
+          - MOCK
+          - EZVIZ
+        onlineStatus:
+          type: string
+          description: ''
+          enum:
+          - ONLINE
+          - OFFLINE
+          - UNKNOWN
+        supportsRemoteOpen:
+          type: boolean
+      required:
+      - deviceId
+      - storeId
+      - merchantId
+      - name
+      - direction
+      - provider
+      - onlineStatus
+      - supportsRemoteOpen
+    OpenRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        scanCode:
+          type: string
+          description: 扫码解析后得到的随机公开标识，需匹配订单门店入口
+          minLength: 8
+          maxLength: 64
+      required:
+      - scanCode
+    DeviceOperation:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        operationNo:
+          type: string
+          description: ''
+        deviceId: *id002
+        orderId: *id002
+        action:
+          type: string
+          description: ''
+          enum:
+          - OPEN
+        status:
+          type: string
+          description: ''
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - UNKNOWN
+          - SUPERSEDED
+        provider:
+          type: string
+          description: ''
+          enum:
+          - MOCK
+          - EZVIZ
+        acceptedAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        executedAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        receivedAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        errorCode:
+          type: string
+          description: ''
+          nullable: true
+        message:
+          type: string
+          description: ''
+          nullable: true
+        canConfirmEntry:
+          type: boolean
+        confirmEntryExpiresAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        retryAllowed:
+          type: boolean
+      required:
+      - id
+      - operationNo
+      - deviceId
+      - orderId
+      - action
+      - status
+      - provider
+      - acceptedAt
+      - executedAt
+      - receivedAt
+      - errorCode
+      - message
+      - canConfirmEntry
+      - confirmEntryExpiresAt
+      - retryAllowed
+    ConfirmEntryRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        orderId: *id002
+        operationId: *id002
+      required:
+      - orderId
+      - operationId
+    Visit:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties: &id009
+        id: *id002
+        visitNo:
+          type: string
+          description: ''
+        merchantId: *id002
+        storeId: *id002
+        userId: *id002
+        status:
+          type: string
+          description: ''
+          enum:
+          - IN_STORE
+          - LEFT
+        entryAt: *id001
+        exitAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        entrySource:
+          type: string
+          description: ''
+          enum:
+          - DEVICE
+          - SELF_CONFIRM
+          - MERCHANT_REVIEW
+        exitSource:
+          type: string
+          description: ''
+          enum:
+          - DEVICE
+          - SELF_CONFIRM
+          - MERCHANT_REVIEW
+          nullable: true
+        authorizedEndAt: *id001
+        lastOrderId: *id002
+        usedOrderIds:
+          type: array
+          items: *id002
+        reviewRequired:
+          type: boolean
+      required: &id010
+      - id
+      - visitNo
+      - merchantId
+      - storeId
+      - userId
+      - status
+      - entryAt
+      - exitAt
+      - entrySource
+      - exitSource
+      - authorizedEndAt
+      - lastOrderId
+      - usedOrderIds
+      - reviewRequired
+    VisitPage:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Visit'
+        page:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页码
+        pageSize:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页大小
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 总数
+      required:
+      - items
+      - page
+      - pageSize
+      - total
+    CurrentVisit:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        visit:
+          type: object
+          additionalProperties: false
+          description: ''
+          properties: *id009
+          required: *id010
+          nullable: true
+      required:
+      - visit
+    Settlement:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        visitId: *id002
+        version:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 修订版本
+        status:
+          type: string
+          description: ''
+          enum:
+          - NOT_READY
+          - REVIEW_REQUIRED
+          - PAYMENT_DUE
+          - SETTLED
+        isEstimate:
+          type: boolean
+        entryAt: *id001
+        exitAt:
+          type: string
+          description: 带时区的ISO8601时间点，UTC示例
+          format: date-time
+          example: '2026-11-12T10:00:00.000Z'
+          nullable: true
+        authorizedEndAt: *id001
+        overtimeMinutes:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        overtimePriceCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        overtimeCapCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        overtimeAmountCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        adjustmentCent:
+          type: integer
+          format: int64
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        totalDueCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 超时应收，不再次包含已付时段费
+        paidCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 超时净已付
+        remainingCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: ''
+        refundDueCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 复核后多付待退，首个正常闭环为零
+        basePaidCent:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 关联订单成功净预约费，仅展示
+        reviewRequired:
+          type: boolean
+      required:
+      - id
+      - visitId
+      - version
+      - status
+      - isEstimate
+      - entryAt
+      - exitAt
+      - authorizedEndAt
+      - overtimeMinutes
+      - overtimePriceCent
+      - overtimeCapCent
+      - overtimeAmountCent
+      - adjustmentCent
+      - totalDueCent
+      - paidCent
+      - remainingCent
+      - refundDueCent
+      - basePaidCent
+      - reviewRequired
+    FinishResult:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        visit:
+          $ref: '#/components/schemas/Visit'
+        settlement:
+          $ref: '#/components/schemas/Settlement'
+      required:
+      - visit
+      - settlement
+    OvertimePayment:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        settlement:
+          $ref: '#/components/schemas/Settlement'
+        payment:
+          type: object
+          additionalProperties: false
+          description: ''
+          properties: *id007
+          required: *id008
+          nullable: true
+      required:
+      - settlement
+      - payment
+    ReviewTask:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        id: *id002
+        category:
+          type: string
+          description: ''
+        storeId:
+          type: string
+          description: Java Long正整数ID字符串，范围1..9223372036854775807；后端需校验上界，不转换成JS Number
+          pattern: ^[1-9][0-9]{0,18}$
+          maxLength: 19
+          nullable: true
+        orderId:
+          type: string
+          description: Java Long正整数ID字符串，范围1..9223372036854775807；后端需校验上界，不转换成JS Number
+          pattern: ^[1-9][0-9]{0,18}$
+          maxLength: 19
+          nullable: true
+        visitId:
+          type: string
+          description: Java Long正整数ID字符串，范围1..9223372036854775807；后端需校验上界，不转换成JS Number
+          pattern: ^[1-9][0-9]{0,18}$
+          maxLength: 19
+          nullable: true
+        status:
+          type: string
+          description: ''
+          enum:
+          - OPEN
+          - PROCESSING
+          - RESOLVED
+        createdAt: *id001
+        summary:
+          type: string
+          description: 脱敏摘要，不含完整原始报文
+      required:
+      - id
+      - category
+      - storeId
+      - orderId
+      - visitId
+      - status
+      - createdAt
+      - summary
+    ReviewPage:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReviewTask'
+        page:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页码
+        pageSize:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9007199254740991
+          description: 页大小
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          description: 总数
+      required:
+      - items
+      - page
+      - pageSize
+      - total
+    MockScenarioRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        scenario:
+          type: string
+          description: ''
+          enum:
+          - SUCCESS
+          - FAILURE
+          - EXECUTED_TIMEOUT
+          - DUPLICATE_EVENT
+          - DELAYED_EVENT
+          - OFFLINE_RECOVERY
+      required:
+      - scenario
+    MockScenarioResult:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        deviceId: *id002
+        scenario:
+          type: string
+          description: ''
+          enum:
+          - SUCCESS
+          - FAILURE
+          - EXECUTED_TIMEOUT
+          - DUPLICATE_EVENT
+          - DELAYED_EVENT
+          - OFFLINE_RECOVERY
+      required:
+      - deviceId
+      - scenario
+    MockEventRequest:
+      type: object
+      additionalProperties: false
+      description: 受控测试入口；条件字段要求见说明文档；不可伪装真实来源
+      properties:
+        eventKey:
+          type: string
+          description: 同键模拟重复消息，入库去重
+          minLength: 8
+          maxLength: 191
+        eventType:
+          type: string
+          description: ''
+          enum:
+          - ENTRY
+          - EXIT
+          - OPEN_RESULT
+          - ONLINE
+          - OFFLINE
+          - HUMAN_ALARM
+        occurredAt: *id001
+        userId: *id002
+        orderId: *id002
+        operationId: *id002
+        result:
+          type: string
+          description: ''
+          enum:
+          - SUCCEEDED
+          - FAILED
+      required:
+      - eventKey
+      - eventType
+      - occurredAt
+    MockEventResult:
+      type: object
+      additionalProperties: false
+      description: ''
+      properties:
+        eventId: *id002
+        duplicate:
+          type: boolean
+        processingStatus:
+          type: string
+          description: ''
+          enum:
+          - PENDING
+          - PROCESSING
+          - PROCESSED
+          - UNMATCHED
+          - FAILED
+      required:
+      - eventId
+      - duplicate
+      - processingStatus
+  responses:
+    Error:
+      description: 失败；使用HTTP状态与稳定业务code，不返回成功HTTP包装所有错误
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+x-database-contract: ../设计/数据库事务与查询约定-v1.1.md

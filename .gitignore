@@ -1,0 +1,38 @@
+# Local credentials and runtime data
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+data/
+logs/
+*.log
+
+# Build and editor output
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+dist/
+target/
+.idea/
+.vscode/
+*.iml
+
+# Local agent rules and temporary artifacts
+AGENTS.md
+CLAUDE.md
+.codex/
+*.tmp
+*.bak
+~$*
+
+# Local Feishu authorization/import scratch files
+/.feishu-*.png
+/.crud-feishu-import.md

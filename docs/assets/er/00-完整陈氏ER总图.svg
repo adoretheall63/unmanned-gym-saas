@@ -1,0 +1,2049 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="4831.0" height="2385.0" viewBox="0 0 4831.0 2385.0"><rect width="100%" height="100%" fill="white" /><text x="2415.5" y="40" text-anchor="middle" font-family="Hiragino Sans GB" font-size="28" fill="#344054">无人健身房 SaaS · 陈氏 ER 总图（模块分区布局）</text><text x="2415.5" y="78" text-anchor="middle" font-family="Hiragino Sans GB" font-size="18" fill="#344054">26 个实体 · 55 个外键联系 · 8 组逻辑引用；同名〔引用〕节点与来源模块的实体相同</text><text x="2415.5" y="110" text-anchor="middle" font-family="Hiragino Sans GB" font-size="18" fill="#344054">灰色实线：模块内联系　橙色实线：跨模块引用　绿色虚线：逻辑引用；底色标明所属模块</text><g transform="translate(538.0,145)" id="module_0"><g id="p0_graph0" class="graph" transform="scale(1 1) rotate(0) translate(36 543)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-36,36 -36,-543 803.14,-543 803.14,36 -36,36" />
+<g id="p0_clust1" class="cluster">
+<title>cluster_0</title>
+<path fill="#e7f0ff" stroke="#98a2b3" d="M20,-8C20,-8 747.14,-8 747.14,-8 753.14,-8 759.14,-14 759.14,-20 759.14,-20 759.14,-487 759.14,-487 759.14,-493 753.14,-499 747.14,-499 747.14,-499 20,-499 20,-499 14,-499 8,-493 8,-487 8,-487 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text xml:space="preserve" text-anchor="middle" x="383.57" y="-475.2" font-family="Hiragino Sans GB" font-size="22.00">A 商家与身份</text>
+</g>
+
+<g id="p0_node1" class="node">
+<title>merchant</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="114.25,-211.8 45.72,-211.8 45.72,-166.2 114.25,-166.2 114.25,-211.8" />
+<text xml:space="preserve" text-anchor="middle" x="79.99" y="-192.9" font-family="Hiragino Sans GB" font-size="13.00">商家</text>
+<text xml:space="preserve" text-anchor="middle" x="79.99" y="-177.3" font-family="Hiragino Sans GB" font-size="13.00">merchant</text>
+</g>
+
+<g id="p0_node2" class="node">
+<title>merchant_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="384.47" cy="-50" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="380.19" y="-47.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p0_edge1" class="edge">
+<title>merchant--merchant_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M91.53,-165.67C108.14,-132.14 143.91,-71.66 195.47,-47 249.21,-21.3 321.87,-33.76 359.17,-43.04" />
+</g>
+
+<g id="p0_node11" class="node">
+<title>F01</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="260.97,-128.4 227.85,-94 260.97,-59.6 294.09,-94 260.97,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">雇用</text>
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F01</text>
+</g>
+
+<g id="p0_edge6" class="edge">
+<title>merchant--F01</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M114.65,-171.13C150.9,-151.89 207.51,-121.85 238.28,-105.51" />
+<text xml:space="preserve" text-anchor="middle" x="161.72" y="-150.49" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p0_node12" class="node">
+<title>F02</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="260.97,-318.4 195.47,-284 260.97,-249.6 326.47,-284 260.97,-318.4" />
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-287.3" font-family="Hiragino Sans GB" font-size="11.00">建立顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-274.1" font-family="Hiragino Sans GB" font-size="11.00">F02</text>
+</g>
+
+<g id="p0_edge8" class="edge">
+<title>merchant--F02</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M114.65,-206.87C146.95,-224.01 195.42,-249.74 227.36,-266.69" />
+<text xml:space="preserve" text-anchor="middle" x="161.72" y="-234.11" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p0_node14" class="node">
+<title>F04</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="260.97,-223.4 227.85,-189 260.97,-154.6 294.09,-189 260.97,-223.4" />
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00">经营</text>
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-179.1" font-family="Hiragino Sans GB" font-size="11.00">F04</text>
+</g>
+
+<g id="p0_edge12" class="edge">
+<title>merchant--F04</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M114.65,-189C146.85,-189 195.11,-189 227.06,-189" />
+<text xml:space="preserve" text-anchor="middle" x="161.72" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p0_node3" class="node">
+<title>customer_user</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="127.97,-401.8 32,-401.8 32,-356.2 127.97,-356.2 127.97,-401.8" />
+<text xml:space="preserve" text-anchor="middle" x="79.99" y="-382.9" font-family="Hiragino Sans GB" font-size="13.00">顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="79.99" y="-367.3" font-family="Hiragino Sans GB" font-size="13.00">customer_user</text>
+</g>
+
+<g id="p0_node4" class="node">
+<title>customer_user_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="623.14" cy="-263" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="618.87" y="-260.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p0_edge2" class="edge">
+<title>customer_user--customer_user_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M126.22,-402.34C146.77,-411.68 171.76,-421.32 195.47,-426 252.59,-437.27 269.13,-436.12 326.47,-426 437.66,-406.37 474.48,-406.28 565.14,-339 586.47,-323.18 603.52,-297.2 613.23,-280.09" />
+</g>
+
+<g id="p0_node13" class="node">
+<title>F03</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="260.97,-413.4 195.47,-379 260.97,-344.6 326.47,-379 260.97,-413.4" />
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-382.3" font-family="Hiragino Sans GB" font-size="11.00">对应全局顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="260.97" y="-369.1" font-family="Hiragino Sans GB" font-size="11.00">F03</text>
+</g>
+
+<g id="p0_edge10" class="edge">
+<title>customer_user--F03</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M128.48,-379C148.67,-379 172.56,-379 194.4,-379" />
+<text xml:space="preserve" text-anchor="middle" x="161.72" y="-382.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p0_node5" class="node">
+<title>admin_user</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="544.21,-121.8 463.4,-121.8 463.4,-76.2 544.21,-76.2 544.21,-121.8" />
+<text xml:space="preserve" text-anchor="middle" x="503.81" y="-102.9" font-family="Hiragino Sans GB" font-size="13.00">后台员工</text>
+<text xml:space="preserve" text-anchor="middle" x="503.81" y="-87.3" font-family="Hiragino Sans GB" font-size="13.00">admin_user</text>
+</g>
+
+<g id="p0_node6" class="node">
+<title>admin_user_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="708.14" cy="-174" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="703.87" y="-171.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p0_edge3" class="edge">
+<title>admin_user--admin_user_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M544.66,-78.14C575.39,-65.16 617.94,-54.19 650.14,-73 680.75,-90.87 696.21,-131.91 702.89,-155.81" />
+</g>
+
+<g id="p0_node7" class="node">
+<title>merchant_customer</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="565.14,-325.8 442.47,-325.8 442.47,-280.2 565.14,-280.2 565.14,-325.8" />
+<text xml:space="preserve" text-anchor="middle" x="503.81" y="-306.9" font-family="Hiragino Sans GB" font-size="13.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="503.81" y="-291.3" font-family="Hiragino Sans GB" font-size="13.00">merchant_customer</text>
+</g>
+
+<g id="p0_node8" class="node">
+<title>merchant_customer_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="708.14" cy="-391" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="703.87" y="-388.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p0_edge4" class="edge">
+<title>merchant_customer--merchant_customer_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M525.08,-279.8C554.36,-249.14 609.44,-202.27 650.14,-232 686.7,-258.69 665.49,-286.53 681.14,-329 686.76,-344.22 693.94,-361.19 699.33,-373.53" />
+</g>
+
+<g id="p0_node9" class="node">
+<title>store</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="530.81,-211.8 476.81,-211.8 476.81,-166.2 530.81,-166.2 530.81,-211.8" />
+<text xml:space="preserve" text-anchor="middle" x="503.81" y="-192.9" font-family="Hiragino Sans GB" font-size="13.00">门店</text>
+<text xml:space="preserve" text-anchor="middle" x="503.81" y="-177.3" font-family="Hiragino Sans GB" font-size="13.00">store</text>
+</g>
+
+<g id="p0_node10" class="node">
+<title>store_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="708.14" cy="-298" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="703.87" y="-295.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p0_edge5" class="edge">
+<title>store--store_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M531.39,-188.34C562.32,-188.8 613.78,-193.49 650.14,-217 673.97,-232.41 690.76,-261.6 699.69,-280.41" />
+</g>
+
+<g id="p0_edge7" class="edge">
+<title>F01--admin_user</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M293.95,-94.66C337.58,-95.57 415.74,-97.19 463.08,-98.18" />
+<text xml:space="preserve" text-anchor="middle" x="384.47" y="-100.39" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p0_edge9" class="edge">
+<title>F02--merchant_customer</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M319.05,-288.5C356.05,-291.42 404.2,-295.22 441.93,-298.2" />
+<text xml:space="preserve" text-anchor="middle" x="384.47" y="-299.06" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p0_edge11" class="edge">
+<title>F03--merchant_customer</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M303.1,-366.02C341.25,-353.98 398.53,-335.91 441.97,-322.2" />
+<text xml:space="preserve" text-anchor="middle" x="384.47" y="-351.11" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p0_edge13" class="edge">
+<title>F04--store</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M294.95,-189C343.26,-189 432.31,-189 476.5,-189" />
+<text xml:space="preserve" text-anchor="middle" x="384.47" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+</g>
+</g><g transform="translate(1427.0,145)" id="module_2"><g id="p2_graph0" class="graph" transform="scale(1 1) rotate(0) translate(36 326)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-36,36 -36,-326 1557.25,-326 1557.25,36 -36,36" />
+<g id="p2_clust1" class="cluster">
+<title>cluster_2</title>
+<path fill="#fff0d9" stroke="#98a2b3" d="M20,-8C20,-8 1501.25,-8 1501.25,-8 1507.25,-8 1513.25,-14 1513.25,-20 1513.25,-20 1513.25,-270 1513.25,-270 1513.25,-276 1507.25,-282 1501.25,-282 1501.25,-282 20,-282 20,-282 14,-282 8,-276 8,-270 8,-270 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text xml:space="preserve" text-anchor="middle" x="760.63" y="-258.2" font-family="Hiragino Sans GB" font-size="22.00">C 卡产品与权益</text>
+</g>
+
+<g id="p2_node1" class="node">
+<title>card_product</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="449.89,-116.8 361.14,-116.8 361.14,-71.2 449.89,-71.2 449.89,-116.8" />
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-97.9" font-family="Hiragino Sans GB" font-size="13.00">卡产品</text>
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-82.3" font-family="Hiragino Sans GB" font-size="13.00">card_product</text>
+</g>
+
+<g id="p2_node2" class="node">
+<title>card_product_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="685.63" cy="-50" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="681.35" y="-47.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p2_edge1" class="edge">
+<title>card_product--card_product_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M450.4,-72.76C473.41,-62.79 502.4,-52.02 529.63,-47 572.46,-39.1 584.09,-45.85 627.63,-47 637.63,-47.26 648.61,-47.79 658.25,-48.32" />
+</g>
+
+<g id="p2_node9" class="node">
+<title>F07</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="578.63,-128.4 529.63,-94 578.63,-59.6 627.63,-94 578.63,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">购买形成</text>
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F07</text>
+</g>
+
+<g id="p2_edge6" class="edge">
+<title>card_product--F07</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M450.14,-94C474.1,-94 503.89,-94 528.65,-94" />
+<text xml:space="preserve" text-anchor="middle" x="495.88" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p2_node3" class="node">
+<title>member_card</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="845.75,-121.8 754.12,-121.8 754.12,-76.2 845.75,-76.2 845.75,-121.8" />
+<text xml:space="preserve" text-anchor="middle" x="799.94" y="-102.9" font-family="Hiragino Sans GB" font-size="13.00">持有卡</text>
+<text xml:space="preserve" text-anchor="middle" x="799.94" y="-87.3" font-family="Hiragino Sans GB" font-size="13.00">member_card</text>
+</g>
+
+<g id="p2_node4" class="node">
+<title>member_card_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1123.74" cy="-73" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1119.47" y="-70.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p2_edge2" class="edge">
+<title>member_card--member_card_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M846.14,-76.6C871.5,-65.27 904.12,-52.74 934.74,-47 991.97,-36.27 1008.85,-34.64 1065.74,-47 1078.6,-49.79 1092.04,-55.76 1102.64,-61.27" />
+</g>
+
+<g id="p2_node12" class="node">
+<title>F22</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1000.24,-128.4 934.74,-94 1000.24,-59.6 1065.74,-94 1000.24,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="1000.24" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">记录权益变化</text>
+<text xml:space="preserve" text-anchor="middle" x="1000.24" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F22</text>
+</g>
+
+<g id="p2_edge10" class="edge">
+<title>member_card--F22</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M845.93,-97.87C872.79,-97.19 907.29,-96.32 936.76,-95.58" />
+<text xml:space="preserve" text-anchor="middle" x="895.49" y="-100.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p2_node5" class="node">
+<title>card_ledger</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1263.25,-171.8 1181.74,-171.8 1181.74,-126.2 1263.25,-126.2 1263.25,-171.8" />
+<text xml:space="preserve" text-anchor="middle" x="1222.5" y="-152.9" font-family="Hiragino Sans GB" font-size="13.00">权益流水</text>
+<text xml:space="preserve" text-anchor="middle" x="1222.5" y="-137.3" font-family="Hiragino Sans GB" font-size="13.00">card_ledger</text>
+</g>
+
+<g id="p2_node6" class="node">
+<title>card_ledger_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1415.5" cy="-79" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1411.23" y="-76.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p2_edge3" class="edge">
+<title>card_ledger--card_ledger_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1263.54,-134.33C1302.16,-120.17 1359.28,-99.24 1391.04,-87.6" />
+</g>
+
+<g id="p2_node15" class="node">
+<title>F24</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1415.5,-207.4 1341.75,-173 1415.5,-138.6 1489.25,-173 1415.5,-207.4" />
+<text xml:space="preserve" text-anchor="middle" x="1415.5" y="-176.3" font-family="Hiragino Sans GB" font-size="11.00">冲正原权益流水</text>
+<text xml:space="preserve" text-anchor="middle" x="1415.5" y="-163.1" font-family="Hiragino Sans GB" font-size="11.00">F24</text>
+</g>
+
+<g id="p2_edge14" class="edge">
+<title>card_ledger--F24</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1263.73,-140.17C1273.66,-138.35 1284.3,-136.72 1294.25,-135.8 1324.07,-133.04 1356.41,-143.89 1380.03,-154.57" />
+<text xml:space="preserve" text-anchor="middle" x="1302.5" y="-139.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p2_node7" class="node">
+<title>F06</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="245.84,-128.4 212.72,-94 245.84,-59.6 278.96,-94 245.84,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="245.84" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">发行</text>
+<text xml:space="preserve" text-anchor="middle" x="245.84" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F06</text>
+</g>
+
+<g id="p2_edge5" class="edge">
+<title>F06--card_product</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M279.51,-94C302.96,-94 334.83,-94 360.52,-94" />
+<text xml:space="preserve" text-anchor="middle" x="313.93" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p2_node8" class="node">
+<title>ref_F06_merchant</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M133.22,-119.56C133.22,-119.56 44,-119.56 44,-119.56 38,-119.56 32,-113.56 32,-107.56 32,-107.56 32,-80.44 32,-80.44 32,-74.44 38,-68.44 44,-68.44 44,-68.44 133.22,-68.44 133.22,-68.44 139.22,-68.44 145.22,-74.44 145.22,-80.44 145.22,-80.44 145.22,-107.56 145.22,-107.56 145.22,-113.56 139.22,-119.56 133.22,-119.56" />
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-103.9" font-family="Hiragino Sans GB" font-size="11.00">商家</text>
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-90.7" font-family="Hiragino Sans GB" font-size="11.00">merchant</text>
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-77.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p2_edge4" class="edge">
+<title>ref_F06_merchant--F06</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M145.65,-94C167.89,-94 192.68,-94 211.92,-94" />
+<text xml:space="preserve" text-anchor="middle" x="178.97" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p2_edge7" class="edge">
+<title>F07--member_card</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M626.94,-95.08C664.47,-95.93 716.58,-97.12 753.58,-97.97" />
+<text xml:space="preserve" text-anchor="middle" x="685.63" y="-100.25" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p2_node10" class="node">
+<title>F08</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="578.63,-223.4 545.51,-189 578.63,-154.6 611.74,-189 578.63,-223.4" />
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00">持有</text>
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-179.1" font-family="Hiragino Sans GB" font-size="11.00">F08</text>
+</g>
+
+<g id="p2_edge9" class="edge">
+<title>F08--member_card</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M603.1,-179.37C638.9,-164.68 707.81,-136.4 753.59,-117.61" />
+<text xml:space="preserve" text-anchor="middle" x="685.63" y="-158.01" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p2_node11" class="node">
+<title>ref_F08_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M450.13,-214.56C450.13,-214.56 360.9,-214.56 360.9,-214.56 354.9,-214.56 348.9,-208.56 348.9,-202.56 348.9,-202.56 348.9,-175.44 348.9,-175.44 348.9,-169.44 354.9,-163.44 360.9,-163.44 360.9,-163.44 450.13,-163.44 450.13,-163.44 456.13,-163.44 462.13,-169.44 462.13,-175.44 462.13,-175.44 462.13,-202.56 462.13,-202.56 462.13,-208.56 456.13,-214.56 450.13,-214.56" />
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-198.9" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-185.7" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-172.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p2_edge8" class="edge">
+<title>ref_F08_merchant_customer--F08</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M462.54,-189C489.74,-189 521.47,-189 544.71,-189" />
+<text xml:space="preserve" text-anchor="middle" x="495.88" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p2_edge11" class="edge">
+<title>F22--card_ledger</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1045.82,-105.13C1085.54,-115.05 1143.15,-129.44 1181.44,-139" />
+<text xml:space="preserve" text-anchor="middle" x="1123.74" y="-134.51" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p2_node13" class="node">
+<title>F23</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1000.24,-223.4 934.74,-189 1000.24,-154.6 1065.74,-189 1000.24,-223.4" />
+<text xml:space="preserve" text-anchor="middle" x="1000.24" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00">订单权益变动</text>
+<text xml:space="preserve" text-anchor="middle" x="1000.24" y="-179.1" font-family="Hiragino Sans GB" font-size="11.00">F23</text>
+</g>
+
+<g id="p2_edge13" class="edge">
+<title>F23--card_ledger</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1050.13,-180.12C1089.54,-172.96 1144.3,-163.02 1181.22,-156.31" />
+<text xml:space="preserve" text-anchor="middle" x="1123.74" y="-174.69" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p2_node14" class="node">
+<title>ref_F23_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M844.24,-214.56C844.24,-214.56 755.63,-214.56 755.63,-214.56 749.63,-214.56 743.63,-208.56 743.63,-202.56 743.63,-202.56 743.63,-175.44 743.63,-175.44 743.63,-169.44 749.63,-163.44 755.63,-163.44 755.63,-163.44 844.24,-163.44 844.24,-163.44 850.24,-163.44 856.24,-169.44 856.24,-175.44 856.24,-175.44 856.24,-202.56 856.24,-202.56 856.24,-208.56 850.24,-214.56 844.24,-214.56" />
+<text xml:space="preserve" text-anchor="middle" x="799.94" y="-198.9" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="799.94" y="-185.7" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="799.94" y="-172.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p2_edge12" class="edge">
+<title>ref_F23_booking_order--F23</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M856.7,-189C880.65,-189 908.79,-189 933.72,-189" />
+<text xml:space="preserve" text-anchor="middle" x="895.49" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p2_edge15" class="edge">
+<title>F24--card_ledger</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1356.39,-165.7C1326.35,-161.92 1290.45,-157.41 1263.54,-154.03" />
+<text xml:space="preserve" text-anchor="middle" x="1302.5" y="-162.86" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+</g>
+</g><g transform="translate(3070.0,145)" id="module_3"><g id="p3_graph0" class="graph" transform="scale(1 1) rotate(0) translate(36 488)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-36,36 -36,-488 1186.56,-488 1186.56,36 -36,36" />
+<g id="p3_clust1" class="cluster">
+<title>cluster_3</title>
+<path fill="#fce7ee" stroke="#98a2b3" d="M20,-8C20,-8 1130.56,-8 1130.56,-8 1136.56,-8 1142.56,-14 1142.56,-20 1142.56,-20 1142.56,-432 1142.56,-432 1142.56,-438 1136.56,-444 1130.56,-444 1130.56,-444 20,-444 20,-444 14,-444 8,-438 8,-432 8,-432 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text xml:space="preserve" text-anchor="middle" x="575.28" y="-420.2" font-family="Hiragino Sans GB" font-size="22.00">D 资金与结算</text>
+</g>
+
+<g id="p3_node1" class="node">
+<title>payment_record</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="533.29,-323.8 428.67,-323.8 428.67,-278.2 533.29,-278.2 533.29,-323.8" />
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-304.9" font-family="Hiragino Sans GB" font-size="13.00">现金流水</text>
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-289.3" font-family="Hiragino Sans GB" font-size="13.00">payment_record</text>
+</g>
+
+<g id="p3_node2" class="node">
+<title>payment_record_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="689.84" cy="-267" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="685.56" y="-264.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p3_edge1" class="edge">
+<title>payment_record--payment_record_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M533.85,-278.63C545.1,-274.68 557.09,-271.16 568.59,-269 600.61,-263 638.26,-263.57 662.78,-264.93" />
+</g>
+
+<g id="p3_node18" class="node">
+<title>F21</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="689.84,-379.4 616.09,-345 689.84,-310.6 763.59,-345 689.84,-379.4" />
+<text xml:space="preserve" text-anchor="middle" x="689.84" y="-348.3" font-family="Hiragino Sans GB" font-size="11.00">退款对应原收款</text>
+<text xml:space="preserve" text-anchor="middle" x="689.84" y="-335.1" font-family="Hiragino Sans GB" font-size="11.00">F21</text>
+</g>
+
+<g id="p3_edge16" class="edge">
+<title>payment_record--F21</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M533.8,-296.04C550.34,-295.62 568.62,-296.37 585.09,-299.8 609.71,-304.93 635.65,-316.23 655.43,-326.25" />
+<text xml:space="preserve" text-anchor="middle" x="576.84" y="-303.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p3_node3" class="node">
+<title>visit_settlement</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="532.22,-98.8 429.74,-98.8 429.74,-53.2 532.22,-53.2 532.22,-98.8" />
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-79.9" font-family="Hiragino Sans GB" font-size="13.00">当前结算</text>
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-64.3" font-family="Hiragino Sans GB" font-size="13.00">visit_settlement</text>
+</g>
+
+<g id="p3_node4" class="node">
+<title>visit_settlement_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="821.59" cy="-73" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="817.31" y="-70.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p3_edge2" class="edge">
+<title>visit_settlement--visit_settlement_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M532.62,-61.28C589.41,-46.96 683.98,-29.7 763.59,-47 776.45,-49.79 789.89,-55.76 800.48,-61.27" />
+</g>
+
+<g id="p3_node9" class="node">
+<title>F16</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="689.84,-128.4 640.84,-94 689.84,-59.6 738.84,-94 689.84,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="689.84" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">保留修订</text>
+<text xml:space="preserve" text-anchor="middle" x="689.84" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F16</text>
+</g>
+
+<g id="p3_edge6" class="edge">
+<title>visit_settlement--F16</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M532.58,-80.4C567.15,-83.41 612.48,-87.36 645.41,-90.22" />
+<text xml:space="preserve" text-anchor="middle" x="576.84" y="-87.76" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p3_node5" class="node">
+<title>settlement_revision</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1001.56,-180.8 879.59,-180.8 879.59,-135.2 1001.56,-135.2 1001.56,-180.8" />
+<text xml:space="preserve" text-anchor="middle" x="940.58" y="-161.9" font-family="Hiragino Sans GB" font-size="13.00">结算修订</text>
+<text xml:space="preserve" text-anchor="middle" x="940.58" y="-146.3" font-family="Hiragino Sans GB" font-size="13.00">settlement_revision</text>
+</g>
+
+<g id="p3_node6" class="node">
+<title>settlement_revision_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1091.56" cy="-209" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1087.28" y="-206.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p3_edge3" class="edge">
+<title>settlement_revision--settlement_revision_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1002.17,-178.74C1024.89,-186.52 1049.4,-194.91 1066.83,-200.88" />
+</g>
+
+<g id="p3_node7" class="node">
+<title>F15</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="288.62,-100.4 239.62,-66 288.62,-31.6 337.62,-66 288.62,-100.4" />
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-69.3" font-family="Hiragino Sans GB" font-size="11.00">形成结算</text>
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-56.1" font-family="Hiragino Sans GB" font-size="11.00">F15</text>
+</g>
+
+<g id="p3_edge5" class="edge">
+<title>F15--visit_settlement</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M335.21,-68.4C363.59,-69.89 400.13,-71.81 429.4,-73.34" />
+<text xml:space="preserve" text-anchor="middle" x="385.12" y="-74.6" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p3_node8" class="node">
+<title>ref_F15_visit_session</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M136.74,-91.56C136.74,-91.56 48.13,-91.56 48.13,-91.56 42.13,-91.56 36.13,-85.56 36.13,-79.56 36.13,-79.56 36.13,-52.44 36.13,-52.44 36.13,-46.44 42.13,-40.44 48.13,-40.44 48.13,-40.44 136.74,-40.44 136.74,-40.44 142.74,-40.44 148.74,-46.44 148.74,-52.44 148.74,-52.44 148.74,-79.56 148.74,-79.56 148.74,-85.56 142.74,-91.56 136.74,-91.56" />
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-75.9" font-family="Hiragino Sans GB" font-size="11.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-62.7" font-family="Hiragino Sans GB" font-size="11.00">visit_session</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-49.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p3_edge4" class="edge">
+<title>ref_F15_visit_session--F15</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M149.34,-66C177.57,-66 211.51,-66 238.7,-66" />
+<text xml:space="preserve" text-anchor="middle" x="192.12" y="-69.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p3_edge7" class="edge">
+<title>F16--settlement_revision</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M726.74,-103.24C766.57,-113.48 831.48,-130.19 879.16,-142.46" />
+<text xml:space="preserve" text-anchor="middle" x="821.59" y="-136.91" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p3_node10" class="node">
+<title>F17</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="689.84,-223.4 640.84,-189 689.84,-154.6 738.84,-189 689.84,-223.4" />
+<text xml:space="preserve" text-anchor="middle" x="689.84" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00">人工修订</text>
+<text xml:space="preserve" text-anchor="middle" x="689.84" y="-179.1" font-family="Hiragino Sans GB" font-size="11.00">F17</text>
+</g>
+
+<g id="p3_edge9" class="edge">
+<title>F17--settlement_revision</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M732.47,-183.81C772.58,-178.81 833.7,-171.2 879.15,-165.53" />
+<text xml:space="preserve" text-anchor="middle" x="821.59" y="-178.66" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p3_node11" class="node">
+<title>ref_F17_admin_user</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M525.59,-214.56C525.59,-214.56 436.37,-214.56 436.37,-214.56 430.37,-214.56 424.37,-208.56 424.37,-202.56 424.37,-202.56 424.37,-175.44 424.37,-175.44 424.37,-169.44 430.37,-163.44 436.37,-163.44 436.37,-163.44 525.59,-163.44 525.59,-163.44 531.59,-163.44 537.59,-169.44 537.59,-175.44 537.59,-175.44 537.59,-202.56 537.59,-202.56 537.59,-208.56 531.59,-214.56 525.59,-214.56" />
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-198.9" font-family="Hiragino Sans GB" font-size="11.00">后台员工</text>
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-185.7" font-family="Hiragino Sans GB" font-size="11.00">admin_user</text>
+<text xml:space="preserve" text-anchor="middle" x="480.98" y="-172.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p3_edge8" class="edge">
+<title>ref_F17_admin_user--F17</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M537.96,-189C569.79,-189 609.27,-189 639.86,-189" />
+<text xml:space="preserve" text-anchor="middle" x="576.84" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p3_node12" class="node">
+<title>F18</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="288.62,-195.4 231.37,-161 288.62,-126.6 345.87,-161 288.62,-195.4" />
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-164.3" font-family="Hiragino Sans GB" font-size="11.00">预约收退款</text>
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-151.1" font-family="Hiragino Sans GB" font-size="11.00">F18</text>
+</g>
+
+<g id="p3_edge11" class="edge">
+<title>F18--payment_record</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M315.29,-179.88C349.8,-205.26 411.1,-250.34 448.39,-277.77" />
+<text xml:space="preserve" text-anchor="middle" x="385.12" y="-238.5" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p3_node13" class="node">
+<title>ref_F18_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M136.74,-186.56C136.74,-186.56 48.13,-186.56 48.13,-186.56 42.13,-186.56 36.13,-180.56 36.13,-174.56 36.13,-174.56 36.13,-147.44 36.13,-147.44 36.13,-141.44 42.13,-135.44 48.13,-135.44 48.13,-135.44 136.74,-135.44 136.74,-135.44 142.74,-135.44 148.74,-141.44 148.74,-147.44 148.74,-147.44 148.74,-174.56 148.74,-174.56 148.74,-180.56 142.74,-186.56 136.74,-186.56" />
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-170.9" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-157.7" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-144.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p3_edge10" class="edge">
+<title>ref_F18_booking_order--F18</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M149.34,-161C174.77,-161 204.83,-161 230.42,-161" />
+<text xml:space="preserve" text-anchor="middle" x="192.12" y="-164.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p3_node14" class="node">
+<title>F19</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="288.62,-290.4 231.37,-256 288.62,-221.6 345.87,-256 288.62,-290.4" />
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-259.3" font-family="Hiragino Sans GB" font-size="11.00">超时收退款</text>
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-246.1" font-family="Hiragino Sans GB" font-size="11.00">F19</text>
+</g>
+
+<g id="p3_edge13" class="edge">
+<title>F19--payment_record</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M330.45,-265.65C359.08,-272.42 397.56,-281.52 428.32,-288.79" />
+<text xml:space="preserve" text-anchor="middle" x="385.12" y="-283.15" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p3_node15" class="node">
+<title>ref_F19_visit_session</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M136.74,-281.56C136.74,-281.56 48.13,-281.56 48.13,-281.56 42.13,-281.56 36.13,-275.56 36.13,-269.56 36.13,-269.56 36.13,-242.44 36.13,-242.44 36.13,-236.44 42.13,-230.44 48.13,-230.44 48.13,-230.44 136.74,-230.44 136.74,-230.44 142.74,-230.44 148.74,-236.44 148.74,-242.44 148.74,-242.44 148.74,-269.56 148.74,-269.56 148.74,-275.56 142.74,-281.56 136.74,-281.56" />
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-265.9" font-family="Hiragino Sans GB" font-size="11.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-252.7" font-family="Hiragino Sans GB" font-size="11.00">visit_session</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-239.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p3_edge12" class="edge">
+<title>ref_F19_visit_session--F19</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M149.34,-256C174.77,-256 204.83,-256 230.42,-256" />
+<text xml:space="preserve" text-anchor="middle" x="192.12" y="-259.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p3_node16" class="node">
+<title>F20</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="288.62,-385.4 231.37,-351 288.62,-316.6 345.87,-351 288.62,-385.4" />
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-354.3" font-family="Hiragino Sans GB" font-size="11.00">购卡收退款</text>
+<text xml:space="preserve" text-anchor="middle" x="288.62" y="-341.1" font-family="Hiragino Sans GB" font-size="11.00">F20</text>
+</g>
+
+<g id="p3_edge15" class="edge">
+<title>F20--payment_record</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M329.52,-340.52C358.2,-332.99 397.11,-322.77 428.18,-314.61" />
+<text xml:space="preserve" text-anchor="middle" x="385.12" y="-330.8" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p3_node17" class="node">
+<title>ref_F20_member_card</title>
+<path fill="#fff0d9" stroke="#b85c00" stroke-width="1.25" d="M140.87,-376.56C140.87,-376.56 44,-376.56 44,-376.56 38,-376.56 32,-370.56 32,-364.56 32,-364.56 32,-337.44 32,-337.44 32,-331.44 38,-325.44 44,-325.44 44,-325.44 140.87,-325.44 140.87,-325.44 146.87,-325.44 152.87,-331.44 152.87,-337.44 152.87,-337.44 152.87,-364.56 152.87,-364.56 152.87,-370.56 146.87,-376.56 140.87,-376.56" />
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-360.9" font-family="Hiragino Sans GB" font-size="11.00">持有卡</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-347.7" font-family="Hiragino Sans GB" font-size="11.00">member_card</text>
+<text xml:space="preserve" text-anchor="middle" x="92.43" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · C 卡产品与权益〕</text>
+</g>
+
+<g id="p3_edge14" class="edge">
+<title>ref_F20_member_card--F20</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M153.28,-351C177.8,-351 206.05,-351 230.3,-351" />
+<text xml:space="preserve" text-anchor="middle" x="192.12" y="-354.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p3_edge17" class="edge">
+<title>F21--payment_record</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M637.96,-334.18C606.32,-327.45 565.75,-318.82 533.91,-312.05" />
+<text xml:space="preserve" text-anchor="middle" x="576.84" y="-324.98" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+</g>
+</g><g transform="translate(40.0,774.0)" id="module_1"><g id="p1_graph0" class="graph" transform="scale(1 1) rotate(0) translate(36 421)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-36,36 -36,-421 1962.51,-421 1962.51,36 -36,36" />
+<g id="p1_clust1" class="cluster">
+<title>cluster_1</title>
+<path fill="#e5f5ee" stroke="#98a2b3" d="M20,-8C20,-8 1906.51,-8 1906.51,-8 1912.51,-8 1918.51,-14 1918.51,-20 1918.51,-20 1918.51,-365 1918.51,-365 1918.51,-371 1912.51,-377 1906.51,-377 1906.51,-377 20,-377 20,-377 14,-377 8,-371 8,-365 8,-365 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text xml:space="preserve" text-anchor="middle" x="963.25" y="-353.2" font-family="Hiragino Sans GB" font-size="22.00">B 预约与到店</text>
+</g>
+
+<g id="p1_node1" class="node">
+<title>store_slot</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="476.46,-116.8 405.74,-116.8 405.74,-71.2 476.46,-71.2 476.46,-116.8" />
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-97.9" font-family="Hiragino Sans GB" font-size="13.00">预约时段</text>
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-82.3" font-family="Hiragino Sans GB" font-size="13.00">store_slot</text>
+</g>
+
+<g id="p1_node2" class="node">
+<title>store_slot_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="752.53" cy="-62" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="748.26" y="-59.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p1_edge1" class="edge">
+<title>store_slot--store_slot_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M477,-78.54C504.4,-67.28 543.84,-53 580.03,-47 630.24,-38.68 644.07,-40.47 694.53,-47 705.6,-48.43 717.57,-51.36 727.68,-54.26" />
+</g>
+
+<g id="p1_node11" class="node">
+<title>F09</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="637.28,-128.4 588.28,-94 637.28,-59.6 686.28,-94 637.28,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="637.28" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">预约时段</text>
+<text xml:space="preserve" text-anchor="middle" x="637.28" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F09</text>
+</g>
+
+<g id="p1_edge7" class="edge">
+<title>store_slot--F09</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M476.82,-94C507.58,-94 552.83,-94 587.28,-94" />
+<text xml:space="preserve" text-anchor="middle" x="540.78" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p1_node3" class="node">
+<title>booking_order</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="907.23,-211.8 810.53,-211.8 810.53,-166.2 907.23,-166.2 907.23,-211.8" />
+<text xml:space="preserve" text-anchor="middle" x="858.88" y="-192.9" font-family="Hiragino Sans GB" font-size="13.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="858.88" y="-177.3" font-family="Hiragino Sans GB" font-size="13.00">booking_order</text>
+</g>
+
+<g id="p1_node4" class="node">
+<title>booking_order_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1163.73" cy="-70" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1159.46" y="-67.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p1_edge2" class="edge">
+<title>booking_order--booking_order_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M878.69,-165.78C899.44,-141.98 935.19,-106.12 974.73,-89 1028.62,-65.67 1099.07,-65.68 1136.57,-67.79" />
+</g>
+
+<g id="p1_node16" class="node">
+<title>F12</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1040.23,-170.4 974.73,-136 1040.23,-101.6 1105.73,-136 1040.23,-170.4" />
+<text xml:space="preserve" text-anchor="middle" x="1040.23" y="-139.3" font-family="Hiragino Sans GB" font-size="11.00">末段计费订单</text>
+<text xml:space="preserve" text-anchor="middle" x="1040.23" y="-126.1" font-family="Hiragino Sans GB" font-size="11.00">F12</text>
+</g>
+
+<g id="p1_edge13" class="edge">
+<title>booking_order--F12</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M907.48,-174.94C935.39,-166.69 970.34,-156.36 997.23,-148.41" />
+<text xml:space="preserve" text-anchor="middle" x="940.98" y="-168.97" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p1_node18" class="node">
+<title>F14</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1396.6,-256.4 1339.35,-222 1396.6,-187.6 1453.85,-222 1396.6,-256.4" />
+<text xml:space="preserve" text-anchor="middle" x="1396.6" y="-225.3" font-family="Hiragino Sans GB" font-size="11.00">实际被使用</text>
+<text xml:space="preserve" text-anchor="middle" x="1396.6" y="-212.1" font-family="Hiragino Sans GB" font-size="11.00">F14</text>
+</g>
+
+<g id="p1_edge17" class="edge">
+<title>booking_order--F14</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M907.43,-191.93C1007.68,-198.1 1240.04,-212.42 1343.86,-218.81" />
+<text xml:space="preserve" text-anchor="middle" x="1040.23" y="-207" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p1_node5" class="node">
+<title>visit_session</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1308.35,-158.8 1221.73,-158.8 1221.73,-113.2 1308.35,-113.2 1308.35,-158.8" />
+<text xml:space="preserve" text-anchor="middle" x="1265.04" y="-139.9" font-family="Hiragino Sans GB" font-size="13.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="1265.04" y="-124.3" font-family="Hiragino Sans GB" font-size="13.00">visit_session</text>
+</g>
+
+<g id="p1_node6" class="node">
+<title>visit_session_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1640.85" cy="-90" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1636.57" y="-87.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p1_edge3" class="edge">
+<title>visit_session--visit_session_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1308.78,-124.01C1352.58,-112.39 1422.84,-95.58 1484.85,-89 1528.16,-84.4 1539.29,-88.62 1582.85,-89 1592.84,-89.09 1603.83,-89.26 1613.46,-89.44" />
+</g>
+
+<g id="p1_node17" class="node">
+<title>F13</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1533.85,-170.4 1484.85,-136 1533.85,-101.6 1582.85,-136 1533.85,-170.4" />
+<text xml:space="preserve" text-anchor="middle" x="1533.85" y="-139.3" font-family="Hiragino Sans GB" font-size="11.00">记录用单</text>
+<text xml:space="preserve" text-anchor="middle" x="1533.85" y="-126.1" font-family="Hiragino Sans GB" font-size="11.00">F13</text>
+</g>
+
+<g id="p1_edge15" class="edge">
+<title>visit_session--F13</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1308.91,-136C1356.78,-136 1434.11,-136 1484.21,-136" />
+<text xml:space="preserve" text-anchor="middle" x="1396.6" y="-139.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p1_node7" class="node">
+<title>visit_order</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1777.51,-217.8 1698.85,-217.8 1698.85,-172.2 1777.51,-172.2 1777.51,-217.8" />
+<text xml:space="preserve" text-anchor="middle" x="1738.18" y="-198.9" font-family="Hiragino Sans GB" font-size="13.00">到店用单记录</text>
+<text xml:space="preserve" text-anchor="middle" x="1738.18" y="-183.3" font-family="Hiragino Sans GB" font-size="13.00">visit_order</text>
+</g>
+
+<g id="p1_node8" class="node">
+<title>visit_order_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1867.51" cy="-175" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1863.23" y="-172.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p1_edge4" class="edge">
+<title>visit_order--visit_order_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1778.07,-188.89C1798.41,-185.7 1822.73,-181.88 1840.72,-179.05" />
+</g>
+
+<g id="p1_node9" class="node">
+<title>F05</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="261.72,-128.4 212.72,-94 261.72,-59.6 310.72,-94 261.72,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="261.72" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">提供时段</text>
+<text xml:space="preserve" text-anchor="middle" x="261.72" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F05</text>
+</g>
+
+<g id="p1_edge6" class="edge">
+<title>F05--store_slot</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M311.66,-94C341.4,-94 378.66,-94 405.37,-94" />
+<text xml:space="preserve" text-anchor="middle" x="345.7" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p1_node10" class="node">
+<title>ref_F05_store</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M133.22,-119.56C133.22,-119.56 44,-119.56 44,-119.56 38,-119.56 32,-113.56 32,-107.56 32,-107.56 32,-80.44 32,-80.44 32,-74.44 38,-68.44 44,-68.44 44,-68.44 133.22,-68.44 133.22,-68.44 139.22,-68.44 145.22,-74.44 145.22,-80.44 145.22,-80.44 145.22,-107.56 145.22,-107.56 145.22,-113.56 139.22,-119.56 133.22,-119.56" />
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-103.9" font-family="Hiragino Sans GB" font-size="11.00">门店</text>
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-90.7" font-family="Hiragino Sans GB" font-size="11.00">store</text>
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-77.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p1_edge5" class="edge">
+<title>ref_F05_store--F05</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M145.64,-94C166.99,-94 191.13,-94 211.77,-94" />
+<text xml:space="preserve" text-anchor="middle" x="178.97" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p1_edge8" class="edge">
+<title>F09--booking_order</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M668.36,-107.01C704.89,-122.81 766.97,-149.67 810.08,-168.32" />
+<text xml:space="preserve" text-anchor="middle" x="752.53" y="-156.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p1_node12" class="node">
+<title>F10</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="637.28,-223.4 580.03,-189 637.28,-154.6 694.53,-189 637.28,-223.4" />
+<text xml:space="preserve" text-anchor="middle" x="637.28" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00">使用卡权益</text>
+<text xml:space="preserve" text-anchor="middle" x="637.28" y="-179.1" font-family="Hiragino Sans GB" font-size="11.00">F10</text>
+</g>
+
+<g id="p1_edge10" class="edge">
+<title>F10--booking_order</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M695.7,-189C731.28,-189 776.45,-189 810.08,-189" />
+<text xml:space="preserve" text-anchor="middle" x="752.53" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p1_node13" class="node">
+<title>ref_F10_member_card</title>
+<path fill="#fff0d9" stroke="#b85c00" stroke-width="1.25" d="M489.53,-214.56C489.53,-214.56 392.67,-214.56 392.67,-214.56 386.67,-214.56 380.67,-208.56 380.67,-202.56 380.67,-202.56 380.67,-175.44 380.67,-175.44 380.67,-169.44 386.67,-163.44 392.67,-163.44 392.67,-163.44 489.53,-163.44 489.53,-163.44 495.53,-163.44 501.53,-169.44 501.53,-175.44 501.53,-175.44 501.53,-202.56 501.53,-202.56 501.53,-208.56 495.53,-214.56 489.53,-214.56" />
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-198.9" font-family="Hiragino Sans GB" font-size="11.00">持有卡</text>
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-185.7" font-family="Hiragino Sans GB" font-size="11.00">member_card</text>
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-172.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · C 卡产品与权益〕</text>
+</g>
+
+<g id="p1_edge9" class="edge">
+<title>ref_F10_member_card--F10</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M501.95,-189C526.46,-189 554.71,-189 578.96,-189" />
+<text xml:space="preserve" text-anchor="middle" x="540.78" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p1_node14" class="node">
+<title>F11</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="637.28,-318.4 604.17,-284 637.28,-249.6 670.4,-284 637.28,-318.4" />
+<text xml:space="preserve" text-anchor="middle" x="637.28" y="-287.3" font-family="Hiragino Sans GB" font-size="11.00">下单</text>
+<text xml:space="preserve" text-anchor="middle" x="637.28" y="-274.1" font-family="Hiragino Sans GB" font-size="11.00">F11</text>
+</g>
+
+<g id="p1_edge12" class="edge">
+<title>F11--booking_order</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M661.37,-274.01C696.5,-258.82 764.14,-229.56 810.14,-209.65" />
+<text xml:space="preserve" text-anchor="middle" x="752.53" y="-248.31" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p1_node15" class="node">
+<title>ref_F11_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M485.71,-309.56C485.71,-309.56 396.49,-309.56 396.49,-309.56 390.49,-309.56 384.49,-303.56 384.49,-297.56 384.49,-297.56 384.49,-270.44 384.49,-270.44 384.49,-264.44 390.49,-258.44 396.49,-258.44 396.49,-258.44 485.71,-258.44 485.71,-258.44 491.71,-258.44 497.71,-264.44 497.71,-270.44 497.71,-270.44 497.71,-297.56 497.71,-297.56 497.71,-303.56 491.71,-309.56 485.71,-309.56" />
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-293.9" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-280.7" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="441.1" y="-267.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p1_edge11" class="edge">
+<title>ref_F11_merchant_customer--F11</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M498.27,-284C532.32,-284 574.59,-284 603.32,-284" />
+<text xml:space="preserve" text-anchor="middle" x="540.78" y="-287.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p1_edge14" class="edge">
+<title>F12--visit_session</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1106.88,-136C1143.85,-136 1188.95,-136 1221.35,-136" />
+<text xml:space="preserve" text-anchor="middle" x="1163.73" y="-139.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p1_edge16" class="edge">
+<title>F13--visit_order</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1569.17,-146.01C1605.02,-156.46 1661.15,-172.83 1698.54,-183.73" />
+<text xml:space="preserve" text-anchor="middle" x="1640.85" y="-177.53" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p1_edge18" class="edge">
+<title>F14--visit_order</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1448.07,-217.99C1516.34,-212.56 1636.64,-202.99 1698.32,-198.09" />
+<text xml:space="preserve" text-anchor="middle" x="1533.85" y="-217.95" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+</g>
+</g><g transform="translate(2089.0,774.0)" id="module_4"><g id="p4_graph0" class="graph" transform="scale(1 1) rotate(0) translate(36 855)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-36,36 -36,-855 2666.1,-855 2666.1,36 -36,36" />
+<g id="p4_clust1" class="cluster">
+<title>cluster_4</title>
+<path fill="#e9e5fa" stroke="#98a2b3" d="M20,-8C20,-8 2610.1,-8 2610.1,-8 2616.1,-8 2622.1,-14 2622.1,-20 2622.1,-20 2622.1,-799 2622.1,-799 2622.1,-805 2616.1,-811 2610.1,-811 2610.1,-811 20,-811 20,-811 14,-811 8,-805 8,-799 8,-799 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text xml:space="preserve" text-anchor="middle" x="1315.05" y="-787.2" font-family="Hiragino Sans GB" font-size="22.00">E 设备与通行</text>
+</g>
+
+<g id="p4_node1" class="node">
+<title>device</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="432.56,-302.8 378.47,-302.8 378.47,-257.2 432.56,-257.2 432.56,-302.8" />
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-283.9" font-family="Hiragino Sans GB" font-size="13.00">设备</text>
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-268.3" font-family="Hiragino Sans GB" font-size="13.00">device</text>
+</g>
+
+<g id="p4_node2" class="node">
+<title>device_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="707.63" cy="-165" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="703.35" y="-162.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p4_edge1" class="edge">
+<title>device--device_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M423.47,-256.95C444.79,-230.08 484.16,-187.06 529.63,-169 580.33,-148.86 645.81,-154.72 681.21,-160.22" />
+</g>
+
+<g id="p4_node15" class="node">
+<title>F26</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="578.63,-250.4 529.63,-216 578.63,-181.6 627.63,-216 578.63,-250.4" />
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-219.3" font-family="Hiragino Sans GB" font-size="11.00">注册人员</text>
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-206.1" font-family="Hiragino Sans GB" font-size="11.00">F26</text>
+</g>
+
+<g id="p4_edge9" class="edge">
+<title>device--F26</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M432.88,-270.14C463.25,-258.78 513.15,-240.12 545.7,-227.94" />
+<text xml:space="preserve" text-anchor="middle" x="495.88" y="-249.38" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p4_node18" class="node">
+<title>F28</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="707.63,-384.4 658.63,-350 707.63,-315.6 756.63,-350 707.63,-384.4" />
+<text xml:space="preserve" text-anchor="middle" x="707.63" y="-353.3" font-family="Hiragino Sans GB" font-size="11.00">承载凭证</text>
+<text xml:space="preserve" text-anchor="middle" x="707.63" y="-340.1" font-family="Hiragino Sans GB" font-size="11.00">F28</text>
+</g>
+
+<g id="p4_edge13" class="edge">
+<title>device--F28</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M433.04,-288.92C450.17,-294.68 472.96,-302.31 493.13,-309 509.33,-314.38 513.04,-316.94 529.63,-321 575.3,-332.18 628.67,-340.26 664.77,-345.01" />
+<text xml:space="preserve" text-anchor="middle" x="495.88" y="-314.04" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p4_node25" class="node">
+<title>F33</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="980.85,-324.4 931.85,-290 980.85,-255.6 1029.85,-290 980.85,-324.4" />
+<text xml:space="preserve" text-anchor="middle" x="980.85" y="-293.3" font-family="Hiragino Sans GB" font-size="11.00">执行命令</text>
+<text xml:space="preserve" text-anchor="middle" x="980.85" y="-280.1" font-family="Hiragino Sans GB" font-size="11.00">F33</text>
+</g>
+
+<g id="p4_edge23" class="edge">
+<title>device--F33</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M433.02,-280.46C522.76,-282.03 816.05,-287.14 932.03,-289.17" />
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-287.08" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p4_node33" class="node">
+<title>F38</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1271.85,-130.4 1222.85,-96 1271.85,-61.6 1320.85,-96 1271.85,-130.4" />
+<text xml:space="preserve" text-anchor="middle" x="1271.85" y="-99.3" font-family="Hiragino Sans GB" font-size="11.00">上报事件</text>
+<text xml:space="preserve" text-anchor="middle" x="1271.85" y="-86.1" font-family="Hiragino Sans GB" font-size="11.00">F38</text>
+</g>
+
+<g id="p4_edge33" class="edge">
+<title>device--F38</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M418.53,-256.76C442.52,-213.96 500.72,-127 577.63,-127 577.63,-127 577.63,-127 981.85,-127 1071.67,-127 1176.31,-112.01 1231.73,-102.88" />
+<text xml:space="preserve" text-anchor="middle" x="707.63" y="-130.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p4_node3" class="node">
+<title>device_person</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="891.86,-238.8 796.62,-238.8 796.62,-193.2 891.86,-193.2 891.86,-238.8" />
+<text xml:space="preserve" text-anchor="middle" x="844.24" y="-219.9" font-family="Hiragino Sans GB" font-size="13.00">设备人员映射</text>
+<text xml:space="preserve" text-anchor="middle" x="844.24" y="-204.3" font-family="Hiragino Sans GB" font-size="13.00">device_person</text>
+</g>
+
+<g id="p4_node4" class="node">
+<title>device_person_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1523.07" cy="-60" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1518.8" y="-57.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p4_edge2" class="edge">
+<title>device_person--device_person_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M892.47,-204.06C935.96,-193.46 1002.39,-178.26 1060.85,-169 1118.2,-159.91 1273.64,-176.8 1320.85,-143 1347.86,-123.66 1324.73,-94.18 1351.85,-75 1395.09,-44.43 1460.79,-49.2 1496.61,-54.89" />
+</g>
+
+<g id="p4_node19" class="node">
+<title>F29</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1126.35,-250.4 1060.85,-216 1126.35,-181.6 1191.85,-216 1126.35,-250.4" />
+<text xml:space="preserve" text-anchor="middle" x="1126.35" y="-219.3" font-family="Hiragino Sans GB" font-size="11.00">引用人员映射</text>
+<text xml:space="preserve" text-anchor="middle" x="1126.35" y="-206.1" font-family="Hiragino Sans GB" font-size="11.00">F29</text>
+</g>
+
+<g id="p4_edge15" class="edge">
+<title>device_person--F29</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M892.44,-216C938.28,-216 1008.27,-216 1059.56,-216" />
+<text xml:space="preserve" text-anchor="middle" x="980.85" y="-219.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p4_node5" class="node">
+<title>access_credential</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1464.01,-441.8 1352.91,-441.8 1352.91,-396.2 1464.01,-396.2 1464.01,-441.8" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-422.9" font-family="Hiragino Sans GB" font-size="13.00">通行凭证</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-407.3" font-family="Hiragino Sans GB" font-size="13.00">access_credential</text>
+</g>
+
+<g id="p4_node6" class="node">
+<title>access_credential_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1836.07" cy="-355" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1831.8" y="-352.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p4_edge3" class="edge">
+<title>access_credential--access_credential_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1464.55,-407.41C1498.13,-400.6 1541.96,-392.14 1581.07,-386 1664.02,-372.98 1762.94,-362.29 1809.03,-357.58" />
+</g>
+
+<g id="p4_node22" class="node">
+<title>F31</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1679.57,-562.4 1614.07,-528 1679.57,-493.6 1745.07,-528 1679.57,-562.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-531.3" font-family="Hiragino Sans GB" font-size="11.00">规定有效区间</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-518.1" font-family="Hiragino Sans GB" font-size="11.00">F31</text>
+</g>
+
+<g id="p4_edge19" class="edge">
+<title>access_credential--F31</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1464.57,-441.32C1517.47,-462.75 1595.89,-494.51 1641.66,-513.05" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-476.8" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">1</text>
+</g>
+
+<g id="p4_node30" class="node">
+<title>F36</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="1679.57,-467.4 1630.57,-433 1679.57,-398.6 1728.57,-433 1679.57,-467.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-436.3" font-family="Hiragino Sans GB" font-size="11.00">同步凭证</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-423.1" font-family="Hiragino Sans GB" font-size="11.00">F36</text>
+</g>
+
+<g id="p4_edge29" class="edge">
+<title>access_credential--F36</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1464.57,-421.87C1514.24,-424.45 1586.41,-428.21 1632.92,-430.63" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-429.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p4_node7" class="node">
+<title>credential_window</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="2013.87,-638.8 1894.07,-638.8 1894.07,-593.2 2013.87,-593.2 2013.87,-638.8" />
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-619.9" font-family="Hiragino Sans GB" font-size="13.00">凭证有效区间</text>
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-604.3" font-family="Hiragino Sans GB" font-size="13.00">credential_window</text>
+</g>
+
+<g id="p4_node8" class="node">
+<title>credential_window_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="2486.1" cy="-213" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="2481.82" y="-210.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p4_edge4" class="edge">
+<title>credential_window--credential_window_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M2014.38,-596.04C2088.65,-569.08 2217.09,-515.66 2308.37,-441 2387.06,-376.63 2452.08,-270.98 2475.63,-229.99" />
+</g>
+
+<g id="p4_node9" class="node">
+<title>device_operation</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="2008.81,-305.8 1899.13,-305.8 1899.13,-260.2 2008.81,-260.2 2008.81,-305.8" />
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-286.9" font-family="Hiragino Sans GB" font-size="13.00">设备命令</text>
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-271.3" font-family="Hiragino Sans GB" font-size="13.00">device_operation</text>
+</g>
+
+<g id="p4_node10" class="node">
+<title>device_operation_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="2281.37" cy="-410" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="2277.09" y="-407.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p4_edge5" class="edge">
+<title>device_operation--device_operation_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M2009.07,-304.11C2081.36,-332.33 2206.28,-381.08 2257.48,-401.07" />
+</g>
+
+<g id="p4_node38" class="node">
+<title>F41</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="2157.87,-317.4 2092.37,-283 2157.87,-248.6 2223.37,-283 2157.87,-317.4" />
+<text xml:space="preserve" text-anchor="middle" x="2157.87" y="-286.3" font-family="Hiragino Sans GB" font-size="11.00">关联命令结果</text>
+<text xml:space="preserve" text-anchor="middle" x="2157.87" y="-273.1" font-family="Hiragino Sans GB" font-size="11.00">F41</text>
+</g>
+
+<g id="p4_edge39" class="edge">
+<title>device_operation--F41</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M2009.34,-283C2034.57,-283 2064.77,-283 2091.25,-283" />
+<text xml:space="preserve" text-anchor="middle" x="2053.12" y="-286.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p4_node11" class="node">
+<title>device_event</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="2428.1,-172.8 2339.37,-172.8 2339.37,-127.2 2428.1,-127.2 2428.1,-172.8" />
+<text xml:space="preserve" text-anchor="middle" x="2383.73" y="-153.9" font-family="Hiragino Sans GB" font-size="13.00">设备事件</text>
+<text xml:space="preserve" text-anchor="middle" x="2383.73" y="-138.3" font-family="Hiragino Sans GB" font-size="13.00">device_event</text>
+</g>
+
+<g id="p4_node12" class="node">
+<title>device_event_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="2571.1" cy="-392" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="2566.82" y="-389.7" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p4_edge6" class="edge">
+<title>device_event--device_event_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M2428.5,-150.12C2456.21,-152.53 2490.87,-160.22 2513.1,-182 2566.94,-234.74 2571.48,-332.81 2570.87,-373.53" />
+</g>
+
+<g id="p4_node13" class="node">
+<title>F25</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="245.84,-314.4 212.72,-280 245.84,-245.6 278.96,-280 245.84,-314.4" />
+<text xml:space="preserve" text-anchor="middle" x="245.84" y="-283.3" font-family="Hiragino Sans GB" font-size="11.00">安装</text>
+<text xml:space="preserve" text-anchor="middle" x="245.84" y="-270.1" font-family="Hiragino Sans GB" font-size="11.00">F25</text>
+</g>
+
+<g id="p4_edge8" class="edge">
+<title>F25--device</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M279.51,-280C308.65,-280 350.77,-280 377.9,-280" />
+<text xml:space="preserve" text-anchor="middle" x="313.93" y="-283.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node14" class="node">
+<title>ref_F25_store</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M133.22,-305.56C133.22,-305.56 44,-305.56 44,-305.56 38,-305.56 32,-299.56 32,-293.56 32,-293.56 32,-266.44 32,-266.44 32,-260.44 38,-254.44 44,-254.44 44,-254.44 133.22,-254.44 133.22,-254.44 139.22,-254.44 145.22,-260.44 145.22,-266.44 145.22,-266.44 145.22,-293.56 145.22,-293.56 145.22,-299.56 139.22,-305.56 133.22,-305.56" />
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-289.9" font-family="Hiragino Sans GB" font-size="11.00">门店</text>
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-276.7" font-family="Hiragino Sans GB" font-size="11.00">store</text>
+<text xml:space="preserve" text-anchor="middle" x="88.61" y="-263.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p4_edge7" class="edge">
+<title>ref_F25_store--F25</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M145.65,-280C167.89,-280 192.68,-280 211.92,-280" />
+<text xml:space="preserve" text-anchor="middle" x="178.97" y="-283.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p4_edge10" class="edge">
+<title>F26--device_person</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M628.59,-216C676.54,-216 749.07,-216 796.31,-216" />
+<text xml:space="preserve" text-anchor="middle" x="707.63" y="-219.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node16" class="node">
+<title>F27</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="578.63,-100.4 529.63,-66 578.63,-31.6 627.63,-66 578.63,-100.4" />
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-69.3" font-family="Hiragino Sans GB" font-size="11.00">映射顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="578.63" y="-56.1" font-family="Hiragino Sans GB" font-size="11.00">F27</text>
+</g>
+
+<g id="p4_edge12" class="edge">
+<title>F27--device_person</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M619.96,-60.03C657.99,-56.49 715.17,-56.76 756.63,-81.8 798.64,-107.18 823.96,-161.61 835.59,-192.8" />
+<text xml:space="preserve" text-anchor="middle" x="707.63" y="-85.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node17" class="node">
+<title>ref_F27_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M450.13,-91.56C450.13,-91.56 360.9,-91.56 360.9,-91.56 354.9,-91.56 348.9,-85.56 348.9,-79.56 348.9,-79.56 348.9,-52.44 348.9,-52.44 348.9,-46.44 354.9,-40.44 360.9,-40.44 360.9,-40.44 450.13,-40.44 450.13,-40.44 456.13,-40.44 462.13,-46.44 462.13,-52.44 462.13,-52.44 462.13,-79.56 462.13,-79.56 462.13,-85.56 456.13,-91.56 450.13,-91.56" />
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-75.9" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-62.7" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="405.51" y="-49.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p4_edge11" class="edge">
+<title>ref_F27_merchant_customer--F27</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M462.54,-66C483.89,-66 508.03,-66 528.67,-66" />
+<text xml:space="preserve" text-anchor="middle" x="495.88" y="-69.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p4_edge14" class="edge">
+<title>F28--access_credential</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M756.87,-349.51C844.09,-349.21 1033.64,-351.31 1191.85,-372 1247.12,-379.23 1309.22,-393.42 1352.52,-404.33" />
+<text xml:space="preserve" text-anchor="middle" x="980.85" y="-360.28" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_edge16" class="edge">
+<title>F29--access_credential</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1160.91,-232.88C1201.23,-254.03 1269.81,-292.9 1320.85,-336.8 1336.91,-350.61 1336.75,-358.15 1351.85,-373 1359.8,-380.82 1368.95,-388.76 1377.49,-395.79" />
+<text xml:space="preserve" text-anchor="middle" x="1271.85" y="-340.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node20" class="node">
+<title>F30</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1126.35,-453.4 1077.35,-419 1126.35,-384.6 1175.35,-419 1126.35,-453.4" />
+<text xml:space="preserve" text-anchor="middle" x="1126.35" y="-422.3" font-family="Hiragino Sans GB" font-size="11.00">拥有凭证</text>
+<text xml:space="preserve" text-anchor="middle" x="1126.35" y="-409.1" font-family="Hiragino Sans GB" font-size="11.00">F30</text>
+</g>
+
+<g id="p4_edge18" class="edge">
+<title>F30--access_credential</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1176.14,-419C1225.36,-419 1301.21,-419 1352.52,-419" />
+<text xml:space="preserve" text-anchor="middle" x="1271.85" y="-422.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node21" class="node">
+<title>ref_F30_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M888.85,-444.56C888.85,-444.56 799.63,-444.56 799.63,-444.56 793.63,-444.56 787.63,-438.56 787.63,-432.56 787.63,-432.56 787.63,-405.44 787.63,-405.44 787.63,-399.44 793.63,-393.44 799.63,-393.44 799.63,-393.44 888.85,-393.44 888.85,-393.44 894.85,-393.44 900.85,-399.44 900.85,-405.44 900.85,-405.44 900.85,-432.56 900.85,-432.56 900.85,-438.56 894.85,-444.56 888.85,-444.56" />
+<text xml:space="preserve" text-anchor="middle" x="844.24" y="-428.9" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="844.24" y="-415.7" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="844.24" y="-402.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p4_edge17" class="edge">
+<title>ref_F30_merchant_customer--F30</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M901.25,-419C952.5,-419 1027.57,-419 1076.46,-419" />
+<text xml:space="preserve" text-anchor="middle" x="980.85" y="-422.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p4_edge20" class="edge">
+<title>F31--credential_window</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1734.13,-534.22C1771.17,-539.62 1821.15,-549.1 1863.07,-564.8 1882.08,-571.92 1901.82,-582.73 1917.95,-592.58" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-568.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node23" class="node">
+<title>F32</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1679.57,-657.4 1630.57,-623 1679.57,-588.6 1728.57,-623 1679.57,-657.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-626.3" font-family="Hiragino Sans GB" font-size="11.00">目标顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-613.1" font-family="Hiragino Sans GB" font-size="11.00">F32</text>
+</g>
+
+<g id="p4_edge22" class="edge">
+<title>F32--device_operation</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1727.8,-624.28C1768.68,-622.8 1826.77,-614.1 1863.07,-580 1942.78,-505.12 1952.61,-362.24 1953.26,-306.29" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-613.27" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node24" class="node">
+<title>ref_F32_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M1453.07,-648.56C1453.07,-648.56 1363.85,-648.56 1363.85,-648.56 1357.85,-648.56 1351.85,-642.56 1351.85,-636.56 1351.85,-636.56 1351.85,-609.44 1351.85,-609.44 1351.85,-603.44 1357.85,-597.44 1363.85,-597.44 1363.85,-597.44 1453.07,-597.44 1453.07,-597.44 1459.07,-597.44 1465.07,-603.44 1465.07,-609.44 1465.07,-609.44 1465.07,-636.56 1465.07,-636.56 1465.07,-642.56 1459.07,-648.56 1453.07,-648.56" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-632.9" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-619.7" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-606.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p4_edge21" class="edge">
+<title>ref_F32_merchant_customer--F32</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1465.55,-623C1514.07,-623 1583.52,-623 1629.78,-623" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-626.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p4_edge24" class="edge">
+<title>F33--device_operation</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1027.18,-287.48C1173.19,-279.54 1630.3,-256 1778.07,-264 1818.64,-266.2 1864.26,-271.24 1898.74,-275.58" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-274.89" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node26" class="node">
+<title>F34</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1679.57,-128.4 1614.07,-94 1679.57,-59.6 1745.07,-94 1679.57,-128.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-97.3" font-family="Hiragino Sans GB" font-size="11.00">订单触发命令</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-84.1" font-family="Hiragino Sans GB" font-size="11.00">F34</text>
+</g>
+
+<g id="p4_edge26" class="edge">
+<title>F34--device_operation</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1715.22,-110.21C1734,-119.21 1757.52,-130.82 1778.07,-142 1816.74,-163.03 1829.04,-164.9 1863.07,-192.8 1878.94,-205.8 1879.74,-212.32 1894.07,-227 1904.82,-238 1917.09,-249.79 1927.64,-259.7" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-196.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node27" class="node">
+<title>ref_F34_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M1452.77,-139.56C1452.77,-139.56 1364.15,-139.56 1364.15,-139.56 1358.15,-139.56 1352.15,-133.56 1352.15,-127.56 1352.15,-127.56 1352.15,-100.44 1352.15,-100.44 1352.15,-94.44 1358.15,-88.44 1364.15,-88.44 1364.15,-88.44 1452.77,-88.44 1452.77,-88.44 1458.77,-88.44 1464.77,-94.44 1464.77,-100.44 1464.77,-100.44 1464.77,-127.56 1464.77,-127.56 1464.77,-133.56 1458.77,-139.56 1452.77,-139.56" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-123.9" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-110.7" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-97.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p4_edge25" class="edge">
+<title>ref_F34_booking_order--F34</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1465.22,-109.86C1510.79,-106.47 1574.98,-101.7 1621.03,-98.28" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-110.83" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p4_node28" class="node">
+<title>F35</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1679.57,-223.4 1614.07,-189 1679.57,-154.6 1745.07,-189 1679.57,-223.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-192.3" font-family="Hiragino Sans GB" font-size="11.00">到店关联命令</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-179.1" font-family="Hiragino Sans GB" font-size="11.00">F35</text>
+</g>
+
+<g id="p4_edge28" class="edge">
+<title>F35--device_operation</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1732.6,-196.16C1769.84,-202.35 1820.67,-213 1863.07,-229.8 1882.63,-237.55 1902.92,-249.2 1919.27,-259.62" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-233.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node29" class="node">
+<title>ref_F35_visit_session</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M1452.77,-216.56C1452.77,-216.56 1364.15,-216.56 1364.15,-216.56 1358.15,-216.56 1352.15,-210.56 1352.15,-204.56 1352.15,-204.56 1352.15,-177.44 1352.15,-177.44 1352.15,-171.44 1358.15,-165.44 1364.15,-165.44 1364.15,-165.44 1452.77,-165.44 1452.77,-165.44 1458.77,-165.44 1464.77,-171.44 1464.77,-177.44 1464.77,-177.44 1464.77,-204.56 1464.77,-204.56 1464.77,-210.56 1458.77,-216.56 1452.77,-216.56" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-200.9" font-family="Hiragino Sans GB" font-size="11.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-187.7" font-family="Hiragino Sans GB" font-size="11.00">visit_session</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-174.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p4_edge27" class="edge">
+<title>ref_F35_visit_session--F35</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1465.22,-190.59C1508.48,-190.26 1568.52,-189.82 1613.89,-189.48" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-193.65" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p4_edge30" class="edge">
+<title>F36--device_operation</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1723.17,-428.61C1762.03,-423.03 1819.8,-410.7 1863.07,-384 1895.24,-364.15 1922.5,-329.32 1938.31,-306.2" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-411.08" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node31" class="node">
+<title>F37</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1679.57,-345.4 1605.82,-311 1679.57,-276.6 1753.32,-311 1679.57,-345.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-314.3" font-family="Hiragino Sans GB" font-size="11.00">入场确认防重用</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-301.1" font-family="Hiragino Sans GB" font-size="11.00">F37</text>
+</g>
+
+<g id="p4_edge32" class="edge">
+<title>F37--device_operation</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1741.37,-304.75C1788.56,-299.9 1853.4,-293.23 1898.83,-288.57" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-300.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node32" class="node">
+<title>ref_F37_visit_session</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M1452.77,-359.56C1452.77,-359.56 1364.15,-359.56 1364.15,-359.56 1358.15,-359.56 1352.15,-353.56 1352.15,-347.56 1352.15,-347.56 1352.15,-320.44 1352.15,-320.44 1352.15,-314.44 1358.15,-308.44 1364.15,-308.44 1364.15,-308.44 1452.77,-308.44 1452.77,-308.44 1458.77,-308.44 1464.77,-314.44 1464.77,-320.44 1464.77,-320.44 1464.77,-347.56 1464.77,-347.56 1464.77,-353.56 1458.77,-359.56 1452.77,-359.56" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-343.9" font-family="Hiragino Sans GB" font-size="11.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-330.7" font-family="Hiragino Sans GB" font-size="11.00">visit_session</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-317.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p4_edge31" class="edge">
+<title>ref_F37_visit_session--F37</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1465.22,-329.23C1509.25,-325.47 1570.67,-320.22 1616.3,-316.32" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-329.86" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p4_edge34" class="edge">
+<title>F38--device_event</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1294.72,-77.36C1309.74,-65.76 1330.71,-51.79 1351.85,-45 1412.95,-25.37 1431.92,-39.56 1496.07,-38 1621.43,-34.96 1656.62,-15.79 1778.07,-47 1833.9,-61.35 1838.64,-89.2 1894.07,-105 1936.27,-117.03 2226.97,-138.84 2338.92,-146.9" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-96.02" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node34" class="node">
+<title>F39</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="2157.87,-100.4 2108.87,-66 2157.87,-31.6 2206.87,-66 2157.87,-100.4" />
+<text xml:space="preserve" text-anchor="middle" x="2157.87" y="-69.3" font-family="Hiragino Sans GB" font-size="11.00">匹配顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="2157.87" y="-56.1" font-family="Hiragino Sans GB" font-size="11.00">F39</text>
+</g>
+
+<g id="p4_edge36" class="edge">
+<title>F39--device_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2196.94,-73.52C2227.71,-80.27 2271.76,-91.48 2308.37,-106.8 2321.45,-112.28 2335.07,-119.64 2347.02,-126.73" />
+<text xml:space="preserve" text-anchor="middle" x="2281.37" y="-110.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node35" class="node">
+<title>ref_F39_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M1998.58,-91.56C1998.58,-91.56 1909.36,-91.56 1909.36,-91.56 1903.36,-91.56 1897.36,-85.56 1897.36,-79.56 1897.36,-79.56 1897.36,-52.44 1897.36,-52.44 1897.36,-46.44 1903.36,-40.44 1909.36,-40.44 1909.36,-40.44 1998.58,-40.44 1998.58,-40.44 2004.58,-40.44 2010.58,-46.44 2010.58,-52.44 2010.58,-52.44 2010.58,-79.56 2010.58,-79.56 2010.58,-85.56 2004.58,-91.56 1998.58,-91.56" />
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-75.9" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-62.7" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-49.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p4_edge35" class="edge">
+<title>ref_F39_merchant_customer--F39</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2010.94,-66C2041.4,-66 2078.73,-66 2108,-66" />
+<text xml:space="preserve" text-anchor="middle" x="2053.12" y="-69.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p4_node36" class="node">
+<title>F40</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="2157.87,-222.4 2108.87,-188 2157.87,-153.6 2206.87,-188 2157.87,-222.4" />
+<text xml:space="preserve" text-anchor="middle" x="2157.87" y="-191.3" font-family="Hiragino Sans GB" font-size="11.00">匹配订单</text>
+<text xml:space="preserve" text-anchor="middle" x="2157.87" y="-178.1" font-family="Hiragino Sans GB" font-size="11.00">F40</text>
+</g>
+
+<g id="p4_edge38" class="edge">
+<title>F40--device_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2198.37,-181.29C2237.79,-174.6 2298.2,-164.35 2339.03,-157.42" />
+<text xml:space="preserve" text-anchor="middle" x="2281.37" y="-174.58" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p4_node37" class="node">
+<title>ref_F40_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M1998.28,-213.56C1998.28,-213.56 1909.66,-213.56 1909.66,-213.56 1903.66,-213.56 1897.66,-207.56 1897.66,-201.56 1897.66,-201.56 1897.66,-174.44 1897.66,-174.44 1897.66,-168.44 1903.66,-162.44 1909.66,-162.44 1909.66,-162.44 1998.28,-162.44 1998.28,-162.44 2004.28,-162.44 2010.28,-168.44 2010.28,-174.44 2010.28,-174.44 2010.28,-201.56 2010.28,-201.56 2010.28,-207.56 2004.28,-213.56 1998.28,-213.56" />
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-197.9" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-184.7" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="1953.97" y="-171.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p4_edge37" class="edge">
+<title>ref_F40_booking_order--F40</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2010.67,-188C2041.14,-188 2078.53,-188 2107.88,-188" />
+<text xml:space="preserve" text-anchor="middle" x="2053.12" y="-191.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p4_edge40" class="edge">
+<title>F41--device_event</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M2189.53,-264.79C2229.52,-241.02 2299.56,-199.42 2343.42,-173.36" />
+<text xml:space="preserve" text-anchor="middle" x="2281.37" y="-227.76" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">N</text>
+</g>
+
+<g id="p4_node39" class="node">
+<title>L01</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="1679.57,-752.4 1581.07,-718 1679.57,-683.6 1778.07,-718 1679.57,-752.4" />
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-721.3" font-family="Hiragino Sans GB" font-size="11.00">授权区间依据订单快照</text>
+<text xml:space="preserve" text-anchor="middle" x="1679.57" y="-708.1" font-family="Hiragino Sans GB" font-size="11.00">L01</text>
+</g>
+
+<g id="p4_edge42" class="edge">
+<title>L01--credential_window</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M1728.33,-700.12C1774.41,-682.86 1844.29,-656.7 1893.86,-638.14" />
+<text xml:space="preserve" text-anchor="middle" x="1836.07" y="-670.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p4_node40" class="node">
+<title>ref_L01_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M1452.77,-743.56C1452.77,-743.56 1364.15,-743.56 1364.15,-743.56 1358.15,-743.56 1352.15,-737.56 1352.15,-731.56 1352.15,-731.56 1352.15,-704.44 1352.15,-704.44 1352.15,-698.44 1358.15,-692.44 1364.15,-692.44 1364.15,-692.44 1452.77,-692.44 1452.77,-692.44 1458.77,-692.44 1464.77,-698.44 1464.77,-704.44 1464.77,-704.44 1464.77,-731.56 1464.77,-731.56 1464.77,-737.56 1458.77,-743.56 1452.77,-743.56" />
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-727.9" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-714.7" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="1408.46" y="-701.5" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p4_edge41" class="edge">
+<title>ref_L01_booking_order--L01</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M1465.22,-718C1498.17,-718 1540.85,-718 1579.36,-718" />
+<text xml:space="preserve" text-anchor="middle" x="1523.07" y="-721.3" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">M</text>
+</g>
+</g>
+</g><g transform="translate(892.5,1715.0)" id="module_5"><g id="p5_graph0" class="graph" transform="scale(1 1) rotate(0) translate(36 594.32)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-36,36 -36,-594.32 3010,-594.32 3010,36 -36,36" />
+<g id="p5_clust1" class="cluster">
+<title>cluster_5</title>
+<path fill="#eef1f3" stroke="#98a2b3" d="M20,-8C20,-8 2954,-8 2954,-8 2960,-8 2966,-14 2966,-20 2966,-20 2966,-538.32 2966,-538.32 2966,-544.32 2960,-550.32 2954,-550.32 2954,-550.32 20,-550.32 20,-550.32 14,-550.32 8,-544.32 8,-538.32 8,-538.32 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text xml:space="preserve" text-anchor="middle" x="1487" y="-526.52" font-family="Hiragino Sans GB" font-size="22.00">F 复核审计与辅助记录</text>
+</g>
+
+<g id="p5_node1" class="node">
+<title>business_event</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="2363.44,-221.6 2264.56,-221.6 2264.56,-176 2363.44,-176 2363.44,-221.6" />
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-202.7" font-family="Hiragino Sans GB" font-size="13.00">业务审计</text>
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-187.1" font-family="Hiragino Sans GB" font-size="13.00">business_event</text>
+</g>
+
+<g id="p5_node2" class="node">
+<title>business_event_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="2709" cy="-66.4" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="2704.72" y="-64.1" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p5_edge1" class="edge">
+<title>business_event--business_event_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M2364.03,-181.28C2449.76,-152.98 2621.65,-96.24 2684.91,-75.35" />
+</g>
+
+<g id="p5_node3" class="node">
+<title>review_task</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="510.49,-221.6 427.51,-221.6 427.51,-176 510.49,-176 510.49,-221.6" />
+<text xml:space="preserve" text-anchor="middle" x="469" y="-202.7" font-family="Hiragino Sans GB" font-size="13.00">复核待办</text>
+<text xml:space="preserve" text-anchor="middle" x="469" y="-187.1" font-family="Hiragino Sans GB" font-size="13.00">review_task</text>
+</g>
+
+<g id="p5_node4" class="node">
+<title>review_task_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="382" cy="-66.4" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="377.72" y="-64.1" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p5_edge2" class="edge">
+<title>review_task--review_task_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M454.04,-175.38C436.55,-149.17 408.04,-106.43 392.65,-83.37" />
+</g>
+
+<g id="p5_node5" class="node">
+<title>credit_event</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1024.2,-221.6 939.8,-221.6 939.8,-176 1024.2,-176 1024.2,-221.6" />
+<text xml:space="preserve" text-anchor="middle" x="982" y="-202.7" font-family="Hiragino Sans GB" font-size="13.00">信用事件</text>
+<text xml:space="preserve" text-anchor="middle" x="982" y="-187.1" font-family="Hiragino Sans GB" font-size="13.00">credit_event</text>
+</g>
+
+<g id="p5_node6" class="node">
+<title>credit_event_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="724" cy="-66.4" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="719.72" y="-64.1" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p5_edge3" class="edge">
+<title>credit_event--credit_event_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M939.4,-176.27C883.58,-148.06 787.82,-99.66 745.35,-78.19" />
+</g>
+
+<g id="p5_node35" class="node">
+<title>F54</title>
+<polygon fill="none" stroke="#667085" stroke-width="1.25" points="982,-100.8 908.25,-66.4 982,-32 1055.75,-66.4 982,-100.8" />
+<text xml:space="preserve" text-anchor="middle" x="982" y="-69.7" font-family="Hiragino Sans GB" font-size="11.00">冲正原信用事件</text>
+<text xml:space="preserve" text-anchor="middle" x="982" y="-56.5" font-family="Hiragino Sans GB" font-size="11.00">F54</text>
+</g>
+
+<g id="p5_edge30" class="edge">
+<title>credit_event--F54</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M982,-175.38C982,-154.99 982,-124.61 982,-101.26" />
+<text xml:space="preserve" text-anchor="middle" x="990.25" y="-135.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p5_node7" class="node">
+<title>api_request</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1463.04,-221.6 1382.96,-221.6 1382.96,-176 1463.04,-176 1463.04,-221.6" />
+<text xml:space="preserve" text-anchor="middle" x="1423" y="-202.7" font-family="Hiragino Sans GB" font-size="13.00">请求幂等记录</text>
+<text xml:space="preserve" text-anchor="middle" x="1423" y="-187.1" font-family="Hiragino Sans GB" font-size="13.00">api_request</text>
+</g>
+
+<g id="p5_node8" class="node">
+<title>api_request_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="2423" cy="-66.4" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="2418.72" y="-64.1" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p5_edge4" class="edge">
+<title>api_request--api_request_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1463.44,-192.53C1629.88,-170.82 2259.64,-88.7 2396.6,-70.84" />
+</g>
+
+<g id="p5_node9" class="node">
+<title>face_profile</title>
+<polygon fill="white" stroke="#344054" stroke-width="1.25" points="1164.48,-221.6 1081.52,-221.6 1081.52,-176 1164.48,-176 1164.48,-221.6" />
+<text xml:space="preserve" text-anchor="middle" x="1123" y="-202.7" font-family="Hiragino Sans GB" font-size="13.00">人脸资料</text>
+<text xml:space="preserve" text-anchor="middle" x="1123" y="-187.1" font-family="Hiragino Sans GB" font-size="13.00">face_profile</text>
+</g>
+
+<g id="p5_node10" class="node">
+<title>face_profile_id</title>
+<ellipse fill="white" stroke="#344054" stroke-width="1.25" cx="1932" cy="-66.4" rx="27" ry="18" />
+<text xml:space="preserve" text-anchor="start" x="1927.72" y="-64.1" font-family="Hiragino Sans GB" text-decoration="underline" font-size="11.00">id</text>
+</g>
+
+<g id="p5_edge5" class="edge">
+<title>face_profile--face_profile_id</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M1123.6,-175.59C1125.27,-160.81 1130.05,-142.25 1143,-131.8 1203.43,-83.03 1772.08,-70.18 1904.52,-67.84" />
+</g>
+
+<g id="p5_node11" class="node">
+<title>F42</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="2769,-365.6 2720,-331.2 2769,-296.8 2818,-331.2 2769,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2769" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">相关顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="2769" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F42</text>
+</g>
+
+<g id="p5_edge7" class="edge">
+<title>F42--business_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2743.15,-314.38C2732.28,-308.24 2719.32,-301.55 2707,-296.8 2587.83,-250.84 2439.78,-221.25 2363.93,-207.95" />
+<text xml:space="preserve" text-anchor="middle" x="2616.41" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node12" class="node">
+<title>ref_F42_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M2790.61,-491.92C2790.61,-491.92 2701.39,-491.92 2701.39,-491.92 2695.39,-491.92 2689.39,-485.92 2689.39,-479.92 2689.39,-479.92 2689.39,-452.8 2689.39,-452.8 2689.39,-446.8 2695.39,-440.8 2701.39,-440.8 2701.39,-440.8 2790.61,-440.8 2790.61,-440.8 2796.61,-440.8 2802.61,-446.8 2802.61,-452.8 2802.61,-452.8 2802.61,-479.92 2802.61,-479.92 2802.61,-485.92 2796.61,-491.92 2790.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2746" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="2746" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="2746" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge6" class="edge">
+<title>ref_F42_merchant_customer--F42</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2750.33,-440.31C2754.15,-418.16 2759.74,-385.8 2763.81,-362.26" />
+<text xml:space="preserve" text-anchor="middle" x="2765.75" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node13" class="node">
+<title>F43</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="2893,-365.6 2844,-331.2 2893,-296.8 2942,-331.2 2893,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2893" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">操作员工</text>
+<text xml:space="preserve" text-anchor="middle" x="2893" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F43</text>
+</g>
+
+<g id="p5_edge9" class="edge">
+<title>F43--business_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2867.22,-314.2C2856.36,-308.03 2843.39,-301.37 2831,-296.8 2666.49,-236.14 2457.93,-211.91 2363.93,-203.58" />
+<text xml:space="preserve" text-anchor="middle" x="2725.21" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node14" class="node">
+<title>ref_F43_admin_user</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M2929.61,-491.92C2929.61,-491.92 2840.39,-491.92 2840.39,-491.92 2834.39,-491.92 2828.39,-485.92 2828.39,-479.92 2828.39,-479.92 2828.39,-452.8 2828.39,-452.8 2828.39,-446.8 2834.39,-440.8 2840.39,-440.8 2840.39,-440.8 2929.61,-440.8 2929.61,-440.8 2935.61,-440.8 2941.61,-446.8 2941.61,-452.8 2941.61,-452.8 2941.61,-479.92 2941.61,-479.92 2941.61,-485.92 2935.61,-491.92 2929.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2885" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">后台员工</text>
+<text xml:space="preserve" text-anchor="middle" x="2885" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">admin_user</text>
+<text xml:space="preserve" text-anchor="middle" x="2885" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge8" class="edge">
+<title>ref_F43_admin_user--F43</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M2886.5,-440.31C2887.79,-418.92 2889.65,-387.99 2891.05,-364.69" />
+<text xml:space="preserve" text-anchor="middle" x="2897.25" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node15" class="node">
+<title>F44</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1718,-365.6 1652.5,-331.2 1718,-296.8 1783.5,-331.2 1718,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="1718" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">引用设备证据</text>
+<text xml:space="preserve" text-anchor="middle" x="1718" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F44</text>
+</g>
+
+<g id="p5_edge11" class="edge">
+<title>F44--business_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1752.08,-314.14C1765.82,-308.1 1781.95,-301.56 1797,-296.8 1963.97,-244.02 2170.87,-215.89 2264.2,-205.09" />
+<text xml:space="preserve" text-anchor="middle" x="1968.72" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node16" class="node">
+<title>ref_F44_device_event</title>
+<path fill="#e9e5fa" stroke="#b85c00" stroke-width="1.25" d="M1762,-491.92C1762,-491.92 1674,-491.92 1674,-491.92 1668,-491.92 1662,-485.92 1662,-479.92 1662,-479.92 1662,-452.8 1662,-452.8 1662,-446.8 1668,-440.8 1674,-440.8 1674,-440.8 1762,-440.8 1762,-440.8 1768,-440.8 1774,-446.8 1774,-452.8 1774,-452.8 1774,-479.92 1774,-479.92 1774,-485.92 1768,-491.92 1762,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="1718" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">设备事件</text>
+<text xml:space="preserve" text-anchor="middle" x="1718" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">device_event</text>
+<text xml:space="preserve" text-anchor="middle" x="1718" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · E 设备与通行〕</text>
+</g>
+
+<g id="p5_edge10" class="edge">
+<title>ref_F44_device_event--F44</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1718,-440.31C1718,-419.37 1718,-389.3 1718,-366.18" />
+<text xml:space="preserve" text-anchor="middle" x="1726.25" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node17" class="node">
+<title>F45</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1859,-365.6 1810,-331.2 1859,-296.8 1908,-331.2 1859,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="1859" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">保存审计</text>
+<text xml:space="preserve" text-anchor="middle" x="1859" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F45</text>
+</g>
+
+<g id="p5_edge13" class="edge">
+<title>F45--business_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1884.99,-314.57C1896.1,-308.39 1909.4,-301.62 1922,-296.8 2041.03,-251.31 2188.63,-221.52 2264.24,-208.07" />
+<text xml:space="preserve" text-anchor="middle" x="2063.3" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node18" class="node">
+<title>ref_F45_merchant</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M1903.61,-491.92C1903.61,-491.92 1814.39,-491.92 1814.39,-491.92 1808.39,-491.92 1802.39,-485.92 1802.39,-479.92 1802.39,-479.92 1802.39,-452.8 1802.39,-452.8 1802.39,-446.8 1808.39,-440.8 1814.39,-440.8 1814.39,-440.8 1903.61,-440.8 1903.61,-440.8 1909.61,-440.8 1915.61,-446.8 1915.61,-452.8 1915.61,-452.8 1915.61,-479.92 1915.61,-479.92 1915.61,-485.92 1909.61,-491.92 1903.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="1859" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">商家</text>
+<text xml:space="preserve" text-anchor="middle" x="1859" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">merchant</text>
+<text xml:space="preserve" text-anchor="middle" x="1859" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge12" class="edge">
+<title>ref_F45_merchant--F45</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1859,-440.31C1859,-419.37 1859,-389.3 1859,-366.18" />
+<text xml:space="preserve" text-anchor="middle" x="1861.75" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p5_node19" class="node">
+<title>F46</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="717,-365.6 668,-331.2 717,-296.8 766,-331.2 717,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="717" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">门店待办</text>
+<text xml:space="preserve" text-anchor="middle" x="717" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F46</text>
+</g>
+
+<g id="p5_edge15" class="edge">
+<title>F46--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M689.57,-315.32C678.81,-309.51 666.34,-302.81 655,-296.8 605.61,-270.62 548.57,-240.96 510.82,-221.41" />
+<text xml:space="preserve" text-anchor="middle" x="597.72" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node20" class="node">
+<title>ref_F46_store</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M835.61,-491.92C835.61,-491.92 746.39,-491.92 746.39,-491.92 740.39,-491.92 734.39,-485.92 734.39,-479.92 734.39,-479.92 734.39,-452.8 734.39,-452.8 734.39,-446.8 740.39,-440.8 746.39,-440.8 746.39,-440.8 835.61,-440.8 835.61,-440.8 841.61,-440.8 847.61,-446.8 847.61,-452.8 847.61,-452.8 847.61,-479.92 847.61,-479.92 847.61,-485.92 841.61,-491.92 835.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="791" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">门店</text>
+<text xml:space="preserve" text-anchor="middle" x="791" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">store</text>
+<text xml:space="preserve" text-anchor="middle" x="791" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge14" class="edge">
+<title>ref_F46_store--F46</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M777.08,-440.31C763.77,-416.36 743.82,-380.45 730.61,-356.68" />
+<text xml:space="preserve" text-anchor="middle" x="766.68" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node21" class="node">
+<title>F47</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="841,-365.6 792,-331.2 841,-296.8 890,-331.2 841,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="841" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">顾客待办</text>
+<text xml:space="preserve" text-anchor="middle" x="841" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F47</text>
+</g>
+
+<g id="p5_edge17" class="edge">
+<title>F47--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M814.69,-314.59C803.87,-308.55 791.06,-301.88 779,-296.8 685.97,-257.61 571.48,-225.8 511.02,-210.21" />
+<text xml:space="preserve" text-anchor="middle" x="699.64" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node22" class="node">
+<title>ref_F47_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M974.61,-491.92C974.61,-491.92 885.39,-491.92 885.39,-491.92 879.39,-491.92 873.39,-485.92 873.39,-479.92 873.39,-479.92 873.39,-452.8 873.39,-452.8 873.39,-446.8 879.39,-440.8 885.39,-440.8 885.39,-440.8 974.61,-440.8 974.61,-440.8 980.61,-440.8 986.61,-446.8 986.61,-452.8 986.61,-452.8 986.61,-479.92 986.61,-479.92 986.61,-485.92 980.61,-491.92 974.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="930" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="930" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="930" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge16" class="edge">
+<title>ref_F47_merchant_customer--F47</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M913.26,-440.31C896.95,-415.9 872.34,-379.09 856.47,-355.35" />
+<text xml:space="preserve" text-anchor="middle" x="899.08" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node23" class="node">
+<title>F48</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="81,-365.6 32,-331.2 81,-296.8 130,-331.2 81,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="81" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">订单复核</text>
+<text xml:space="preserve" text-anchor="middle" x="81" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F48</text>
+</g>
+
+<g id="p5_edge19" class="edge">
+<title>F48--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M107.27,-314.5C118.09,-308.45 130.91,-301.79 143,-296.8 241.92,-255.94 364.18,-224.32 427.15,-209.33" />
+<text xml:space="preserve" text-anchor="middle" x="270.18" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node24" class="node">
+<title>ref_F48_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M132.31,-491.92C132.31,-491.92 43.69,-491.92 43.69,-491.92 37.69,-491.92 31.69,-485.92 31.69,-479.92 31.69,-479.92 31.69,-452.8 31.69,-452.8 31.69,-446.8 37.69,-440.8 43.69,-440.8 43.69,-440.8 132.31,-440.8 132.31,-440.8 138.31,-440.8 144.31,-446.8 144.31,-452.8 144.31,-452.8 144.31,-479.92 144.31,-479.92 144.31,-485.92 138.31,-491.92 132.31,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="88" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="88" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="88" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p5_edge18" class="edge">
+<title>ref_F48_booking_order--F48</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M86.68,-440.31C85.56,-418.92 83.93,-387.99 82.71,-364.69" />
+<text xml:space="preserve" text-anchor="middle" x="93.17" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node25" class="node">
+<title>F49</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="205,-365.6 156,-331.2 205,-296.8 254,-331.2 205,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="205" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">到店复核</text>
+<text xml:space="preserve" text-anchor="middle" x="205" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F49</text>
+</g>
+
+<g id="p5_edge21" class="edge">
+<title>F49--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M232.02,-315.29C242.84,-309.42 255.45,-302.68 267,-296.8 321.78,-268.91 385.88,-238.5 426.94,-219.3" />
+<text xml:space="preserve" text-anchor="middle" x="359.19" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node26" class="node">
+<title>ref_F49_visit_session</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M271.31,-491.92C271.31,-491.92 182.69,-491.92 182.69,-491.92 176.69,-491.92 170.69,-485.92 170.69,-479.92 170.69,-479.92 170.69,-452.8 170.69,-452.8 170.69,-446.8 176.69,-440.8 182.69,-440.8 182.69,-440.8 271.31,-440.8 271.31,-440.8 277.31,-440.8 283.31,-446.8 283.31,-452.8 283.31,-452.8 283.31,-479.92 283.31,-479.92 283.31,-485.92 277.31,-491.92 271.31,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="227" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="227" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">visit_session</text>
+<text xml:space="preserve" text-anchor="middle" x="227" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p5_edge20" class="edge">
+<title>ref_F49_visit_session--F49</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M222.86,-440.31C219.23,-418.31 213.93,-386.24 210.05,-362.74" />
+<text xml:space="preserve" text-anchor="middle" x="225.57" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node27" class="node">
+<title>F50</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="337,-365.6 279.75,-331.2 337,-296.8 394.25,-331.2 337,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="337" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">卡权益复核</text>
+<text xml:space="preserve" text-anchor="middle" x="337" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F50</text>
+</g>
+
+<g id="p5_edge23" class="edge">
+<title>F50--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M358.21,-309.25C382.4,-285.35 421.81,-246.42 446.52,-222.01" />
+<text xml:space="preserve" text-anchor="middle" x="418.79" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node28" class="node">
+<title>ref_F50_member_card</title>
+<path fill="#fff0d9" stroke="#b85c00" stroke-width="1.25" d="M418.43,-491.92C418.43,-491.92 321.57,-491.92 321.57,-491.92 315.57,-491.92 309.57,-485.92 309.57,-479.92 309.57,-479.92 309.57,-452.8 309.57,-452.8 309.57,-446.8 315.57,-440.8 321.57,-440.8 321.57,-440.8 418.43,-440.8 418.43,-440.8 424.43,-440.8 430.43,-446.8 430.43,-452.8 430.43,-452.8 430.43,-479.92 430.43,-479.92 430.43,-485.92 424.43,-491.92 418.43,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="370" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">持有卡</text>
+<text xml:space="preserve" text-anchor="middle" x="370" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">member_card</text>
+<text xml:space="preserve" text-anchor="middle" x="370" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · C 卡产品与权益〕</text>
+</g>
+
+<g id="p5_edge22" class="edge">
+<title>ref_F50_member_card--F50</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M363.79,-440.31C358.27,-418.01 350.18,-385.36 344.33,-361.78" />
+<text xml:space="preserve" text-anchor="middle" x="363.73" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node29" class="node">
+<title>F51</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="469,-365.6 420,-331.2 469,-296.8 518,-331.2 469,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="469" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">处理待办</text>
+<text xml:space="preserve" text-anchor="middle" x="469" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F51</text>
+</g>
+
+<g id="p5_edge25" class="edge">
+<title>F51--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M469,-296.28C469,-272.89 469,-242.45 469,-222.08" />
+<text xml:space="preserve" text-anchor="middle" x="472.97" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node30" class="node">
+<title>ref_F51_admin_user</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M557.61,-491.92C557.61,-491.92 468.39,-491.92 468.39,-491.92 462.39,-491.92 456.39,-485.92 456.39,-479.92 456.39,-479.92 456.39,-452.8 456.39,-452.8 456.39,-446.8 462.39,-440.8 468.39,-440.8 468.39,-440.8 557.61,-440.8 557.61,-440.8 563.61,-440.8 569.61,-446.8 569.61,-452.8 569.61,-452.8 569.61,-479.92 569.61,-479.92 569.61,-485.92 563.61,-491.92 557.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="513" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">后台员工</text>
+<text xml:space="preserve" text-anchor="middle" x="513" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">admin_user</text>
+<text xml:space="preserve" text-anchor="middle" x="513" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge24" class="edge">
+<title>ref_F51_admin_user--F51</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M504.72,-440.31C497.16,-417.41 485.98,-383.59 478.15,-359.89" />
+<text xml:space="preserve" text-anchor="middle" x="501.88" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">0..1</text>
+</g>
+
+<g id="p5_node31" class="node">
+<title>F52</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="593,-365.6 544,-331.2 593,-296.8 642,-331.2 593,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="593" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">商家待办</text>
+<text xml:space="preserve" text-anchor="middle" x="593" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F52</text>
+</g>
+
+<g id="p5_edge27" class="edge">
+<title>F52--review_task</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M573.62,-309.83C551.01,-286.04 513.73,-246.84 490.32,-222.22" />
+<text xml:space="preserve" text-anchor="middle" x="534.97" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node32" class="node">
+<title>ref_F52_merchant</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M696.61,-491.92C696.61,-491.92 607.39,-491.92 607.39,-491.92 601.39,-491.92 595.39,-485.92 595.39,-479.92 595.39,-479.92 595.39,-452.8 595.39,-452.8 595.39,-446.8 601.39,-440.8 607.39,-440.8 607.39,-440.8 696.61,-440.8 696.61,-440.8 702.61,-440.8 708.61,-446.8 708.61,-452.8 708.61,-452.8 708.61,-479.92 708.61,-479.92 708.61,-485.92 702.61,-491.92 696.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="652" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">商家</text>
+<text xml:space="preserve" text-anchor="middle" x="652" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">merchant</text>
+<text xml:space="preserve" text-anchor="middle" x="652" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge26" class="edge">
+<title>ref_F52_merchant--F52</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M640.9,-440.31C630.49,-416.81 614.98,-381.8 604.45,-358.04" />
+<text xml:space="preserve" text-anchor="middle" x="628.78" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p5_node33" class="node">
+<title>F53</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="982,-365.6 916.5,-331.2 982,-296.8 1047.5,-331.2 982,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="982" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">产生信用变化</text>
+<text xml:space="preserve" text-anchor="middle" x="982" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F53</text>
+</g>
+
+<g id="p5_edge29" class="edge">
+<title>F53--credit_event</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M982,-296.28C982,-272.89 982,-242.45 982,-222.08" />
+<text xml:space="preserve" text-anchor="middle" x="985.97" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node34" class="node">
+<title>ref_F53_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M1113.31,-491.92C1113.31,-491.92 1024.69,-491.92 1024.69,-491.92 1018.69,-491.92 1012.69,-485.92 1012.69,-479.92 1012.69,-479.92 1012.69,-452.8 1012.69,-452.8 1012.69,-446.8 1018.69,-440.8 1024.69,-440.8 1024.69,-440.8 1113.31,-440.8 1113.31,-440.8 1119.31,-440.8 1125.31,-446.8 1125.31,-452.8 1125.31,-452.8 1125.31,-479.92 1125.31,-479.92 1125.31,-485.92 1119.31,-491.92 1113.31,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="1069" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="1069" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="1069" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p5_edge28" class="edge">
+<title>ref_F53_booking_order--F53</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1052.64,-440.31C1037.18,-416.66 1014.11,-381.35 998.59,-357.59" />
+<text xml:space="preserve" text-anchor="middle" x="1033.46" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p5_edge31" class="edge">
+<title>F54--credit_event</title>
+<path fill="none" stroke="#667085" stroke-width="1.1" d="M967.45,-94.43C961.19,-109.22 956.02,-127.96 959.5,-145 961.63,-155.45 965.91,-166.38 970.17,-175.58" />
+<text xml:space="preserve" text-anchor="middle" x="967.75" y="-135.1" font-family="Hiragino Sans GB" font-size="11.00" fill="#667085">0..1</text>
+</g>
+
+<g id="p5_node36" class="node">
+<title>F55</title>
+<polygon fill="none" stroke="#b85c00" stroke-width="1.25" points="1123,-365.6 1074,-331.2 1123,-296.8 1172,-331.2 1123,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="1123" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">授权保存</text>
+<text xml:space="preserve" text-anchor="middle" x="1123" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">F55</text>
+</g>
+
+<g id="p5_edge33" class="edge">
+<title>F55--face_profile</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1123,-296.28C1123,-272.89 1123,-242.45 1123,-222.08" />
+<text xml:space="preserve" text-anchor="middle" x="1126.97" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">N</text>
+</g>
+
+<g id="p5_node37" class="node">
+<title>ref_F55_merchant_customer</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M1252.61,-491.92C1252.61,-491.92 1163.39,-491.92 1163.39,-491.92 1157.39,-491.92 1151.39,-485.92 1151.39,-479.92 1151.39,-479.92 1151.39,-452.8 1151.39,-452.8 1151.39,-446.8 1157.39,-440.8 1163.39,-440.8 1163.39,-440.8 1252.61,-440.8 1252.61,-440.8 1258.61,-440.8 1264.61,-446.8 1264.61,-452.8 1264.61,-452.8 1264.61,-479.92 1264.61,-479.92 1264.61,-485.92 1258.61,-491.92 1252.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="1208" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">商家顾客档案</text>
+<text xml:space="preserve" text-anchor="middle" x="1208" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">merchant_customer</text>
+<text xml:space="preserve" text-anchor="middle" x="1208" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge32" class="edge">
+<title>ref_F55_merchant_customer--F55</title>
+<path fill="none" stroke="#b85c00" stroke-width="1.1" d="M1192.01,-440.31C1176.43,-415.9 1152.93,-379.09 1137.78,-355.35" />
+<text xml:space="preserve" text-anchor="middle" x="1173.34" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#b85c00">1</text>
+</g>
+
+<g id="p5_node38" class="node">
+<title>L02</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="1310,-365.6 1198.35,-331.2 1310,-296.8 1421.65,-331.2 1310,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="1310" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">CUSTOMER 请求主体</text>
+<text xml:space="preserve" text-anchor="middle" x="1310" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L02</text>
+</g>
+
+<g id="p5_edge35" class="edge">
+<title>L02--api_request</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M1333.14,-303.5C1353.93,-279.5 1384.11,-244.68 1403.65,-222.13" />
+<text xml:space="preserve" text-anchor="middle" x="1380.59" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node39" class="node">
+<title>ref_L02_customer_user</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M1391.61,-491.92C1391.61,-491.92 1302.39,-491.92 1302.39,-491.92 1296.39,-491.92 1290.39,-485.92 1290.39,-479.92 1290.39,-479.92 1290.39,-452.8 1290.39,-452.8 1290.39,-446.8 1296.39,-440.8 1302.39,-440.8 1302.39,-440.8 1391.61,-440.8 1391.61,-440.8 1397.61,-440.8 1403.61,-446.8 1403.61,-452.8 1403.61,-452.8 1403.61,-479.92 1403.61,-479.92 1403.61,-485.92 1397.61,-491.92 1391.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="1347" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">顾客</text>
+<text xml:space="preserve" text-anchor="middle" x="1347" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">customer_user</text>
+<text xml:space="preserve" text-anchor="middle" x="1347" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge34" class="edge">
+<title>ref_L02_customer_user--L02</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M1340.04,-440.31C1333.97,-418.47 1325.14,-386.68 1318.62,-363.23" />
+<text xml:space="preserve" text-anchor="middle" x="1338.97" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+
+<g id="p5_node40" class="node">
+<title>L03</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="1537,-365.6 1447.97,-331.2 1537,-296.8 1626.03,-331.2 1537,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="1537" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">ADMIN 请求主体</text>
+<text xml:space="preserve" text-anchor="middle" x="1537" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L03</text>
+</g>
+
+<g id="p5_edge37" class="edge">
+<title>L03--api_request</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M1514.75,-304.75C1493.75,-280.73 1462.59,-245.09 1442.53,-222.14" />
+<text xml:space="preserve" text-anchor="middle" x="1483.97" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node41" class="node">
+<title>ref_L03_admin_user</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M1581.61,-491.92C1581.61,-491.92 1492.39,-491.92 1492.39,-491.92 1486.39,-491.92 1480.39,-485.92 1480.39,-479.92 1480.39,-479.92 1480.39,-452.8 1480.39,-452.8 1480.39,-446.8 1486.39,-440.8 1492.39,-440.8 1492.39,-440.8 1581.61,-440.8 1581.61,-440.8 1587.61,-440.8 1593.61,-446.8 1593.61,-452.8 1593.61,-452.8 1593.61,-479.92 1593.61,-479.92 1593.61,-485.92 1587.61,-491.92 1581.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="1537" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">后台员工</text>
+<text xml:space="preserve" text-anchor="middle" x="1537" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">admin_user</text>
+<text xml:space="preserve" text-anchor="middle" x="1537" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge36" class="edge">
+<title>ref_L03_admin_user--L03</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M1537,-440.31C1537,-419.37 1537,-389.3 1537,-366.18" />
+<text xml:space="preserve" text-anchor="middle" x="1545.25" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+
+<g id="p5_node42" class="node">
+<title>L04</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="2000,-365.6 1934.5,-331.2 2000,-296.8 2065.5,-331.2 2000,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2000" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">审计多态目标</text>
+<text xml:space="preserve" text-anchor="middle" x="2000" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L04</text>
+</g>
+
+<g id="p5_edge39" class="edge">
+<title>L04--business_event</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2035.76,-315.01C2049.3,-309.27 2064.85,-302.71 2079,-296.8 2142.74,-270.17 2216.37,-239.85 2263.98,-220.3" />
+<text xml:space="preserve" text-anchor="middle" x="2186.04" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node43" class="node">
+<title>ref_L04_booking_order</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M2044.31,-491.92C2044.31,-491.92 1955.69,-491.92 1955.69,-491.92 1949.69,-491.92 1943.69,-485.92 1943.69,-479.92 1943.69,-479.92 1943.69,-452.8 1943.69,-452.8 1943.69,-446.8 1949.69,-440.8 1955.69,-440.8 1955.69,-440.8 2044.31,-440.8 2044.31,-440.8 2050.31,-440.8 2056.31,-446.8 2056.31,-452.8 2056.31,-452.8 2056.31,-479.92 2056.31,-479.92 2056.31,-485.92 2050.31,-491.92 2044.31,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2000" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">预约订单</text>
+<text xml:space="preserve" text-anchor="middle" x="2000" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">booking_order</text>
+<text xml:space="preserve" text-anchor="middle" x="2000" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p5_edge38" class="edge">
+<title>ref_L04_booking_order--L04</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2000,-440.31C2000,-419.37 2000,-389.3 2000,-366.18" />
+<text xml:space="preserve" text-anchor="middle" x="2008.25" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+
+<g id="p5_node44" class="node">
+<title>L05</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="2157,-365.6 2091.5,-331.2 2157,-296.8 2222.5,-331.2 2157,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2157" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">审计多态目标</text>
+<text xml:space="preserve" text-anchor="middle" x="2157" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L05</text>
+</g>
+
+<g id="p5_edge41" class="edge">
+<title>L05--business_event</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2181.88,-309.54C2210.58,-285.7 2257.62,-246.63 2287.14,-222.11" />
+<text xml:space="preserve" text-anchor="middle" x="2253.53" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node45" class="node">
+<title>ref_L05_visit_session</title>
+<path fill="#e5f5ee" stroke="#b85c00" stroke-width="1.25" d="M2201.31,-491.92C2201.31,-491.92 2112.69,-491.92 2112.69,-491.92 2106.69,-491.92 2100.69,-485.92 2100.69,-479.92 2100.69,-479.92 2100.69,-452.8 2100.69,-452.8 2100.69,-446.8 2106.69,-440.8 2112.69,-440.8 2112.69,-440.8 2201.31,-440.8 2201.31,-440.8 2207.31,-440.8 2213.31,-446.8 2213.31,-452.8 2213.31,-452.8 2213.31,-479.92 2213.31,-479.92 2213.31,-485.92 2207.31,-491.92 2201.31,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2157" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">实际到店</text>
+<text xml:space="preserve" text-anchor="middle" x="2157" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">visit_session</text>
+<text xml:space="preserve" text-anchor="middle" x="2157" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · B 预约与到店〕</text>
+</g>
+
+<g id="p5_edge40" class="edge">
+<title>ref_L05_visit_session--L05</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2157,-440.31C2157,-419.37 2157,-389.3 2157,-366.18" />
+<text xml:space="preserve" text-anchor="middle" x="2165.25" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+
+<g id="p5_node46" class="node">
+<title>L06</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="2314,-365.6 2248.5,-331.2 2314,-296.8 2379.5,-331.2 2314,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">审计多态目标</text>
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L06</text>
+</g>
+
+<g id="p5_edge43" class="edge">
+<title>L06--business_event</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2314,-296.28C2314,-272.89 2314,-242.45 2314,-222.08" />
+<text xml:space="preserve" text-anchor="middle" x="2317.97" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node47" class="node">
+<title>ref_L06_member_card</title>
+<path fill="#fff0d9" stroke="#b85c00" stroke-width="1.25" d="M2362.43,-491.92C2362.43,-491.92 2265.57,-491.92 2265.57,-491.92 2259.57,-491.92 2253.57,-485.92 2253.57,-479.92 2253.57,-479.92 2253.57,-452.8 2253.57,-452.8 2253.57,-446.8 2259.57,-440.8 2265.57,-440.8 2265.57,-440.8 2362.43,-440.8 2362.43,-440.8 2368.43,-440.8 2374.43,-446.8 2374.43,-452.8 2374.43,-452.8 2374.43,-479.92 2374.43,-479.92 2374.43,-485.92 2368.43,-491.92 2362.43,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">持有卡</text>
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">member_card</text>
+<text xml:space="preserve" text-anchor="middle" x="2314" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · C 卡产品与权益〕</text>
+</g>
+
+<g id="p5_edge42" class="edge">
+<title>ref_L06_member_card--L06</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2314,-440.31C2314,-419.37 2314,-389.3 2314,-366.18" />
+<text xml:space="preserve" text-anchor="middle" x="2322.25" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+
+<g id="p5_node48" class="node">
+<title>L07</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="2471,-365.6 2405.5,-331.2 2471,-296.8 2536.5,-331.2 2471,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2471" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">审计多态目标</text>
+<text xml:space="preserve" text-anchor="middle" x="2471" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L07</text>
+</g>
+
+<g id="p5_edge45" class="edge">
+<title>L07--business_event</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2446.12,-309.54C2417.42,-285.7 2370.38,-246.63 2340.86,-222.11" />
+<text xml:space="preserve" text-anchor="middle" x="2396.47" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node49" class="node">
+<title>ref_L07_store</title>
+<path fill="#e7f0ff" stroke="#b85c00" stroke-width="1.25" d="M2512.61,-491.92C2512.61,-491.92 2423.39,-491.92 2423.39,-491.92 2417.39,-491.92 2411.39,-485.92 2411.39,-479.92 2411.39,-479.92 2411.39,-452.8 2411.39,-452.8 2411.39,-446.8 2417.39,-440.8 2423.39,-440.8 2423.39,-440.8 2512.61,-440.8 2512.61,-440.8 2518.61,-440.8 2524.61,-446.8 2524.61,-452.8 2524.61,-452.8 2524.61,-479.92 2524.61,-479.92 2524.61,-485.92 2518.61,-491.92 2512.61,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2468" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">门店</text>
+<text xml:space="preserve" text-anchor="middle" x="2468" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">store</text>
+<text xml:space="preserve" text-anchor="middle" x="2468" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · A 商家与身份〕</text>
+</g>
+
+<g id="p5_edge44" class="edge">
+<title>ref_L07_store--L07</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2468.56,-440.31C2469.04,-419.22 2469.72,-388.86 2470.25,-365.68" />
+<text xml:space="preserve" text-anchor="middle" x="2477.75" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+
+<g id="p5_node50" class="node">
+<title>L08</title>
+<polygon fill="none" stroke="#258058" stroke-width="1.25" stroke-dasharray="5,2" points="2628,-365.6 2562.5,-331.2 2628,-296.8 2693.5,-331.2 2628,-365.6" />
+<text xml:space="preserve" text-anchor="middle" x="2628" y="-334.5" font-family="Hiragino Sans GB" font-size="11.00">审计多态目标</text>
+<text xml:space="preserve" text-anchor="middle" x="2628" y="-321.3" font-family="Hiragino Sans GB" font-size="11.00">L08</text>
+</g>
+
+<g id="p5_edge47" class="edge">
+<title>L08--business_event</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2592.71,-314.96C2579.35,-309.22 2563.99,-302.67 2550,-296.8 2485.87,-269.89 2411.64,-239.5 2363.81,-220.03" />
+<text xml:space="preserve" text-anchor="middle" x="2476.23" y="-255.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">N</text>
+</g>
+
+<g id="p5_node51" class="node">
+<title>ref_L08_device</title>
+<path fill="#e9e5fa" stroke="#b85c00" stroke-width="1.25" d="M2651,-491.92C2651,-491.92 2563,-491.92 2563,-491.92 2557,-491.92 2551,-485.92 2551,-479.92 2551,-479.92 2551,-452.8 2551,-452.8 2551,-446.8 2557,-440.8 2563,-440.8 2563,-440.8 2651,-440.8 2651,-440.8 2657,-440.8 2663,-446.8 2663,-452.8 2663,-452.8 2663,-479.92 2663,-479.92 2663,-485.92 2657,-491.92 2651,-491.92" />
+<text xml:space="preserve" text-anchor="middle" x="2607" y="-476.26" font-family="Hiragino Sans GB" font-size="11.00">设备</text>
+<text xml:space="preserve" text-anchor="middle" x="2607" y="-463.06" font-family="Hiragino Sans GB" font-size="11.00">device</text>
+<text xml:space="preserve" text-anchor="middle" x="2607" y="-449.86" font-family="Hiragino Sans GB" font-size="11.00">〔引用 · E 设备与通行〕</text>
+</g>
+
+<g id="p5_edge46" class="edge">
+<title>ref_L08_device--L08</title>
+<path fill="none" stroke="#258058" stroke-width="1.1" stroke-dasharray="5,2" d="M2610.95,-440.31C2614.4,-418.47 2619.41,-386.68 2623.11,-363.23" />
+<text xml:space="preserve" text-anchor="middle" x="2625.75" y="-399.9" font-family="Hiragino Sans GB" font-size="11.00" fill="#258058">0..1</text>
+</g>
+</g>
+</g><g id="module_navigation" font-family="Hiragino Sans GB" fill="#344054"><rect x="75" y="1280" width="1850" height="350" rx="12" fill="#FAFBFC" stroke="#CBD5E1" /><text x="100" y="1320" font-size="24">跨模块关系导航</text><text x="550" y="1320" font-size="24">（模块代号对应各分区标题）</text><text x="100" y="1371" font-size="21">B 预约与到店</text><text x="550" y="1371" font-size="21">引用 A 商家与身份、C 卡产品与权益</text><text x="100" y="1422" font-size="21">C 卡产品与权益</text><text x="550" y="1422" font-size="21">引用 A 商家与身份、B 预约与到店</text><text x="100" y="1473" font-size="21">D 资金与结算</text><text x="550" y="1473" font-size="21">引用 A 商家与身份、B 预约与到店、C 卡产品与权益</text><text x="100" y="1524" font-size="21">E 设备与通行</text><text x="550" y="1524" font-size="21">引用 A 商家与身份、B 预约与到店</text><text x="100" y="1575" font-size="21">F 复核审计与辅助记录</text><text x="550" y="1575" font-size="21">引用 A 商家与身份、B 预约与到店、C 卡产品与权益、E 设备与通行</text></g></svg>

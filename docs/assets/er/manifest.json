@@ -1,0 +1,81 @@
+[
+  {
+    "slug": "01-商家与身份",
+    "title": "商家与身份",
+    "note": "商家与顾客是M:N联系，联系属性映射到merchant_customer；不把该关系表重复画成另一个商家或顾客实体。",
+    "entities": [
+      "merchant",
+      "customer_user",
+      "admin_user",
+      "store"
+    ]
+  },
+  {
+    "slug": "02-预约与到店",
+    "title": "预约与实际到店",
+    "note": "实际使用联系映射到visit_order；一次到店使用多单，每单至多被一次到店使用。未实际使用订单不建立该联系。",
+    "entities": [
+      "store",
+      "store_slot",
+      "customer_user",
+      "booking_order",
+      "visit_session"
+    ]
+  },
+  {
+    "slug": "03-卡权益",
+    "title": "卡产品与顾客权益",
+    "note": "现金预约可没有持有卡；人工调整流水可不关联订单。每单只选择一种支付权益。卡产品规则与已售卡快照分开。",
+    "entities": [
+      "merchant",
+      "customer_user",
+      "card_product",
+      "member_card",
+      "card_ledger",
+      "booking_order"
+    ]
+  },
+  {
+    "slug": "04-资金与结算",
+    "title": "现金流水与到店结算",
+    "note": "现金流水关联预约、到店、持有卡三者必须且只能选一个，不能解读为同时属于三者。退款另用refund_of_id关联原收款；图中不展开自联系。",
+    "entities": [
+      "booking_order",
+      "visit_session",
+      "member_card",
+      "payment_record",
+      "visit_settlement",
+      "settlement_revision"
+    ]
+  },
+  {
+    "slug": "05-设备通行",
+    "title": "设备与通行",
+    "note": "设备人员映射联系映射到device_person；只对需要注册人员的设备建立。命令与事件分开，成功开门不等于人员入场；本图不重复画订单等跨图引用。",
+    "entities": [
+      "store",
+      "device",
+      "customer_user",
+      "access_credential",
+      "credential_window",
+      "device_operation",
+      "device_event"
+    ]
+  },
+  {
+    "slug": "06-复核与技术记录",
+    "title": "复核审计与辅助记录",
+    "note": "api_request单独显示，其主体可能是顾客、管理员或受控DEV，不伪造统一外键联系。审计和待办的多态目标按服务端规则校验；可选人脸资料不代表已启用人脸通行。",
+    "entities": [
+      "merchant",
+      "admin_user",
+      "customer_user",
+      "booking_order",
+      "credit_event",
+      "review_task",
+      "business_event",
+      "face_profile",
+      "api_request"
+    ]
+  }
+]

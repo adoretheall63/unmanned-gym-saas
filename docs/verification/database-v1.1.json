@@ -1,0 +1,33 @@
+{
+  "checks": [
+    "same-device foreign keys reject mismatched person and credential",
+    "current read sees committed order despite earlier RR snapshot",
+    "two-client cross-store overlap creates one order and one capacity hold",
+    "two-client final capacity cannot oversell",
+    "failed transaction rolls capacity back",
+    "lock wait past deadline rejects payment and expires capacity once",
+    "store-level current-read admission serializes different users with an overstayer",
+    "concurrent refunds serialize on receipt and cannot exceed original amount",
+    "reversal foreign key rejects returning a debit to a different card",
+    "unresolved open uniqueness and runnable lease constraints",
+    "two workers cannot run two commands on same device",
+    "expired lease becomes UNKNOWN and old claim cannot overwrite new worker",
+    "event processing fencing also rejects an old claim version",
+    "preaggregated visit cash stays 200 with two used orders and two payments",
+    "application role cannot update append-only records or delete orders",
+    "order lists use time indexes without Sort and total indexes are reduced"
+  ],
+  "query_plans": {
+    "list_my_orders": "-> Limit: 20 row(s)  (cost=0.0703 rows=20) (actual time=0.0761..0.0969 rows=20 loops=1)\\n    -> Filter: (booking_order.user_id = 1)  (cost=0.0703 rows=20) (actual time=0.0706..0.0901 rows=20 loops=1)\\n        -> Index scan on booking_order using ix_order_user_created (reverse)  (cost=0.0703 rows=20) (actual time=0.0508..0.0808 rows=26 loops=1)\\n",
+    "list_merchant_orders": "-> Limit: 20 row(s)  (cost=0.0703 rows=20) (actual time=0.038..0.0962 rows=20 loops=1)\\n    -> Filter: (booking_order.merchant_id = 1)  (cost=0.0703 rows=20) (actual time=0.0364..0.0916 rows=20 loops=1)\\n        -> Index scan on booking_order using ix_order_merchant_created (reverse)  (cost=0.0703 rows=20) (actual time=0.0304..0.0816 rows=21 loops=1)\\n"
+  },
+  "index_count": 141,
+  "foreign_key_count": 55,
+  "mysql_version": "8.4.11",
+  "table_count": 26,
+  "column_count": 369,
+  "constraint_checks": 14,
+  "openapi_operations": 30,
+  "openapi_schemas": 39,
+  "schema_sha256": "811c29a78a90edcfd07ecd84575613227e1fccc5eb251e49e25d8cb457460670"
+}

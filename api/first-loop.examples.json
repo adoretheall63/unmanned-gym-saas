@@ -1,0 +1,43 @@
+[
+  {
+    "id": "201",
+    "orderNo": "O202611120001",
+    "merchantId": "1",
+    "storeId": "11",
+    "storeName": "演示门店A",
+    "slotId": "101",
+    "startAt": "2026-11-12T10:00:00.000Z",
+    "endAt": "2026-11-12T11:00:00.000Z",
+    "benefitType": "TIME_FEE",
+    "baseAmountCent": 1000,
+    "payDeadline": "2026-11-12T10:00:00.000Z",
+    "status": "PENDING_PAYMENT",
+    "capacityHeld": true,
+    "confirmedAt": null,
+    "cancelStage": "NONE",
+    "cancelRequestedAt": null,
+    "cancelledAt": null,
+    "cancelReason": null,
+    "reviewRequired": false,
+    "paymentMode": "MOCK",
+    "ruleSnapshot": {
+      "version": "v1.0",
+      "slotMinutes": 60,
+      "entryGraceMinutes": 0,
+      "exitGraceMinutes": 0,
+      "overtimePriceCent": 100,
+      "overtimeCapCent": 3000,
+      "rounding": "CEIL_MINUTE",
+      "timezone": "Asia/Shanghai",
+      "merchantName": "演示商家A",
+      "storeName": "演示门店A"
+    }
+  },
+  {
+    "code": "PAYMENT_EXPIRED",
+    "message": "订单支付时间已截止",
+    "requestId": "req-demo-1",
+    "serverTime": "2026-11-12T10:00:00.000Z",
+    "fieldErrors": []
+  }
+]

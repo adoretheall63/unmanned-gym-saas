@@ -1,0 +1,18 @@
+# 本地开发 profile：Mock 外部依赖（微信身份兑换、手机号兑换），仅本机使用
+# 契约要求：Mock 只替代外部边界，用户唯一身份、本地 JWT、账号状态、token_version 必须真实
+gym:
+  auth:
+    # 微信身份兑换替身（M1）；生产留空 → 503 DEPENDENCY_UNAVAILABLE，不伪装登录成功
+    wechat-provider: mock
+    wechat-app-id: wx-dev-local
+    # 手机号兑换替身（M1）；生产留空 → 422 PHONE_BINDING_UNAVAILABLE
+    phone-provider: mock
+    # 仅开发用的 32 字节 Base64 密钥（"0123456789abcdef0123456789abcdef"）
+    phone-cipher-key: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+  scheduler:
+    enabled: false
+
+logging:
+  level:
+    com.wrgym: INFO
+    org.springframework.security: WARN

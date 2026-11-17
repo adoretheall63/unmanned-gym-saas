@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +22,10 @@ import java.time.format.DateTimeFormatter;
 /**
  * JSON 序列化约定（docs/接口文档.md §1.1）：
  * <ul>
- *   <li>金额与 ID：JSON 中 Long 一律输出为字符串，避免 JS 精度丢失；</li>
+ *   <li>业务 ID 在 JSON 中为十进制字符串（DTO 用 String 承载，不依赖全局 Long 改写）；</li>
+ *   <li>金额为整数分、{@code expiresIn} 等计数值为 JSON 整数（不转字符串）；</li>
  *   <li>时间：数据库为 UTC，输出带时区 ISO 8601（如 {@code 2026-11-16T14:00:00Z}）；</li>
+ *   <li>契约规定"可为 null 的必有字段"必须显式输出 null，因此不启用全局 NON_NULL；</li>
  *   <li>时间戳格式默认关闭。</li>
  * </ul>
  */
@@ -35,10 +36,6 @@ public class JacksonConfig {
     public Jackson2ObjectMapperBuilderCustomizer gymJacksonCustomizer() {
         return builder -> {
             SimpleModule module = new SimpleModule("gym-json");
-            // Long / long -> 字符串
-            module.addSerializer(Long.class, ToStringSerializer.instance);
-            module.addSerializer(Long.TYPE, ToStringSerializer.instance);
-            // 时间
             module.addSerializer(LocalDateTime.class, new UtcLocalDateTimeSerializer());
             module.addDeserializer(LocalDateTime.class, new UtcLocalDateTimeDeserializer());
             module.addSerializer(OffsetDateTime.class, new UtcOffsetDateTimeSerializer());

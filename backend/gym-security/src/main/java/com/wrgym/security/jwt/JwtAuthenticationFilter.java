@@ -1,6 +1,8 @@
 package com.wrgym.security.jwt;
 
 import com.wrgym.common.exception.BizException;
+import com.wrgym.common.security.PrincipalRef;
+import com.wrgym.common.security.SecurityPrincipal;
 import com.wrgym.security.auth.LoginUser;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -19,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 解析 {@code Authorization: Bearer <jwt>} 并填充 SecurityContext。
+ * 解析 {@code Authorization: Bearer <jwt>} 并填充 SecurityContext / PrincipalRef。
  *
- * <p>只负责令牌有效性与身份类型；账号停用、token_version 失效、商家状态由各业务模块在需要时复核
- * （docs/接口文档.md §1.1：每次验证账号启用状态、token_version 和商家状态）。
+ * <p>只负责令牌有效性与身份类型；账号停用、token_version 失效、商家状态由
+ * {@link com.wrgym.security.auth.AccountStatusFilter} 每请求复核。
  * 令牌无效时不抛异常，交给 EntryPoint 统一返回 401。
  */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -58,6 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 permissions.forEach(p -> granted.add(new SimpleGrantedAuthority("PERM_" + p)));
                 var authentication = new UsernamePasswordAuthenticationToken(loginUser, null, granted);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                PrincipalRef.set(new SecurityPrincipal(id,
+                        type == LoginUser.Type.ADMIN ? SecurityPrincipal.ADMIN : SecurityPrincipal.CUSTOMER));
             } catch (BizException ex) {
                 log.debug("invalid jwt: {}", ex.getMessage());
             } catch (RuntimeException ex) {
@@ -68,6 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
         } finally {
             SecurityContextHolder.clearContext();
+            PrincipalRef.clear();
         }
     }
 }

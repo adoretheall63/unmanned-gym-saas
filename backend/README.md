@@ -108,11 +108,26 @@ git push -u origin feat/be-m03-store-slot   # PR 目标：adoretheall63/unmanned
 每个模块 PR 必须包含：接口编号范围、涉及表、规则编号（Q0xx）、测试证据、
 OpenAPI 同步（首闭环操作同步 `api/first-loop.openapi.yaml`）、约定自检清单。
 
-## 6. 当前状态（feat/be-00-foundation）
+## 6. 当前状态
+
+**feat/be-00-foundation（基础设施，已提交）**
 
 - ✅ 父 POM + 22 个模块（业务模块为空壳，等各自分支实现）
 - ✅ `gym-common`：统一响应/错误码/异常/分页/BaseEntity/UTC 时间/JSON 序列化/requestId/MyBatis 配置
 - ✅ `gym-security`：双端 FilterChain、JWT 签发校验、401/403 统一响应
 - ✅ `gym-bootstrap`：启动类、application.yml、OpenAPI 分组、CORS、冒烟测试
 - ✅ `docker-compose.yml`：MySQL 8.4 + Redis 7（26 表 / 369 列 / 55 外键 / 141 索引已验证）
-- ⬜ `com.wrgym.common.port` 端口与 record DTO、幂等拦截器（在首个业务分支前补齐）
+
+**feat/be-m01-auth-profile（认证与个人资料，接口文档 §2 全部 10 个接口）**
+
+- ✅ 2.1 微信登录（M1 测试替身，openid 唯一身份，首次自动建号）、2.3 顾客退出（token_version 递增）
+- ✅ 2.2 后台登录（BCrypt、失败统一 401、10 分钟 5 次失败限流、账号/商家停用 403）、2.4 后台退出
+- ✅ 2.5 本人资料、2.6 修改昵称（Idempotency-Key + 同键不同体 409）、
+  2.7 绑定手机号（AES-256-GCM 密文、一次性 code、能力未开通 422）、2.8 解除绑定
+- ✅ 2.9 后台身份（每请求复核账号状态与 token_version）、2.10 修改密码（旧密码校验 + 禁止复用 + 版本递增）
+- ✅ 跨模块能力：`AccountPort` 端口、`PrincipalRef`、幂等执行器（`api_request` 同事务 + 唯一键兜底）、
+  登录限流（Redis + 进程内降级）、每请求账号状态过滤
+- ✅ 验证证据：`mvn package` 通过；`JsonContractTest` 7/7；HTTP 端到端 `tools/verify-auth-api.ps1` **18/18 PASS**
+  （含幂等重放/冲突、退出与改密后旧 JWT 401、脱敏与显式 null 字段）
+
+**下一步**：`feat/be-m02-merchant-staff`（§3 商家与员工权限，8 个接口）。

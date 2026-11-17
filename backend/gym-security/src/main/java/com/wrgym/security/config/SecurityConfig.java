@@ -1,5 +1,6 @@
 package com.wrgym.security.config;
 
+import com.wrgym.security.auth.AccountStatusFilter;
 import com.wrgym.security.jwt.JwtAuthenticationFilter;
 import com.wrgym.security.jwt.JwtProperties;
 import com.wrgym.security.jwt.JwtService;
@@ -21,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * 双端鉴权（docs/接口文档.md §1.1 / §1.3）：顾客端 /api/v1/app/**，商家端 /api/v1/admin/**。
  *
- * <p>两条链互不放行；回调与开发入口单独放行，由对应模块自行校验来源与开关。
+ * <p>过滤器顺序：JWT 解析 → 每请求账号状态/token_version 复核（AccountStatusFilter）。
  * <p>所有失败响应统一 R（401/403），不返回 Spring 默认 HTML。
  */
 @Configuration
@@ -45,11 +46,12 @@ public class SecurityConfig {
         return new JwtAuthenticationFilter(jwtService);
     }
 
-    /** 商家端：/api/v1/admin/** 仅 ROLE_ADMIN。 */
+    /** 商家端：/api/v1/admin/** 仅 ROLE_ADMIN（登录接口放行）。 */
     @Bean
     @Order(1)
     public SecurityFilterChain adminFilterChain(HttpSecurity http,
                                                 JwtAuthenticationFilter jwtFilter,
+                                                AccountStatusFilter accountStatusFilter,
                                                 RestAuthenticationEntryPoint entryPoint,
                                                 RestAccessDeniedHandler deniedHandler) throws Exception {
         http.securityMatcher("/api/v1/admin/**")
@@ -63,7 +65,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/admin/auth/login").permitAll()
                         .anyRequest().hasRole("ADMIN"))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(accountStatusFilter, JwtAuthenticationFilter.class);
         return http.build();
     }
 
@@ -72,6 +75,7 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain appFilterChain(HttpSecurity http,
                                               JwtAuthenticationFilter jwtFilter,
+                                              AccountStatusFilter accountStatusFilter,
                                               RestAuthenticationEntryPoint entryPoint,
                                               RestAccessDeniedHandler deniedHandler) throws Exception {
         http.csrf(csrf -> csrf.disable())
@@ -82,14 +86,15 @@ public class SecurityConfig {
                 .httpBasic(b -> b.disable())
                 .exceptionHandling(e -> e.authenticationEntryPoint(entryPoint).accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/app/auth/**").permitAll()
+                        .requestMatchers("/api/v1/app/auth/wechat-login").permitAll()
+                        .requestMatchers("/api/v1/app/auth/**").authenticated()
                         .requestMatchers("/api/v1/integrations/**").permitAll()
-                        .requestMatchers("/api/v1/dev/**").permitAll()
-                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(accountStatusFilter, JwtAuthenticationFilter.class);
         return http.build();
     }
 }

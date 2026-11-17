@@ -27,6 +27,10 @@ public class BizException extends RuntimeException {
         this(code, message, null, cause);
     }
 
+    public BizException(ErrorCode code, String message, List<FieldErrorItem> fieldErrors) {
+        this(code, message, fieldErrors, null);
+    }
+
     public BizException(ErrorCode code, List<FieldErrorItem> fieldErrors) {
         this(code, code.message(), fieldErrors, null);
     }

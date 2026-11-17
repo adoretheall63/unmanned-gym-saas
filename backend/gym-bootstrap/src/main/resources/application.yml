@@ -6,8 +6,6 @@ spring:
     name: gym-saas-backend
   profiles:
     default: dev
-  jackson:
-    default-property-inclusion: non_null
   datasource:
     # 连接必须固定 UTC 会话时区（docs/数据库设计.md 通用约定）；库名默认 gym_saas
     url: >-

@@ -1,0 +1,15 @@
+# 统一行尾与编码：Java/YAML/SQL/Markdown 一律 LF + UTF-8，避免 Windows 下 CRLF 噪音
+* text=auto eol=lf
+*.java text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sql text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.png binary
+*.jpg binary
+*.docx binary
+*.jar binary

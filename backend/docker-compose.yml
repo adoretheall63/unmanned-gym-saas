@@ -1,0 +1,57 @@
+# 本地开发用 MySQL 8.4 + Redis 7（仅开发/联调；生产部署见 docs/设备与部署.md）
+# 用法：
+#   cp .env.example .env        # 首次
+#   docker compose up -d
+#   docker compose logs -f mysql
+# 首次初始化会自动执行：database/schema.sql → database/app_privileges.sql → docker/mysql-init/03-dev-app-user.sql
+# 重置（清空所有数据重来）：docker compose down -v
+
+name: gym-saas-dev
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: gym-mysql
+    restart: unless-stopped
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_dev_only}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-gym_saas}
+      TZ: UTC
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_as_cs
+      - --default-time-zone=+00:00
+      - --lower_case_table_names=0
+    volumes:
+      - gym-mysql-data:/var/lib/mysql
+      # 只读挂载仓库里的正式 DDL，不在 compose 里复制一份
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ../database/app_privileges.sql:/docker-entrypoint-initdb.d/02-app-privileges.sql:ro
+      - ./docker/mysql-init/03-dev-app-user.sql:/docker-entrypoint-initdb.d/03-dev-app-user.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  redis:
+    image: redis:7
+    container_name: gym-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - gym-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  gym-mysql-data:
+  gym-redis-data:

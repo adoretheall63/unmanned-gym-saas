@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gym-saas-backend
+  profiles:
+    default: dev
+  datasource:
+    # 连接必须固定 UTC 会话时区（docs/数据库设计.md 通用约定）；库名默认 gym_saas
+    url: >-
+      jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:gym_saas}
+      ?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true
+      &characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: ${APP_DB_USER:gym_dev}
+    password: ${APP_DB_PASSWORD:dev_only_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 16
+      minimum-idle: 4
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2s
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 16MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+gym:
+  jwt:
+    # 开发占位值；生产通过环境变量 GYM_JWT_SECRET 注入，禁止提交真实密钥
+    secret: ${GYM_JWT_SECRET:dev-only-secret-change-me-32bytes-minimum!!}
+    expire-seconds: 7200
+    issuer: gym-saas
+  cors:
+    allowed-origin-patterns: ${GYM_CORS_PATTERNS:http://localhost:*,http://127.0.0.1:*}
+  scheduler:
+    enabled: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

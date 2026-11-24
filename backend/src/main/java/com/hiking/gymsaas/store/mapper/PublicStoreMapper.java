@@ -1,12 +1,16 @@
 package com.hiking.gymsaas.store.mapper;
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.hiking.gymsaas.store.model.entity.Store;
 import com.hiking.gymsaas.store.model.entity.StoreSlot;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -25,11 +29,14 @@ public interface PublicStoreMapper {
             + "WHERE m.status = 'ACTIVE' AND s.status = 'OPEN' ORDER BY s.id LIMIT #{offset}, #{size}")
     List<Long> pageOpenStoreIds(@Param("offset") long offset, @Param("size") long size);
 
+    @Results(id = "publicStoreRow", value = @Result(column = "images", property = "images",
+            typeHandler = JacksonTypeHandler.class))
     @Select("SELECT id, merchant_id, name, address, latitude, longitude, description, images, open_time, "
             + "close_time, is_24h, ends_next_day, capacity, slot_price_cent, overtime_price_cent, "
             + "overtime_cap_cent, status, admission_paused, pause_reason FROM store WHERE id = #{id}")
     Store store(long id);
 
+    @ResultMap("publicStoreRow")
     @Select("<script>SELECT id, merchant_id, name, address, latitude, longitude, description, images, "
             + "open_time, close_time, is_24h, ends_next_day, capacity, slot_price_cent, overtime_price_cent, "
             + "overtime_cap_cent, status, admission_paused, pause_reason FROM store WHERE id IN "

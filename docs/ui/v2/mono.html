@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MONO — 交互原型</title>
+<style>
+@font-face{
+  font-family:"InterTight";
+  src:url("https://cdn.jsdelivr.net/npm/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2") format("woff2");
+  font-weight:100 900;font-display:swap;
+}
+:root{
+  --void:#0A0A0B;
+  --paper:#121214;
+  --paper-2:#191A1D;
+  --paper-3:#222326;
+  --ink:#F2F1EE;
+  --ink-2:#A4A39F;
+  --ink-3:#6C6B68;
+  --hair:rgba(242,241,238,.10);
+  --hair-2:rgba(242,241,238,.19);
+  --signal:#FF4A1C;
+  --ok:#5FE39A;
+  --u:"InterTight",-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  --zh:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  --ease:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%}
+body{
+  background:#070708;color:var(--ink);
+  font-family:var(--u);font-size:15px;line-height:1.5;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"ss01","cv05";
+  -webkit-font-smoothing:antialiased;
+  display:flex;align-items:center;justify-content:center;gap:64px;
+  padding:24px;overflow:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+:focus-visible{outline:1px solid var(--ink-2);outline-offset:3px}
+
+/* ================= stage ================= */
+.stage{display:flex;align-items:center;gap:56px}
+.phone{
+  width:390px;height:844px;border-radius:46px;background:var(--void);
+  position:relative;overflow:hidden;flex:none;isolation:isolate;
+  box-shadow:0 0 0 1px rgba(242,241,238,.12),0 60px 100px -50px #000;
+}
+.phone::after{content:"";position:absolute;left:50%;bottom:9px;width:112px;height:4px;margin-left:-56px;border-radius:2px;background:rgba(242,241,238,.2);z-index:99;pointer-events:none}
+
+.jump{display:flex;flex-direction:column;gap:1px;min-width:164px}
+.jump .h{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#3A3A3C;margin-bottom:12px;padding-left:9px}
+.jump button{
+  display:flex;align-items:baseline;gap:10px;padding:6px 9px;border-radius:5px;
+  font-size:12px;letter-spacing:.02em;color:var(--ink-3);
+  transition:color 140ms var(--ease),background-color 140ms var(--ease);
+}
+.jump button i{font-style:normal;font-size:10px;width:16px;color:#3A3A3C;letter-spacing:.06em}
+.jump button:hover{color:var(--ink-2);background:rgba(242,241,238,.05)}
+.jump button.on{color:var(--ink);background:rgba(242,241,238,.07)}
+.jump button.on i{color:var(--signal)}
+
+/* ================= screens ================= */
+.sc{
+  position:absolute;inset:0;display:flex;flex-direction:column;background:var(--void);
+  transform:translateX(100%);visibility:hidden;will-change:transform,opacity;
+}
+.sc.active{transform:translateX(0);visibility:visible}
+
+.statusbar{height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 8px 28px;font-size:15px;font-weight:600;letter-spacing:.01em;flex:none;color:var(--ink)}
+.bat{width:23px;height:11.5px;border-radius:3px;border:1.4px solid rgba(242,241,238,.45);position:relative}
+.bat::after{content:"";position:absolute;inset:1.6px 4.5px 1.6px 1.6px;border-radius:1px;background:rgba(242,241,238,.8)}
+
+.nav{height:44px;display:flex;align-items:center;padding:0 14px;flex:none;position:relative;z-index:5}
+.back{width:34px;height:34px;display:grid;place-items:center;margin-left:-6px;color:var(--ink);border-radius:50%}
+.back:active{background:rgba(242,241,238,.07)}
+.back svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.capsule{
+  margin-left:auto;width:84px;height:31px;border-radius:999px;border:1px solid var(--hair-2);
+  display:flex;align-items:center;justify-content:space-around;padding:0 7px;color:var(--ink-2);position:relative;
+}
+.capsule::before{content:"";position:absolute;left:50%;top:8px;bottom:8px;width:1px;background:var(--hair-2)}
+.capsule .dots{display:flex;gap:3px}
+.capsule .dots i{width:3.5px;height:3.5px;border-radius:50%;background:currentColor}
+.capsule .ring{width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;position:relative}
+.capsule .ring::after{content:"";position:absolute;inset:2.5px;border-radius:50%;background:currentColor}
+
+.brandbar{display:flex;align-items:center;gap:9px;height:44px;padding:0 20px;flex:none}
+.mark{width:22px;height:22px;color:var(--ink);flex:none}
+.mark circle{fill:none;stroke:currentColor;stroke-width:2.4}
+.wm{font-size:15px;font-weight:600;letter-spacing:.11em}
+
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 20px;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.scroll.pad{padding-bottom:28px}
+
+.hair{height:1px;background:var(--hair);margin:0;flex:none}
+.u{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.disp{font-size:52px;font-weight:500;letter-spacing:-.035em;line-height:1}
+.disp em{font-style:normal;font-size:24px;font-weight:400;color:var(--ink-3);letter-spacing:-.02em}
+.t19{font-size:19px;font-weight:600;letter-spacing:-.012em}
+.zh{font-family:var(--zh)}
+
+.btn{
+  height:50px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:15px;font-weight:600;letter-spacing:.01em;padding:0 20px;white-space:nowrap;
+  transition:transform 120ms var(--ease),opacity 160ms var(--ease),background-color 160ms var(--ease);
+}
+.btn:active{transform:scale(.985)}
+.btn.prime{background:var(--ink);color:#0A0A0B}
+.btn.quiet{background:var(--paper-2);color:var(--ink)}
+.btn.line{border:1px solid var(--hair-2);color:var(--ink)}
+.btn.block{width:100%}
+.btn.sm{height:34px;font-size:13px;padding:0 15px;border-radius:999px;font-weight:600}
+
+.rows{padding:4px 0}
+.rw{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--hair);width:100%}
+.rw:first-child{border-top:0}
+.rw .th{width:52px;height:52px;border-radius:9px;object-fit:cover;background:var(--paper-2);flex:none;filter:saturate(.85) contrast(.96)}
+.rw .tx{flex:1;min-width:0}
+.rw .nm{font-size:15px;font-weight:500;display:block;letter-spacing:-.005em}
+.rw .mt{font-size:13px;color:var(--ink-3);display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rw .go{color:var(--ink-3);flex:none;font-size:13px;display:flex;align-items:center;gap:8px}
+.rw .face-state{font-weight:600;color:var(--ink)}
+.rw .go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rw.off .nm,.rw.off .mt{color:var(--ink-3)}
+.rw:active{background:rgba(242,241,238,.03)}
+.live{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--signal)}
+.live i{width:5px;height:5px;border-radius:50%;background:var(--signal)}
+
+.facts{padding:2px 0}
+.facts .f{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--hair)}
+.facts .f:first-child{border-top:0}
+.facts dt{font-size:13px;color:var(--ink-3)}
+.facts dd{margin:0;font-size:15px;font-weight:500;text-align:right}
+
+/* rail */
+.rail{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}
+.hr{display:flex;flex-direction:column;gap:7px;padding:0}
+.hr .bar{display:flex;align-items:flex-end;height:58px;border-radius:3px;background:rgba(242,241,238,.045);overflow:hidden;transition:background-color 180ms var(--ease),box-shadow 180ms var(--ease)}
+.hr .bar i{display:block;width:100%;border-radius:3px;background:rgba(242,241,238,.15);transition:background-color 180ms var(--ease)}
+.hr b{font-size:11px;font-weight:500;color:var(--ink-3);text-align:center;letter-spacing:.02em;transition:color 180ms var(--ease)}
+.hr.sel .bar{background:transparent;outline:1px solid var(--signal);outline-offset:-1px}
+.hr.sel .bar i{background:var(--signal)}
+.hr[aria-disabled="true"]{cursor:not-allowed}
+.hr[aria-disabled="true"] .bar i{background:var(--hair-2)}
+.hr[aria-disabled="true"] .bar{position:relative}
+.hr .full{position:absolute;inset:auto 0 4px;text-align:center;font-size:11px;font-weight:500;color:var(--ink-2)}
+.rail-tip{font-size:13px;color:var(--ink-2);margin-top:12px}
+[data-booked] .disp{margin-top:10px}
+[data-sc="today"]:has([data-booked]:not([hidden])) .hr.sel .bar{outline-color:var(--ink-2)}
+[data-sc="today"]:has([data-booked]:not([hidden])) .hr.sel .bar i{background:var(--ink-2)}
+.hr.sel b{color:var(--ink);font-weight:600}
+.hr:active .bar{background:rgba(242,241,238,.08)}
+
+/* dock */
+.dock{position:absolute;inset:auto 0 0;padding:14px 20px max(30px,env(safe-area-inset-bottom));background:var(--void);border-top:1px solid var(--hair);display:flex;align-items:center;gap:14px;z-index:6}
+.dock .amt{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.dock .amt small{display:block;font-size:11px;font-weight:400;color:var(--ink-3);letter-spacing:.03em;margin-top:1px}
+.dock .btn{margin-left:auto;min-width:144px}
+.dock.stack{flex-direction:column;align-items:stretch;gap:8px}
+.dock.stack .btn{margin:0;width:100%}
+.dock.inset{bottom:78px;border-top:0;padding-bottom:14px}
+
+/* tabbar */
+.tabbar{position:absolute;inset:auto 0 0;z-index:6;display:grid;grid-template-columns:repeat(4,1fr);padding:9px 10px max(26px,env(safe-area-inset-bottom));background:var(--void);border-top:1px solid var(--hair)}
+.tab{display:grid;justify-items:center;gap:4px;font-size:10px;font-weight:500;letter-spacing:.04em;color:var(--ink-3);transition:color 160ms var(--ease)}
+.tab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{color:var(--ink)}
+
+/* hero */
+.hero{position:relative;height:246px;margin:0 -20px;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(.94) brightness(.8)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.42) 0%,rgba(10,10,11,.14) 38%,rgba(10,10,11,.94) 100%)}
+.hero .txt{position:absolute;z-index:1;inset:auto 0 0;padding:0 20px 20px}
+.hero .txt h1{margin:0;font-family:var(--zh);font-size:26px;font-weight:600;letter-spacing:.005em}
+.hero .txt p{margin:5px 0 0;font-size:13px;color:rgba(242,241,238,.62)}
+
+/* door */
+.door{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px 90px;position:relative;margin-top:-44px}
+.door .meta{text-align:center;margin-bottom:38px}
+.door .meta .nm{font-family:var(--zh);font-size:19px;font-weight:600;letter-spacing:.01em}
+.door .meta .tm{font-size:13px;color:var(--ink-3);margin-top:5px;letter-spacing:.03em}
+.ringwrap{position:relative;width:224px;height:224px;display:grid;place-items:center;border-radius:50%;-webkit-user-select:none;user-select:none;touch-action:none}
+.ringwrap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ringwrap .trk{fill:none;stroke:rgba(242,241,238,.13);stroke-width:1.5}
+.ringwrap .fil{fill:none;stroke:var(--signal);stroke-width:1.5;stroke-dasharray:685;stroke-dashoffset:685}
+.ringwrap.done .fil{stroke:var(--ok)}
+.ringwrap.fail .trk,.ringwrap.fail .fil{stroke:var(--ink-3)}
+.ringwrap .lbl{position:relative;text-align:center;pointer-events:none}
+.ringwrap .lbl b{display:block;font-family:var(--zh);font-size:22px;font-weight:600;letter-spacing:.06em;transition:color 200ms var(--ease)}
+.ringwrap .lbl small{display:block;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-top:8px;transition:color 200ms var(--ease)}
+.ringwrap.hot .trk{stroke:rgba(242,241,238,.2)}
+.ringwrap.done .lbl b{color:var(--ok)}
+.door .hint{margin-top:34px;font-size:12px;color:var(--ink-3);letter-spacing:.03em;min-height:18px}
+
+/* session */
+.tick{font-size:52px;font-weight:500;letter-spacing:-.035em;line-height:1}
+
+/* misc */
+.big-num{font-size:34px;font-weight:500;letter-spacing:-.03em;line-height:1}
+.barline{height:2px;background:rgba(242,241,238,.07);border-radius:1px;overflow:hidden;margin-top:14px}
+.barline i{display:block;height:100%;background:rgba(242,241,238,.45);border-radius:1px;transition:width 400ms var(--ease)}
+.tiny{font-size:12px;color:var(--ink-3);line-height:1.7}
+
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sc.enter .stag>*{animation:rise 420ms var(--ease) both}
+.sc.enter .stag>*:nth-child(2){animation-delay:30ms}
+.sc.enter .stag>*:nth-child(3){animation-delay:60ms}
+.sc.enter .stag>*:nth-child(4){animation-delay:90ms}
+.sc.enter .stag>*:nth-child(5){animation-delay:120ms}
+.sc.enter .stag>*:nth-child(6){animation-delay:150ms}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="phone" id="phone">
+
+    <!-- ================= 登录 ================= -->
+    <section class="sc" data-sc="login">
+      <div class="statusbar"><span>17:20</span><span class="bat"></span></div>
+      <div class="scroll" style="display:flex;flex-direction:column;justify-content:center;padding-bottom:60px">
+        <svg class="mark" style="width:46px;height:46px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>
+        <div style="font-size:30px;font-weight:600;letter-spacing:.09em;margin-top:22px">MONO</div>
+        <div class="zh" style="font-size:16px;color:var(--ink-2);margin-top:10px;letter-spacing:.01em">一个人，整座场</div>
+        <div class="hair" style="margin:38px 0 26px"></div>
+        <button class="btn prime block" data-go="today" data-mode="reset">微信一键登录</button>
+        <button class="btn line block" style="margin-top:10px" data-go="today" data-mode="reset">手机号登录</button>
+        <p class="tiny" style="margin:18px 0 0;font-size:11px">继续即表示同意《服务条款》与《隐私政策》</p>
+      </div>
+    </section>
+
+    <!-- ================= 今天（有预约） ================= -->
+    <section class="sc" data-sc="today">
+      <div class="statusbar"><span>17:28</span><span class="bat"></span></div>
+      <div class="brandbar">
+        <svg class="mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>
+        <span class="wm">MONO</span>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:84px">
+        <div class="u">Next session</div>
+        <div data-booked>
+          <div class="disp"><span data-bind="book-start">18:00</span><em data-bind="book-end"> — 19:00</em></div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:14px">
+            <span class="live"><i></i><span data-bind="book-lead">32 分钟后</span></span>
+            <span style="font-size:13px;color:var(--ink-2)" data-bind="book-venue">大学城店</span>
+            <button class="btn prime sm" style="margin-left:auto" data-go="door">开门</button>
+          </div>
+          <button class="u" style="margin-top:12px;color:var(--ink-2)" data-go="cancel">取消预约</button>
+        </div>
+        <div class="t19" data-unbooked hidden style="margin-top:12px">暂无预约</div>
+
+        <div class="hair" style="margin:24px 0 20px"></div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+          <span class="u" style="color:var(--ink-2)">今天 · 周三</span>
+          <span style="font-size:12px;color:var(--ink-3)">在场 6 / 12</span>
+        </div>
+        <div class="rail" data-rail="today"></div>
+        <div class="rail-tip" data-bind="railtip" role="status">18:00 开始 · 还剩 4 个位置</div>
+        <button class="btn prime block" data-unbooked hidden style="margin-top:24px" data-go="venue" data-venue="大学城店">选时段</button>
+
+        <div class="hair" style="margin:24px 0 18px"></div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+          <span class="t19">附近</span>
+          <span style="font-size:13px;color:var(--ink-3)">全部 6 家</span>
+        </div>
+        <div class="rows">
+          <button class="rw" data-go="venue" data-venue="大学城店">
+            <img class="th" src="assets/store-daxuecheng-2.jpg" alt="">
+            <span class="tx"><span class="nm zh">大学城店</span><span class="mt">1.2 km · ¥10/小时 · 4 个空位</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+          <button class="rw off" data-go="venue" data-venue="江南店">
+            <img class="th" src="assets/store-jiangnan.jpg" alt="">
+            <span class="tx"><span class="nm zh">江南店</span><span class="mt">3.8 km · 暂不开放入场</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+          <button class="rw" data-go="venue" data-venue="滨江店">
+            <img class="th" src="assets/store-daxuecheng-3.jpg" alt="">
+            <span class="tx"><span class="nm zh">滨江店</span><span class="mt">5.1 km · ¥12/小时 · 8 个空位</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="tabbar">
+        <button class="tab on" data-tab="today"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6h5v6"/></svg>今天</button>
+        <button class="tab" data-tab="venues"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>场</button>
+        <button class="tab" data-tab="cards"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2.5"/><path d="M2.5 10.5h19"/></svg>卡</button>
+        <button class="tab" data-tab="me"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 20.4c.9-3.5 3.5-5.3 6.8-5.3s5.9 1.8 6.8 5.3"/></svg>我</button>
+      </nav>
+    </section>
+
+    <!-- ================= 场（门店列表） ================= -->
+    <section class="sc" data-sc="venues">
+      <div class="statusbar"><span>17:28</span><span class="bat"></span></div>
+      <div class="brandbar">
+        <svg class="mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>
+        <span class="wm">MONO</span>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:84px">
+        <div class="u" style="margin-top:14px">Venues</div>
+        <div class="disp zh" style="font-size:38px;letter-spacing:-.01em;margin-top:12px">6 家场馆</div>
+
+        <div class="hair" style="margin:26px 0 8px"></div>
+        <div class="rows">
+          <button class="rw" data-go="venue" data-venue="大学城店">
+            <img class="th" src="assets/store-daxuecheng.jpg" alt="">
+            <span class="tx"><span class="nm zh">大学城店</span><span class="mt">1.2 km · ¥10/小时 · 4 个空位</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+          <button class="rw" data-go="venue" data-venue="滨江店">
+            <img class="th" src="assets/store-daxuecheng-3.jpg" alt="">
+            <span class="tx"><span class="nm zh">滨江店</span><span class="mt">5.1 km · ¥12/小时 · 8 个空位</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+          <button class="rw off" data-go="venue" data-venue="江南店">
+            <img class="th" src="assets/store-jiangnan.jpg" alt="">
+            <span class="tx"><span class="nm zh">江南店</span><span class="mt">3.8 km · 暂不开放入场</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+          <button class="rw off" data-go="venue" data-venue="西溪店">
+            <img class="th" src="assets/store-daxuecheng-2.jpg" alt="">
+            <span class="tx"><span class="nm zh">西溪店</span><span class="mt">6.4 km · 满场</span></span>
+            <span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="tabbar">
+        <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6h5v6"/></svg>今天</button>
+        <button class="tab on" data-tab="venues"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>场</button>
+        <button class="tab" data-tab="cards"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2.5"/><path d="M2.5 10.5h19"/></svg>卡</button>
+        <button class="tab" data-tab="me"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 20.4c.9-3.5 3.5-5.3 6.8-5.3s5.9 1.8 6.8 5.3"/></svg>我</button>
+      </nav>
+    </section>
+
+    <!-- ================= 门店详情 · 选时段 ================= -->
+    <section class="sc" data-sc="venue">
+      <div class="statusbar"><span>17:28</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:110px">
+        <div class="hero">
+          <img src="assets/store-daxuecheng.jpg" alt="">
+          <div class="txt">
+            <h1 class="zh" data-bind="vname">大学城店</h1>
+            <p data-bind="vmeta">1.2 km · 一小时 ¥10 · 开放至 02:00</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 14px">
+          <span class="u" style="color:var(--ink-2)">今天 · 周三</span>
+          <span style="font-size:13px;color:var(--ink-2)">在场 6 / 12</span>
+        </div>
+
+        <div class="rail" data-rail="venue"></div>
+        <div class="rail-tip" data-bind="railtip" role="status">18:00 开始 · 还剩 4 个位置</div>
+
+        <div class="hair" style="margin:24px 0 6px"></div>
+        <div class="facts">
+          <div class="f"><dt>时段</dt><dd data-bind="slot">今天 18:00 – 19:00</dd></div>
+          <div class="f"><dt>计费</dt><dd>¥10 / 小时，按分钟结算</dd></div>
+          <div class="f"><dt>入场</dt><dd data-bind="entry">18:00 起可扫码开门</dd></div>
+        </div>
+      </div>
+
+      <div class="dock">
+        <div class="amt" data-bind="dockprice">¥10<small>1 小时</small></div>
+        <button class="btn prime" data-go="confirm" data-bind="dockbtn">约 18:00</button>
+      </div>
+    </section>
+
+    <!-- ================= 确认 ================= -->
+    <section class="sc" data-sc="confirm">
+      <div class="statusbar"><span>17:43</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:110px">
+        <div class="u" style="margin-top:16px">Confirm</div>
+        <div class="t19 zh" style="margin-top:12px" data-bind="cname">大学城店</div>
+        <div style="font-size:15px;color:var(--ink-2);margin-top:6px" data-bind="cslot">今天 18:00 – 19:00</div>
+
+        <div class="disp" style="margin-top:34px">¥10<em>.00</em></div>
+        <div style="font-size:13px;color:var(--ink-3);margin-top:10px">进入会员余额结算，余额 ¥60</div>
+
+        <div class="hair" style="margin:30px 0 6px"></div>
+        <div class="facts">
+          <div class="f"><dt>扣款</dt><dd>时段费 ¥10.00</dd></div>
+          <div class="f"><dt>支付方式</dt><dd>单次卡</dd></div>
+          <div class="f"><dt>取消规则</dt><dd>开场前 30 分钟内不可退</dd></div>
+        </div>
+        <div class="hair" style="margin:18px 0 0"></div>
+        <p class="tiny" style="margin:16px 0 0">未到店会自动结束计时并按实际分钟结算，不为整点付费。</p>
+      </div>
+
+      <div class="dock">
+        <div class="amt">¥10.00<small>确认后立即扣除</small></div>
+        <button class="btn prime" data-go="paid">确认预约</button>
+      </div>
+    </section>
+
+    <!-- ================= 预约成功 ================= -->
+    <section class="sc" data-sc="paid">
+      <div class="statusbar"><span>17:44</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:130px">
+        <div class="u" style="margin-top:16px">Booked</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:14px">
+          <svg style="width:22px;height:22px;fill:none;stroke:var(--ok);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>
+          <span class="t19">预约成功</span>
+        </div>
+        <div class="disp" style="margin-top:26px"><span data-bind="book-start">18:00</span><em data-bind="book-end"> — 19:00</em></div>
+        <div style="font-size:13px;color:var(--ink-3);margin-top:12px"><span data-bind="book-venue">大学城店</span> · 今天 · 01 号门</div>
+
+        <div class="hair" style="margin:30px 0 6px"></div>
+        <div class="facts">
+          <div class="f"><dt>已付</dt><dd>¥10.00</dd></div>
+          <div class="f"><dt>通行权限</dt><dd>已下发至微信</dd></div>
+          <div class="f"><dt>开门</dt><dd>18:00 起可用</dd></div>
+        </div>
+        <div class="hair" style="margin:18px 0 0"></div>
+        <p class="tiny" style="margin:16px 0 0">开场前 30 分钟可免费取消，之后取消不再退款。</p>
+      </div>
+
+      <div class="dock stack">
+        <button class="btn prime block" data-go="door">提前开门</button>
+        <button class="btn quiet block" data-go="today" data-mode="reset">完成</button>
+      </div>
+    </section>
+
+    <!-- ================= 到场开门 ================= -->
+    <section class="sc" data-sc="door">
+      <div class="statusbar"><span>18:00</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="door">
+        <div class="meta">
+          <div class="nm zh" data-bind="book-venue">大学城店</div>
+          <div class="tm"><span data-bind="book-time">18:00 – 19:00</span> · 01 号门</div>
+        </div>
+
+        <div class="ringwrap" id="doorRing" role="button" tabindex="0" aria-label="长按开门" aria-describedby="doorHint">
+          <svg viewBox="0 0 220 220">
+            <circle class="trk" cx="110" cy="110" r="109"/>
+            <circle class="fil" cx="110" cy="110" r="109"/>
+          </svg>
+          <span class="lbl">
+            <b id="doorLbl">开门</b>
+            <small id="doorSub">长按</small>
+          </span>
+        </div>
+
+        <div class="hint" id="doorHint" role="status">权限已下发 · 长按圆环</div>
+      </div>
+    </section>
+
+    <!-- ================= 计时中 ================= -->
+    <section class="sc" data-sc="session">
+      <div class="statusbar"><span>18:47</span><span class="bat"></span></div>
+      <div class="nav">
+        <div class="capsule" style="margin-left:auto"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:120px">
+        <div class="u" style="margin-top:10px">Session</div>
+        <div role="timer" aria-label="本次入场已用时间">
+          <div class="tick" style="margin-top:14px" id="tick" aria-live="off">00:00:00</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:14px">
+          <span class="live"><i></i>进行中</span>
+          <span style="font-size:13px;color:var(--ink-3)">·</span>
+          <span style="font-size:13px;color:var(--ink-2)">大学城店 · 01 号门</span>
+        </div>
+
+        <div class="barline" style="margin-top:26px"><i id="sessBar" style="width:0%"></i></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:8px;letter-spacing:.03em">
+          <span>18:00</span><span>19:00</span>
+        </div>
+
+        <div class="hair" style="margin:26px 0 6px"></div>
+        <div class="facts">
+          <div class="f"><dt>已用</dt><dd id="used">0 分钟</dd></div>
+          <div class="f"><dt>计费</dt><dd id="cost">¥0.00</dd></div>
+          <div class="f"><dt>余额</dt><dd id="bal">¥60.00</dd></div>
+        </div>
+        <p class="tiny" style="margin:18px 0 0">按分钟结算，结束时一次扣款。离开时不用手动关闭，门禁会自动结束计时。</p>
+      </div>
+
+      <div class="dock stack inset">
+        <button class="btn line block" data-go="bill">结束并结算</button>
+      </div>
+    </section>
+
+    <!-- ================= 账单 ================= -->
+    <section class="sc" data-sc="bill">
+      <div class="statusbar"><span>18:48</span><span class="bat"></span></div>
+      <div class="nav">
+        <div class="capsule" style="margin-left:auto"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:130px">
+        <div class="u" style="margin-top:10px">Settled</div>
+        <div class="t19" style="margin-top:14px">本次消费</div>
+        <div class="disp" style="margin-top:22px" id="billAmt">¥7.83</div>
+        <div style="font-size:13px;color:var(--ink-3);margin-top:12px">大学城店 · 今天 18:00 – 18:47</div>
+
+        <div class="hair" style="margin:30px 0 6px"></div>
+        <div class="facts">
+          <div class="f"><dt>时长</dt><dd id="billMin">47 分钟</dd></div>
+          <div class="f"><dt>单价</dt><dd>¥10 / 小时</dd></div>
+          <div class="f"><dt>支付方式</dt><dd>次卡</dd></div>
+          <div class="f"><dt>剩余次数</dt><dd>7 / 10</dd></div>
+        </div>
+        <div class="hair" style="margin:18px 0 0"></div>
+        <p class="tiny" style="margin:16px 0 0">实际用时不足 1 小时，按分钟折算，比整点计费少付 ¥2.17。</p>
+      </div>
+
+      <div class="dock stack">
+        <button class="btn prime block" data-go="today" data-mode="reset">完成</button>
+      </div>
+    </section>
+
+    <!-- ================= 卡 ================= -->
+    <section class="sc" data-sc="cards">
+      <div class="statusbar"><span>20:41</span><span class="bat"></span></div>
+      <div class="brandbar">
+        <svg class="mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>
+        <span class="wm">MONO</span>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:84px">
+        <div class="u" style="margin-top:14px">Cards</div>
+        <div class="t19" style="margin-top:14px">次卡</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:16px">
+          <span class="big-num">7</span>
+          <span style="font-size:13px;color:var(--ink-3)">/ 10 次</span>
+          <span style="font-size:13px;color:var(--ink-3);margin-left:auto">有效期至 12.31</span>
+        </div>
+        <div class="barline"><i style="width:70%"></i></div>
+
+        <div class="hair" style="margin:28px 0 18px"></div>
+
+        <div class="t19">余额</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:16px">
+          <span class="big-num">¥60</span>
+          <span style="font-size:13px;color:var(--ink-3)">近 90 天无变动</span>
+        </div>
+
+        <div class="hair" style="margin:28px 0 18px"></div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+          <div class="t19">记录</div>
+          <button class="u" style="color:var(--ink-2)" data-go="bills">全部账单</button>
+        </div>
+        <div class="rows">
+          <button class="rw" data-go="bill">
+            <span class="tx"><span class="nm">大学城店</span><span class="mt">今天 18:00 – 18:47 · 次卡</span></span>
+            <span class="go">−1</span>
+          </button>
+          <button class="rw">
+            <span class="tx"><span class="nm">江南店</span><span class="mt">11.15 周日 · 余额支付</span></span>
+            <span class="go">−¥15</span>
+          </button>
+          <button class="rw">
+            <span class="tx"><span class="nm">购买次卡</span><span class="mt">11.01 周六 · 10 次</span></span>
+            <span class="go">+10</span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="tabbar">
+        <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6h5v6"/></svg>今天</button>
+        <button class="tab" data-tab="venues"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>场</button>
+        <button class="tab on" data-tab="cards"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2.5"/><path d="M2.5 10.5h19"/></svg>卡</button>
+        <button class="tab" data-tab="me"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 20.4c.9-3.5 3.5-5.3 6.8-5.3s5.9 1.8 6.8 5.3"/></svg>我</button>
+      </nav>
+    </section>
+
+    <!-- ================= 我 ================= -->
+    <section class="sc" data-sc="me">
+      <div class="statusbar"><span>20:41</span><span class="bat"></span></div>
+      <div class="brandbar">
+        <svg class="mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>
+        <span class="wm">MONO</span>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+
+      <div class="scroll stag" style="padding-bottom:84px">
+        <div class="u" style="margin-top:14px">You</div>
+        <div class="disp zh" style="font-size:38px;letter-spacing:-.01em;margin-top:12px">小林</div>
+
+        <div class="hair" style="margin:26px 0 18px"></div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between">
+          <span class="t19">本月</span>
+          <span style="font-size:13px;color:var(--ink-3)">11 月</span>
+        </div>
+        <div style="display:flex;gap:40px;margin-top:18px">
+          <div>
+            <div class="big-num">9</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:6px;letter-spacing:.03em">次到场</div>
+          </div>
+          <div>
+            <div class="big-num">11.5</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:6px;letter-spacing:.03em">小时</div>
+          </div>
+          <div>
+            <div class="big-num">¥96</div>
+            <div style="font-size:12px;color:var(--ink-3);margin-top:6px;letter-spacing:.03em">消费</div>
+          </div>
+        </div>
+
+        <div class="hair" style="margin:28px 0 0"></div>
+        <div class="rows">
+          <button class="rw" data-tab="cards"><span class="tx"><span class="nm">会员卡与余额</span></span><span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span></button>
+          <button class="rw" data-go="bills"><span class="tx"><span class="nm">全部账单</span></span><span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span></button>
+          <button class="rw" data-go="profile"><span class="tx"><span class="nm">资料与隐私</span></span><span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span></button>
+          <button class="rw" data-go="login" data-mode="reset"><span class="tx"><span class="nm">退出登录</span></span><span class="go"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span></button>
+        </div>
+      </div>
+
+      <nav class="tabbar">
+        <button class="tab" data-tab="today"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6h5v6"/></svg>今天</button>
+        <button class="tab" data-tab="venues"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke-dasharray="49.5 4.5" transform="rotate(60 12 12)"/></svg>场</button>
+        <button class="tab" data-tab="cards"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="2.5"/><path d="M2.5 10.5h19"/></svg>卡</button>
+        <button class="tab on" data-tab="me"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 20.4c.9-3.5 3.5-5.3 6.8-5.3s5.9 1.8 6.8 5.3"/></svg>我</button>
+      </nav>
+    </section>
+
+    <section class="sc" data-sc="cancel" aria-labelledby="cancel-title">
+      <div class="statusbar"><span>17:28</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+      <div class="scroll stag pad">
+        <h1 class="t19 zh" id="cancel-title" style="margin:16px 0 24px">取消预约</h1>
+        <div class="hair"></div>
+        <dl class="facts" style="margin:0">
+          <div class="f"><dt>门店</dt><dd data-bind="book-venue">大学城店</dd></div>
+          <div class="f"><dt>时段</dt><dd data-bind="book-time">18:00 – 19:00</dd></div>
+          <div class="f"><dt>退款规则</dt><dd>开场前 30 分钟内不可退</dd></div>
+        </dl>
+        <div class="hair"></div>
+      </div>
+      <div class="dock stack">
+        <button class="btn line" data-cancel>取消预约</button>
+        <button class="btn quiet" data-back>保留</button>
+      </div>
+    </section>
+
+    <section class="sc" data-sc="bills" aria-labelledby="bills-title">
+      <div class="statusbar"><span>20:41</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+      <div class="scroll stag pad">
+        <h1 class="t19 zh" id="bills-title" style="margin:16px 0 32px">全部账单</h1>
+        <h2 class="u" style="margin:0 0 12px">11 月</h2>
+        <div class="hair"></div>
+        <div class="rows">
+          <div class="rw"><span class="mt">11.18</span><span class="tx nm">大学城店</span><span class="go">¥7.83</span></div>
+          <div class="rw"><span class="mt">11.15</span><span class="tx nm">江南店</span><span class="go">¥15.00</span></div>
+          <div class="rw"><span class="mt">11.08</span><span class="tx nm">滨江店</span><span class="go">¥12.00</span></div>
+        </div>
+        <h2 class="u" style="margin:24px 0 12px">10 月</h2>
+        <div class="hair"></div>
+        <div class="rows">
+          <div class="rw"><span class="mt">10.27</span><span class="tx nm">大学城店</span><span class="go">¥10.00</span></div>
+          <div class="rw"><span class="mt">10.16</span><span class="tx nm">滨江店</span><span class="go">¥12.00</span></div>
+        </div>
+        <div class="hair"></div>
+      </div>
+    </section>
+
+    <section class="sc" data-sc="profile" aria-labelledby="profile-title">
+      <div class="statusbar"><span>20:41</span><span class="bat"></span></div>
+      <div class="nav">
+        <button class="back" data-back><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="capsule"><span class="dots"><i></i><i></i><i></i></span><span class="ring"></span></div>
+      </div>
+      <div class="scroll stag pad">
+        <h1 class="t19 zh" id="profile-title" style="margin:16px 0 32px">资料与隐私</h1>
+        <div class="hair"></div>
+        <div class="rows">
+          <div class="rw"><span class="tx nm">手机号</span><span class="go">138****8210</span></div>
+          <div class="rw"><span class="tx nm">实名认证</span><span class="go">已实名</span></div>
+          <button class="rw" data-face aria-label="刷脸进门" aria-pressed="false"><span class="tx nm">刷脸进门</span><span class="go face-state">未开启</span></button>
+        </div>
+        <div class="hair"></div>
+        <button class="btn line block" style="margin-top:32px" data-go="login" data-mode="reset">退出登录</button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="jump" id="jump">
+    <div class="h">Screens</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- 数据 ---------- */
+  const RAIL = [['16',100,true],['17',100,true],['18',66],['19',34],['20',22],['21',48],['22',16],['23',8],['00',4],['01',4],['02',4]];
+  const VENUES = {
+    '大学城店':{meta:'1.2 km · 一小时 ¥10 · 开放至 02:00', price:10},
+    '江南店':{meta:'3.8 km · 一小时 ¥10 · 暂不开放', price:10},
+    '滨江店':{meta:'5.1 km · 一小时 ¥12 · 开放至 24:00', price:12},
+    '西溪店':{meta:'6.4 km · 一小时 ¥12 · 当前满场', price:12}
+  };
+  const ORDER = ['login','today','venues','venue','confirm','paid','cancel','door','session','bill','cards','me','bills','profile'];
+  const LABEL = {
+    login:'登录', today:'今天', venues:'场 · 列表', venue:'场 · 选时段',
+    confirm:'确认', paid:'预约成功', door:'到场 · 开门',
+    session:'计时中', bill:'账单', cards:'卡', me:'我', cancel:'取消预约', bills:'全部账单', profile:'资料与隐私'
+  };
+  const TABS = new Set(['today','venues','cards','me']);
+
+  const S = { hour:18, venue:'大学城店', booking:{hour:18, venue:'大学城店'}, sessionStart:null, opened:false };
+
+  /* ---------- DOM ---------- */
+  const phone = document.getElementById('phone');
+  const scr = {};
+  document.querySelectorAll('.sc').forEach(el => { scr[el.dataset.sc] = el; });
+  document.querySelectorAll('.back').forEach(el => el.setAttribute('aria-label', '返回'));
+
+  /* ---------- 跳转列表 ---------- */
+  const jump = document.getElementById('jump');
+  ORDER.forEach((id,i) => {
+    const b = document.createElement('button');
+    b.dataset.jump = id;
+    b.innerHTML = '<i>'+String(i+1).padStart(2,'0')+'</i>'+LABEL[id];
+    b.addEventListener('click', () => show(id, 'reset'));
+    jump.appendChild(b);
+  });
+  function markJump(id){
+    jump.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.jump === id));
+  }
+
+  /* ---------- 时条 ---------- */
+  function buildRail(el){
+    el.innerHTML = RAIL.map(([h,v,full]) =>
+      '<button class="hr" data-hour="'+h+'" aria-label="'+h+':00'+(full?'，已满':'')+'"'+(full?' aria-disabled="true"':'')+'>'+
+      '<span class="bar"><i style="height:'+v+'%"></i>'+(full?'<span class="full">满</span>':'')+'</span><b>'+h+'</b></button>'
+    ).join('');
+  }
+  document.querySelectorAll('[data-rail]').forEach(buildRail);
+
+  function setHour(h){
+    S.hour = Number(h);
+    document.querySelectorAll('[data-hour]').forEach(e => {
+      const selected = Number(e.dataset.hour) === S.hour;
+      e.classList.toggle('sel', selected);
+      e.setAttribute('aria-pressed', selected);
+    });
+    const slot = '今天 '+pad(S.hour)+':00 – '+pad(S.hour+1)+':00';
+    document.querySelectorAll('[data-bind="slot"]').forEach(e => e.textContent = slot);
+    document.querySelectorAll('[data-bind="cslot"]').forEach(e => e.textContent = slot);
+    document.querySelectorAll('[data-bind="entry"]').forEach(e => e.textContent = pad(S.hour)+':00 起可扫码开门');
+    document.querySelectorAll('[data-bind="railtip"]').forEach(e => e.textContent = pad(S.hour)+':00 开始 · 还剩 4 个位置');
+    document.querySelectorAll('[data-bind="dockbtn"]').forEach(e => e.textContent = '约 '+pad(S.hour)+':00');
+  }
+  function pad(n){ return String(n % 24).padStart(2,'0'); }
+
+  function fillBooking(){
+    const booking = S.booking;
+    scr.today.querySelector('[data-booked]').hidden = !booking;
+    scr.today.querySelectorAll('[data-unbooked]').forEach(e => { e.hidden = !!booking; });
+    if(!booking) return;
+    const start = pad(booking.hour)+':00', end = pad(booking.hour+1)+':00';
+    const lead = (booking.hour < 16 ? booking.hour+24 : booking.hour)*60 - (17*60+28);
+    const fields = {'book-venue':booking.venue, 'book-time':start+' – '+end, 'book-start':start, 'book-end':' — '+end,
+      'book-lead':lead < 60 ? lead+' 分钟后' : Math.floor(lead/60)+' 小时 '+lead%60+' 分钟后'};
+    Object.entries(fields).forEach(([key,value]) => {
+      document.querySelectorAll('[data-bind="'+key+'"]').forEach(e => { e.textContent = value; });
+    });
+  }
+
+  /* ---------- 路由 ---------- */
+  const EASE = 'cubic-bezier(.32,.72,0,1)';
+  let stack = [];
+  function show(id, mode){
+    const to = scr[id];
+    if(!to) return;
+    let prev = current();
+
+    if(mode === 'reset' || mode === 'tab'){
+      stack = [id];
+    } else if(mode === 'pop'){
+      // 返回：弹出栈顶，目标 = 新的栈顶
+      if(stack.length <= 1) return;
+      prev = stack.pop();
+      const target = stack[stack.length-1];
+      if(!target || !scr[target]) return;
+      transition(target, 'pop', prev);
+      return;
+    } else {
+      if(stack[stack.length-1] === id) return;
+      stack.push(id);
+    }
+    transition(id, mode || 'push', prev);
+  }
+
+  function transition(id, mode, prevId){
+    const to = scr[id];
+    const fromId = prevId !== undefined ? prevId : current();
+    if(fromId === id){ markJump(id); return; }
+    const from = fromId ? scr[fromId] : null;
+    const d = mode === 'tab' ? 220 : 340;
+
+    // 进入前重置状态
+    if(id === 'door' || fromId === 'door') resetDoor();
+    if(id === 'session') startSession();
+    if(id === 'bill') leaveSession();
+    if(id === 'venue') fillVenue();
+    if(id === 'confirm') fillVenue();
+    if(id === 'today') setHour(S.hour);
+    stagger(id);
+
+    to.style.transition = 'none';
+    to.style.visibility = 'visible';
+    to.style.zIndex = 3;
+
+    if(from){
+      from.style.transition = 'none';
+      from.style.visibility = 'visible';
+      from.style.zIndex = 2;
+      from.style.transform = 'translateX(0)';
+      from.style.opacity = '1';
+    }
+
+    if(mode === 'tab' || mode === 'reset'){
+      // 交叉淡入：新屏先就位，再让旧屏淡出
+      to.style.transform = 'translateX(0)';
+      to.style.opacity = '0';
+      void to.offsetWidth;
+      to.style.transition = 'opacity '+d+'ms '+EASE;
+      to.style.opacity = '1';
+      if(from){
+        from.style.transition = 'opacity '+d+'ms '+EASE;
+        from.style.opacity = '0';
+      }
+    } else if(mode === 'pop'){
+      to.style.transform = 'translateX(-28%)';
+      to.style.opacity = '1';
+      void to.offsetWidth;
+      to.style.transition = 'transform '+d+'ms '+EASE;
+      to.style.transform = 'translateX(0)';
+      if(from){
+        from.style.transition = 'transform '+d+'ms '+EASE;
+        from.style.transform = 'translateX(100%)';
+      }
+    } else {
+      to.style.transform = 'translateX(100%)';
+      to.style.opacity = '1';
+      void to.offsetWidth;
+      to.style.transition = 'transform '+d+'ms '+EASE;
+      to.style.transform = 'translateX(0)';
+      if(from){
+        from.style.transition = 'transform '+d+'ms '+EASE;
+        from.style.transform = 'translateX(-28%)';
+      }
+    }
+
+    if(from){
+      setTimeout(() => {
+        if(current() === fromId) return;
+        from.style.transition = 'none';
+        from.style.visibility = 'hidden';
+        from.style.transform = 'translateX(100%)';
+        from.style.opacity = '1';
+        from.style.zIndex = 1;
+      }, d + 20);
+    }
+    markJump(id);
+  }
+
+  function snap(id){
+    Object.values(scr).forEach(el => {
+      el.style.transition = 'none';
+      el.style.transform = 'translateX(100%)';
+      el.style.opacity = '1';
+      el.style.visibility = 'hidden';
+      el.style.zIndex = 1;
+    });
+    const el = scr[id];
+    el.style.transition = 'none';
+    el.style.transform = 'translateX(0)';
+    el.style.opacity = '1';
+    el.style.visibility = 'visible';
+    el.style.zIndex = 3;
+    markJump(id);
+  }
+
+  function current(){
+    for(let i = stack.length - 1; i >= 0; i--){
+      if(stack[i] && scr[stack[i]]) return stack[i];
+    }
+    return null;
+  }
+
+  function stagger(id){
+    const el = scr[id];
+    el.classList.remove('enter');
+    void el.offsetWidth;
+    el.classList.add('enter');
+    setTimeout(() => el.classList.remove('enter'), 700);
+    const sc = el.querySelector('.scroll');
+    if(sc) sc.scrollTop = 0;
+  }
+
+  /* ---------- 业务填充 ---------- */
+  function fillVenue(){
+    const v = VENUES[S.venue] || VENUES['大学城店'];
+    document.querySelectorAll('[data-bind="vname"]').forEach(e => e.textContent = S.venue);
+    document.querySelectorAll('[data-bind="cname"]').forEach(e => e.textContent = S.venue);
+    document.querySelectorAll('[data-bind="vmeta"]').forEach(e => e.textContent = v.meta);
+    document.querySelectorAll('[data-bind="dockprice"]').forEach(e => {
+      e.innerHTML = '¥'+v.price+'<small>1 小时</small>';
+    });
+    setHour(S.hour);
+  }
+
+  /* ---------- 开门 ---------- */
+  const ring = document.getElementById('doorRing');
+  const fil = ring.querySelector('.fil');
+  const doorLbl = document.getElementById('doorLbl');
+  const doorSub = document.getElementById('doorSub');
+  const doorHint = document.getElementById('doorHint');
+  const CIRC = 2 * Math.PI * 109;
+  const HOLD_MS = 780;
+  let holdTimer = null, entryTimer = null, opened = false, heldKey = null;
+
+  function resetDoor(){
+    opened = false;
+    heldKey = null;
+    clearTimeout(entryTimer);
+    clearTimeout(holdTimer);
+    holdTimer = null;
+    ring.classList.remove('done','hot','fail');
+    ring.setAttribute('aria-label', '长按开门');
+    fil.style.transition = 'none';
+    fil.style.strokeDashoffset = CIRC;
+    doorLbl.textContent = '开门';
+    doorSub.textContent = '长按';
+    doorHint.textContent = '权限已下发 · 长按圆环';
+  }
+
+  function openDone(){
+    holdTimer = null;
+    ring.classList.remove('hot');
+    if(ring.hasAttribute('data-fail')){
+      ring.classList.add('fail');
+      ring.setAttribute('aria-label', '长按重试');
+      doorLbl.textContent = '重试';
+      doorHint.textContent = '门禁未响应，请重试';
+      return;
+    }
+    opened = true;
+    ring.classList.add('done');
+    fil.style.strokeDashoffset = 0;
+    doorLbl.textContent = '已开门';
+    doorSub.textContent = 'Open';
+    doorHint.textContent = '门已打开 · 正在进入';
+    if(navigator.vibrate) navigator.vibrate(18);
+    entryTimer = setTimeout(() => show('session'), 460);
+  }
+
+  function holdStart_(e){
+    if(opened || holdTimer !== null || (e.type === 'pointerdown' && e.button !== 0)) return;
+    ring.classList.add('hot');
+    if(navigator.vibrate) navigator.vibrate(8);
+    // 描边进度用 CSS 过渡驱动，只由时间决定，不依赖帧率
+    fil.style.transition = 'none';
+    fil.style.strokeDashoffset = CIRC;
+    void fil.getBoundingClientRect();
+    fil.style.transition = 'stroke-dashoffset '+HOLD_MS+'ms linear';
+    fil.style.strokeDashoffset = 0;
+    holdTimer = setTimeout(openDone, HOLD_MS);
+  }
+
+  function holdEnd(){
+    if(holdTimer === null) return;
+    clearTimeout(holdTimer);
+    holdTimer = null;
+    ring.classList.remove('hot');
+    if(fil.style.strokeDashoffset !== String(CIRC)){
+      // 回弹
+      fil.style.transition = 'stroke-dashoffset 260ms ' + EASE;
+      fil.style.strokeDashoffset = CIRC;
+    }
+  }
+  ring.addEventListener('pointerdown', holdStart_);
+  ring.addEventListener('pointerup', holdEnd);
+  ring.addEventListener('pointercancel', holdEnd);
+  ring.addEventListener('pointerleave', holdEnd);
+  ring.addEventListener('keydown', e => {
+    if(e.key !== ' ' && e.key !== 'Enter') return;
+    e.preventDefault();
+    if(e.repeat || heldKey !== null) return;
+    heldKey = e.key;
+    holdStart_(e);
+  });
+  ring.addEventListener('keyup', e => {
+    if(e.key !== heldKey) return;
+    heldKey = null;
+    holdEnd();
+  });
+  ring.addEventListener('blur', () => { heldKey = null; holdEnd(); });
+
+  /* ---------- 计时 ---------- */
+  let sessRAF = null;
+  function startSession(){
+    if(!S.sessionStart) S.sessionStart = Date.now() - 47 * 60000;
+    tickLoop();
+  }
+  function stopLoop(){ if(sessRAF) cancelAnimationFrame(sessRAF); sessRAF = null; }
+
+  function tickLoop(){
+    stopLoop();
+    const el = document.getElementById('tick');
+    const bar = document.getElementById('sessBar');
+    const used = document.getElementById('used');
+    const cost = document.getElementById('cost');
+    const bal = document.getElementById('bal');
+    function frame(){
+      const ms = Date.now() - S.sessionStart;
+      const total = Math.floor(ms / 1000);
+      const h = Math.floor(total / 3600);
+      const m = Math.floor(total / 60) % 60;
+      const s = total % 60;
+      el.textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+      const mins = total / 60;
+      bar.style.width = Math.min(100, (mins / 60) * 100) + '%';
+      used.textContent = Math.floor(mins) + ' 分钟';
+      const yuan = mins / 60 * 10;
+      cost.textContent = '¥' + yuan.toFixed(2);
+      bal.textContent = '¥' + (60 - yuan).toFixed(2);
+      sessRAF = requestAnimationFrame(frame);
+    }
+    frame();
+  }
+
+  function leaveSession(){
+    stopLoop();
+    if(!S.sessionStart) S.sessionStart = Date.now() - 47 * 60000;
+    const mins = Math.max(1, Math.round((Date.now() - S.sessionStart) / 60000));
+    const yuan = mins / 60 * 10;
+    document.getElementById('billMin').textContent = mins + ' 分钟';
+    document.getElementById('billAmt').textContent = '¥' + yuan.toFixed(2);
+    const save = Math.max(0, 10 - yuan);
+    const p = document.querySelector('[data-sc="bill"] .tiny');
+    if(p) p.textContent = '实际用时不足 1 小时，按分钟折算，比整点计费少付 ¥' + save.toFixed(2) + '。';
+  }
+
+  /* ---------- 事件 ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-go],[data-tab],[data-back],[data-hour],[data-cancel],[data-face]');
+    if(!t) return;
+
+    if(t.dataset.hour){
+      if(t.getAttribute('aria-disabled') === 'true'){
+        t.closest('.sc').querySelector('.rail-tip').textContent = '该时段已满';
+        return;
+      }
+      setHour(t.dataset.hour);
+      return;
+    }
+    if(t.hasAttribute('data-cancel')){
+      S.booking = null;
+      fillBooking();
+      show('today', 'reset');
+      return;
+    }
+    if(t.hasAttribute('data-face')){
+      const enabled = t.getAttribute('aria-pressed') !== 'true';
+      t.setAttribute('aria-pressed', enabled);
+      t.querySelector('.face-state').textContent = enabled ? '已开启' : '未开启';
+      return;
+    }
+    if(t.hasAttribute('data-back')){
+      show(current(), 'pop');
+      return;
+    }
+    if(t.dataset.tab){
+      show(t.dataset.tab, 'tab');
+      return;
+    }
+    if(t.dataset.go){
+      if(t.dataset.venue) S.venue = t.dataset.venue;
+      if(t.dataset.go === 'paid'){
+        S.booking = {hour:S.hour, venue:S.venue};
+        S.sessionStart = null;
+        fillBooking();
+      }
+      show(t.dataset.go, t.dataset.mode || 'push');
+    }
+  });
+
+  /* ---------- 初始 ---------- */
+  S.venue = '大学城店';
+  fillVenue();
+  fillBooking();
+  stack = ['today'];
+  scr['today'].style.transition = 'none';
+  scr['today'].style.visibility = 'visible';
+  scr['today'].style.transform = 'translateX(0)';
+  scr['today'].classList.add('active');
+  scr['today'].style.zIndex = 2;
+  markJump('today');
+  stagger('today');
+
+  /* ---------- 深度链接 #door / #bill ... ---------- */
+  window.MONO = { show, snap, state: S, scr };
+  function fromHash(){
+    const [id,...flags] = location.hash.slice(1).split('&');
+    ring.toggleAttribute('data-fail', id === 'door' && flags.includes('fail'));
+    if(!scr[id]) return;
+    if(id === 'door' && current() === 'door') resetDoor();
+    show(id, 'reset');
+    if(id !== 'today' && !TABS.has(id) && id !== 'login') stack.unshift(id === 'bills' || id === 'profile' ? 'me' : 'today');
+    snap(id);
+  }
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>

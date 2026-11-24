@@ -130,4 +130,17 @@ OpenAPI 同步（首闭环操作同步 `api/first-loop.openapi.yaml`）、约定
 - ✅ 验证证据：`mvn package` 通过；`JsonContractTest` 7/7；HTTP 端到端 `tools/verify-auth-api.ps1` **18/18 PASS**
   （含幂等重放/冲突、退出与改密后旧 JWT 401、脱敏与显式 null 字段）
 
-**下一步**：`feat/be-m02-merchant-staff`（§3 商家与员工权限，8 个接口）。
+**feat/be-m02-merchant-staff（商家与员工权限，接口文档 §3 全部 8 个接口）**
+
+- ✅ 3.1 读取本商家信息（返回 ETag）、3.2 修改商家显示名（ADMIN + Idempotency-Key + If-Match 428/412，锁内重算比对）
+- ✅ 3.3 员工列表（page/pageSize/total/items，按 JWT 商家过滤）、3.4 员工详情（返回 ETag，不输出密码哈希）
+- ✅ 3.5 创建员工（201、登录名全局唯一、BCrypt、权限白名单、ADMIN 必须空权限数组、审计）
+- ✅ 3.6 调整角色权限（幂等 + ETag + 管理员集合串行锁 + 最后一位启用管理员保护 + token_version 递增 + 审计）
+- ✅ 3.7 启停账号（停用立即失效旧 JWT、禁止停用最后一位启用管理员、禁止物理删除）
+- ✅ 3.8 管理员重置密码（BCrypt、token_version 递增、幂等快照只保存 accepted，不含密码）
+- ✅ 基础设施增量：`Etags`/`Ids` 工具、`PermissionCodes` 白名单、`AuditWriter`（business_event 只追加）、
+  `SecurityUtils.requireAdminRole/requirePermission`（角色取数据库权威状态，不信任 JWT 快照）
+- ✅ 验证证据：`mvn package` 通过；HTTP 端到端 `tools/verify-merchant-staff.ps1` **31/31 PASS**
+  （含 428/412、幂等重放与冲突、最后管理员 409、停用/改密后旧 JWT 401、跨商家 404、操作员 403）
+
+**下一步**：`feat/be-m03-store-slot`（§4 门店、营业规则与时段，15 个接口）。

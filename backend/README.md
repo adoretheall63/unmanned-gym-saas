@@ -158,7 +158,30 @@ OpenAPI 同步（首闭环操作同步 `api/first-loop.openapi.yaml`）、约定
 - ✅ 验证证据：`mvn package` 通过；`JsonContractTest` 7/7；HTTP 端到端 `tools/verify-store-slot.ps1` **29/29 PASS**
   （含公开匿名访问、7 天范围 422、428/412、幂等重放、跨商家 404、STORE_READ 403、公开/后台 DTO 差异）
 
-**待续（m03 第二批）**：4.8 门店图片上传、4.9 规则预览、4.10 应用规则、4.11 营业状态、4.12 准入暂停、
-4.14 补齐时段、4.15 调整未售时段。
+**feat/be-m03b-store-rules（门店规则与运营，接口文档 §4 的第 2 批：4.8–4.12、4.14、4.15）**
 
-**下一步**：`feat/be-m03b-store-rules`（§4 第二批）。
+- ✅ 4.8 门店展示图片上传（201、multipart、JPEG/PNG/WebP 魔数 + 可解码校验、≤5MiB、objectKey 属本商家、幂等含文件摘要）
+- ✅ 4.9 规则预览（只演算：previewHash/affectedUnsoldSlots/conflicts/uncoveredMinutes/canApply，不写库）
+- ✅ 4.10 应用规则（幂等 + If-Match 428/412、锁内重算 hash、过期 409 PREVIEW_STALE、冲突 409 RULE_CONFLICT 带订单 ID、
+  容量不得低于承诺、只改未售未来时段、按新规则补齐时段）
+- ✅ 4.11 营业状态（DISABLED 前检查未结束到店/未履约订单/未决设备命令，冲突 409；CLOSED 停止新销售）
+- ✅ 4.12 准入暂停/恢复（ADMIN 或 STORE_CONTROL；恢复前当前读检查门店状态与在场人数/容量，不安全 409）
+- ✅ 4.14 补齐未来七天时段（200 + 仅 accepted；唯一键防重、只补未来完整小时段、跨午夜不截断）
+- ✅ 4.15 调整未售时段（幂等 + 逐项 etag If-Match；已开始/已承诺 409 SLOT_COMMITTED；只改 capacity/price/status）
+- ✅ 基础设施增量：`gym.storage` 配置 + `LocalObjectStorage`（M5 开发实现）、`StoreOpsQueryMapper`
+  （架构例外的只读跨模块检查，待 visit/booking/device 端口替换）、时段生成与规则摘要复用
+- ✅ 验证证据：`mvn package` 通过；`JsonContractTest` 7/7；HTTP 端到端 `tools/verify-store-rules.ps1` **30/30 PASS**
+  （含幂等重放、428/412、PREVIEW_STALE、RULE 冲突、SLOT_COMMITTED、STORE_CONTROL 403、图片魔数 415、上传幂等）
+
+**下一步**：`feat/be-m04a-booking-pay`（§6 预约下单与模拟支付，首闭环核心）。
+
+## 目录：验证脚本
+
+| 脚本 | 覆盖 |
+|---|---|
+| `tools/verify-auth-api.ps1` | §2 认证与个人资料（18 项） |
+| `tools/verify-merchant-staff.ps1` | §3 商家与员工权限（31 项） |
+| `tools/verify-store-slot.ps1` | §4.1–4.7、4.13（29 项） |
+| `tools/verify-store-rules.ps1` | §4.8–4.12、4.14、4.15（30 项） |
+
+脚本默认连 `http://127.0.0.1:18080`，并使用本地 `gym-mysql` 准备/清理测试数据（仅开发环境）。

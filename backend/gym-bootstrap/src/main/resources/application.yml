@@ -48,6 +48,11 @@ gym:
     issuer: gym-saas
   cors:
     allowed-origin-patterns: ${GYM_CORS_PATTERNS:http://localhost:*,http://127.0.0.1:*}
+  storage:
+    # 门店展示图片（M5 开发实现：本地目录 + 公开访问前缀；生产替换为对象存储）
+    local-root: data/store-images
+    public-base-url: /media/store-images
+    max-image-bytes: 5242880
   scheduler:
     enabled: false
 

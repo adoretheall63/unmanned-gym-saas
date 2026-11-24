@@ -197,7 +197,11 @@ public class StoreAdminService {
                                 : validateImagesNode(body.get("images"), merchantId);
                         before.put("images", locked.getImages() == null ? List.of() : locked.getImages());
                         after.put("images", images);
-                        update.set(StoreEntity::getImages, images);
+                        // JSON 列走实体更新，才能套用 JacksonTypeHandler；wrapper.set 会按 binary 绑定而报错
+                        StoreEntity imagesPatch = new StoreEntity();
+                        imagesPatch.setId(storeId);
+                        imagesPatch.setImages(images);
+                        storeMapper.updateById(imagesPatch);
                     }
                     update.set(StoreEntity::getUpdatedAt, UtcTimes.now());
                     storeMapper.update(null, update);

@@ -143,4 +143,22 @@ OpenAPI 同步（首闭环操作同步 `api/first-loop.openapi.yaml`）、约定
 - ✅ 验证证据：`mvn package` 通过；HTTP 端到端 `tools/verify-merchant-staff.ps1` **31/31 PASS**
   （含 428/412、幂等重放与冲突、最后管理员 409、停用/改密后旧 JWT 401、跨商家 404、操作员 403）
 
-**下一步**：`feat/be-m03-store-slot`（§4 门店、营业规则与时段，15 个接口）。
+**feat/be-m03-store-profile-slot（门店资料与时段查询，接口文档 §4 的第 1 批：4.1–4.7、4.13）**
+
+- ✅ 4.1 公开营业门店列表（启用商家 + OPEN 门店，匿名可访问，分页）
+- ✅ 4.2 公开门店详情（公开/后台两套 DTO：公开坐标 number、不返回 capacity 与 etag；固定 60 分钟、7 个自然日）
+- ✅ 4.3 公开时段（只返回尚未开始时段；日期限含当天 7 天，超范围 422；`remaining` 为可预约余量、不可售给原因、公开响应不含 etag）
+- ✅ 4.4 后台门店列表（`STORE_READ` 权限，分页 + 状态筛选，项目 etag）
+- ✅ 4.5 后台门店详情（返回 HTTP ETag 与 body.etag，跨商家 404）
+- ✅ 4.6 创建门店（ADMIN、201、创建即 CLOSED、营业时间规则校验、幂等）
+- ✅ 4.7 修改展示资料（ADMIN、幂等 + If-Match 428/412、锁内重算、显式 null 清除可空字段、图片只允许本商家对象键）
+- ✅ 4.13 后台时段列表（含已开始/关闭时段，逐项 etag；GET 不触发生成）
+- ✅ 基础设施增量：`TimeZones`（UTC 存储 / Asia/Shanghai 营业日）、`MerchantPort`（门店模块不直读 merchant 表）、
+  `Etags`/`Ids` 复用、Jackson `HH:mm:ss` 营业时间口径
+- ✅ 验证证据：`mvn package` 通过；`JsonContractTest` 7/7；HTTP 端到端 `tools/verify-store-slot.ps1` **29/29 PASS**
+  （含公开匿名访问、7 天范围 422、428/412、幂等重放、跨商家 404、STORE_READ 403、公开/后台 DTO 差异）
+
+**待续（m03 第二批）**：4.8 门店图片上传、4.9 规则预览、4.10 应用规则、4.11 营业状态、4.12 准入暂停、
+4.14 补齐时段、4.15 调整未售时段。
+
+**下一步**：`feat/be-m03b-store-rules`（§4 第二批）。

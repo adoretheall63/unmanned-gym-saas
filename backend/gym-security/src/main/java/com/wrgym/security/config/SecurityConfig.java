@@ -87,6 +87,7 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e.authenticationEntryPoint(entryPoint).accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/app/auth/wechat-login").permitAll()
+                        .requestMatchers("/api/v1/app/stores/**").permitAll()
                         .requestMatchers("/api/v1/app/auth/**").authenticated()
                         .requestMatchers("/api/v1/integrations/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()

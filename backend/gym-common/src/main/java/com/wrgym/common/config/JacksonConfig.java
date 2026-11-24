@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -39,6 +40,8 @@ public class JacksonConfig {
             module.addSerializer(LocalDateTime.class, new UtcLocalDateTimeSerializer());
             module.addDeserializer(LocalDateTime.class, new UtcLocalDateTimeDeserializer());
             module.addSerializer(OffsetDateTime.class, new UtcOffsetDateTimeSerializer());
+            module.addSerializer(LocalTime.class, new BusinessTimeSerializer());
+            module.addDeserializer(LocalTime.class, new BusinessTimeDeserializer());
             builder.modulesToInstall(module);
             builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         };
@@ -70,6 +73,27 @@ public class JacksonConfig {
         }
     }
 
+    /** 营业时间 HH:mm:ss（商家本地时间，不涉及时区换算）。 */
+    static final class BusinessTimeSerializer extends JsonSerializer<LocalTime> {
+        private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        @Override
+        public void serialize(LocalTime value, JsonGenerator gen, SerializerProvider serializers)
+                throws IOException {
+            gen.writeString(value.format(FORMAT));
+        }
+    }
+
+    /** 接受 HH:mm:ss（也接受 HH:mm）。 */
+    static final class BusinessTimeDeserializer extends JsonDeserializer<LocalTime> {
+        private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("HH:mm[:ss]");
+
+        @Override
+        public LocalTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            String text = parser.getText().trim();
+            return text.isEmpty() ? null : LocalTime.parse(text, FORMAT);
+        }
+    }
     static final class UtcOffsetDateTimeSerializer extends OffsetDateTimeSerializer {
         UtcOffsetDateTimeSerializer() {
             super();

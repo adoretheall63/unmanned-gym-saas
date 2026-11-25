@@ -135,4 +135,26 @@ public final class StoreRules {
     private static String nullSafe(String value) {
         return value == null ? "" : value;
     }
+    /** 瞬时字段统一按契约输出 UTC（序列化为 Z 结尾）。 */
+    public static java.time.OffsetDateTime utc(LocalDateTime time) {
+        return time == null ? null : time.atOffset(java.time.ZoneOffset.UTC);
+    }
+
+    /**
+     * 时段可售口径必须与下单规则一致：门店非 OPEN、暂停准入、时段关闭、已开始、已满都不可预约，
+     * 并在 unavailableReason 中返回原因，避免前端显示可预约但下单失败。
+     */
+    public record SlotState(boolean bookable, String unavailableReason) { }
+
+    public static SlotState slotState(StoreSlot slot, String storeStatus, boolean admissionPaused,
+                                      LocalDateTime nowUtc) {
+        if (!"OPEN".equals(storeStatus)) return new SlotState(false, "STORE_CLOSED");
+        if (admissionPaused) return new SlotState(false, "ADMISSION_PAUSED");
+        if (!"OPEN".equals(slot.getStatus())) return new SlotState(false, "SLOT_CLOSED");
+        if (slot.getStartAt() == null || !slot.getStartAt().isAfter(nowUtc)) {
+            return new SlotState(false, "SLOT_STARTED");
+        }
+        if (remaining(slot) <= 0) return new SlotState(false, "SLOT_FULL");
+        return new SlotState(true, null);
+    }
 }

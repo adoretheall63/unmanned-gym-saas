@@ -194,11 +194,16 @@ public class StoreServiceImpl implements StoreService {
         LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
         var items = mapper.slots(id, StoreRules.businessDayStartUtc(businessDate),
                         StoreRules.businessDayEndUtc(businessDate)).stream()
-                .map(slot -> new StoreViews.AdminSlot(slot.getId().toString(), slot.getStoreId().toString(),
-                        slot.getStartAt(), slot.getEndAt(), slot.getCapacity() == null ? 0 : slot.getCapacity(),
-                        StoreRules.remaining(slot), slot.getPriceCent() == null ? 0 : slot.getPriceCent(),
-                        slot.getStatus(), StoreRules.bookable(slot, now),
-                        StoreRules.unavailableReason(slot, now), StoreRules.slotEtag(slot)))
+                .map(slot -> {
+                    var state = StoreRules.slotState(slot, store.getStatus(),
+                            Boolean.TRUE.equals(store.getAdmissionPaused()), now);
+                    return new StoreViews.AdminSlot(slot.getId().toString(), slot.getStoreId().toString(),
+                            StoreRules.utc(slot.getStartAt()), StoreRules.utc(slot.getEndAt()),
+                            slot.getCapacity() == null ? 0 : slot.getCapacity(),
+                            StoreRules.remaining(slot), slot.getPriceCent() == null ? 0 : slot.getPriceCent(),
+                            slot.getStatus(), state.bookable(), state.unavailableReason(),
+                            StoreRules.slotEtag(slot));
+                })
                 .toList();
         return new StoreViews.AdminSlotList(store.getId().toString(), businessDate,
                 StoreRules.lastBookableDate(), items);

@@ -2,7 +2,7 @@ package com.hiking.gymsaas.store.model.vo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public final class StoreViews {
                                     boolean admissionPaused, String pauseReason,
                                     int entryGraceMinutes, int exitGraceMinutes) { }
 
-    public record PublicSlot(String id, String storeId, LocalDateTime startAt, LocalDateTime endAt,
+    public record PublicSlot(String id, String storeId, OffsetDateTime startAt, OffsetDateTime endAt,
                              long capacity, long remaining, long priceCent, String status,
                              boolean bookable, String unavailableReason) { }
 
@@ -34,7 +34,7 @@ public final class StoreViews {
                              long overtimePriceCent, long overtimeCapCent, String status,
                              boolean admissionPaused, String pauseReason, String etag) { }
 
-    public record AdminSlot(String id, String storeId, LocalDateTime startAt, LocalDateTime endAt,
+    public record AdminSlot(String id, String storeId, OffsetDateTime startAt, OffsetDateTime endAt,
                             long capacity, long remaining, long priceCent, String status,
                             boolean bookable, String unavailableReason, String etag) { }
 

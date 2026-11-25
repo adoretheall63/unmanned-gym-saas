@@ -40,6 +40,8 @@ public class PublicStoreServiceImpl implements PublicStoreService {
         if (total == 0) return new PageResult<>(query.getPage(), query.getPageSize(), 0, List.of());
         List<Long> ids = mapper.pageOpenStoreIds((long) (query.getPage() - 1) * query.getPageSize(),
                 query.getPageSize());
+        // 当前页无记录时直接返回空页，避免空集合查询；total 保持过滤后总数
+        if (ids.isEmpty()) return new PageResult<>(query.getPage(), query.getPageSize(), total, List.of());
         List<Store> stores = mapper.storesByIds(ids);
         Map<Long, String> merchantNames = mapper.merchantsByIds(
                         stores.stream().map(Store::getMerchantId).distinct().toList()).stream()
@@ -79,11 +81,16 @@ public class PublicStoreServiceImpl implements PublicStoreService {
         var items = mapper.slots(store.getId(), StoreRules.businessDayStartUtc(businessDate),
                         StoreRules.businessDayEndUtc(businessDate)).stream()
                 .filter(slot -> slot.getStartAt() != null && slot.getStartAt().isAfter(now))
-                .map(slot -> new StoreViews.PublicSlot(slot.getId().toString(), slot.getStoreId().toString(),
-                        slot.getStartAt(), slot.getEndAt(), slot.getCapacity() == null ? 0 : slot.getCapacity(),
-                        StoreRules.remaining(slot), slot.getPriceCent() == null ? 0 : slot.getPriceCent(),
-                        slot.getStatus(), StoreRules.bookable(slot, now),
-                        StoreRules.unavailableReason(slot, now)))
+                .map(slot -> {
+                    // 与下单规则一致：门店 CLOSED / 暂停准入时展示为不可预约
+                    var state = StoreRules.slotState(slot, store.getStatus(),
+                            Boolean.TRUE.equals(store.getAdmissionPaused()), now);
+                    return new StoreViews.PublicSlot(slot.getId().toString(), slot.getStoreId().toString(),
+                            StoreRules.utc(slot.getStartAt()), StoreRules.utc(slot.getEndAt()),
+                            slot.getCapacity() == null ? 0 : slot.getCapacity(),
+                            StoreRules.remaining(slot), slot.getPriceCent() == null ? 0 : slot.getPriceCent(),
+                            slot.getStatus(), state.bookable(), state.unavailableReason());
+                })
                 .toList();
         return new StoreViews.PublicSlotList(store.getId().toString(), businessDate, lastBookable, items);
     }

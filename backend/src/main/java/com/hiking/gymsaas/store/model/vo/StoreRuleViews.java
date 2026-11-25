@@ -6,12 +6,14 @@ import java.util.List;
 public final class StoreRuleViews {
     private StoreRuleViews() { }
 
+    /** 4.8 对外响应：字段与 OpenAPI 一致，返回 objectKey。 */
+    public record UploadResult(String objectKey, String url, String contentType, long sizeBytes) { }
+
     /**
-     * 4.8 上传结果。
-     * 字段名用 imageKey 而非 objectKey：通用幂等/审计脱敏规则把 objectKey 视为敏感键，
-     * 禁止进入重放快照；值仍是对象键，4.7 的 images 直接引用该字符串。
+     * 4.8 幂等重放快照：通用快照层把 objectKey 视为敏感键，禁止进入重放快照。
+     * 因此用专门的重放实现，快照字段用 imageKey 保存同一个对象键，重放时由 Controller 映射回 objectKey。
      */
-    public record Upload(String imageKey, String url, String contentType, long sizeBytes) { }
+    public record UploadSnapshot(String imageKey, String url, String contentType, long sizeBytes) { }
 
     /** 4.9 冲突项（已售订单）。 */
     public record Conflict(String orderId, String reason) { }

@@ -43,16 +43,26 @@ public final class StoreRulePlanner {
         return starts;
     }
 
-    /** 给定 UTC 时段是否被计划中的营业窗口完整覆盖（跨午夜按起始日归档）。 */
+    /**
+     * 给定 UTC 时段是否被计划中的营业窗口完整覆盖（按**北京时间**归属营业日）。
+     *
+     * <p>跨午夜（endsNextDay）时，次日 00:00–close 的时段属于前一天的营业窗口：
+     * 例如窗口 22:00–04:00，26 日 00:00–01:00 属于 25 日窗口，必须判定为覆盖；
+     * 若直接按起始日取 26 日 22:00–27 日 04:00 会错误地判成不覆盖。
+     */
     public static boolean covered(LocalTime open, LocalTime close, boolean is24h, boolean endsNextDay,
                                   LocalDateTime startUtc, LocalDateTime endUtc) {
         LocalDateTime start = business(startUtc);
         LocalDateTime end = business(endUtc);
         if (is24h) return Duration.between(start, end).toMinutes() > 0;
-        LocalDateTime windowStart = LocalDateTime.of(start.toLocalDate(), open);
+        LocalDate businessDay = start.toLocalDate();
+        if (endsNextDay && start.toLocalTime().isBefore(close)) {
+            businessDay = businessDay.minusDays(1);
+        }
+        LocalDateTime windowStart = LocalDateTime.of(businessDay, open);
         LocalDateTime windowEnd = endsNextDay
-                ? LocalDateTime.of(start.toLocalDate().plusDays(1), close)
-                : LocalDateTime.of(start.toLocalDate(), close);
+                ? LocalDateTime.of(businessDay.plusDays(1), close)
+                : LocalDateTime.of(businessDay, close);
         return !start.isBefore(windowStart) && !end.isAfter(windowEnd);
     }
 

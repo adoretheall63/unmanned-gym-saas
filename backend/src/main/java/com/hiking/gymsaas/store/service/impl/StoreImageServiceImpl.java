@@ -51,7 +51,7 @@ public class StoreImageServiceImpl implements StoreImageService {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public IdempotencyService.Outcome<StoreRuleViews.Upload> upload(String storeId, MultipartFile file,
+    public IdempotencyService.Outcome<StoreRuleViews.UploadSnapshot> upload(String storeId, MultipartFile file,
                                                                    String key) {
         long id = Ids.parse(storeId);
         long merchantId = CurrentIdentity.merchantId();
@@ -70,9 +70,9 @@ public class StoreImageServiceImpl implements StoreImageService {
         String digest = sha256(bytes);
         return idempotency.execute("uploadStoreImage", "POST", "/api/v1/admin/stores/" + id + "/images", key,
                 Map.of("digest", digest, "size", bytes.length, "contentType", contentType),
-                StoreRuleViews.Upload.class, () -> {
+                StoreRuleViews.UploadSnapshot.class, () -> {
                     storage.save(objectKey, bytes);
-                    return new IdempotencyService.Outcome<>(201, new StoreRuleViews.Upload(objectKey,
+                    return new IdempotencyService.Outcome<>(201, new StoreRuleViews.UploadSnapshot(objectKey,
                             storage.publicUrl(objectKey), contentType, bytes.length));
                 });
     }

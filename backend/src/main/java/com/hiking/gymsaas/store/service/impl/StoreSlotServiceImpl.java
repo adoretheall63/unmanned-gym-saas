@@ -76,7 +76,7 @@ public class StoreSlotServiceImpl implements StoreSlotService {
         return idempotency.execute("adjustStoreSlot", "PATCH",
                 "/api/v1/admin/stores/" + id + "/slots/" + slotPrimaryKey, key, input,
                 StoreViews.AdminSlot.class, () -> {
-                    StoreSlot slot = slots.lock(slotPrimaryKey);
+                    StoreSlot slot = slots.lock(slotPrimaryKey, id);
                     if (slot == null || !slot.getStoreId().equals(id)) {
                         throw new BusinessException(ErrorCode.NOT_FOUND);
                     }
@@ -98,12 +98,18 @@ public class StoreSlotServiceImpl implements StoreSlotService {
                                     "beforePriceCent", slot.getPriceCent(), "afterPriceCent", input.priceCent(),
                                     "beforeStatus", slot.getStatus(), "afterStatus", input.status()));
                     StoreSlot updated = slots.selectById(slotPrimaryKey);
+                    var store = stores.selectById(id);
+                    if (store == null) throw new BusinessException(ErrorCode.NOT_FOUND);
+                    // 与 4.13/下单一致：门店状态、暂停准入、时段状态共同决定 bookable
+                    var state = StoreRules.slotState(updated, store.getStatus(),
+                            Boolean.TRUE.equals(store.getAdmissionPaused()), now);
                     return new IdempotencyService.Outcome<>(200, new StoreViews.AdminSlot(
-                            updated.getId().toString(), updated.getStoreId().toString(), updated.getStartAt(),
-                            updated.getEndAt(), updated.getCapacity() == null ? 0 : updated.getCapacity(),
+                            updated.getId().toString(), updated.getStoreId().toString(),
+                            StoreRules.utc(updated.getStartAt()), StoreRules.utc(updated.getEndAt()),
+                            updated.getCapacity() == null ? 0 : updated.getCapacity(),
                             StoreRules.remaining(updated), updated.getPriceCent() == null ? 0 : updated.getPriceCent(),
-                            updated.getStatus(), StoreRules.bookable(updated, now),
-                            StoreRules.unavailableReason(updated, now), StoreRules.slotEtag(updated)));
+                            updated.getStatus(), state.bookable(), state.unavailableReason(),
+                            StoreRules.slotEtag(updated)));
                 });
     }
 }

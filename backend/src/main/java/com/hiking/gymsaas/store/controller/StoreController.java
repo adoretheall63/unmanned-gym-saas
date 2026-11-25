@@ -77,11 +77,15 @@ public class StoreController {
     // ---------- 4.8 图片上传 ----------
 
     @PostMapping("/{storeId}/images")
-    public ResponseEntity<ApiResponse<StoreRuleViews.Upload>> uploadImage(@PathVariable String storeId,
+    public ResponseEntity<ApiResponse<StoreRuleViews.UploadResult>> uploadImage(@PathVariable String storeId,
             @RequestPart("file") MultipartFile file,
             @RequestHeader(value = "Idempotency-Key", required = false) String key) {
         var result = images.upload(storeId, file, key);
-        return ResponseEntity.status(result.status()).body(ApiResponse.ok(result.data()));
+        var snapshot = result.data();
+        // 专门的重放映射：快照保存 imageKey（避免 objectKey 被通用快照层脱敏），对外仍按 OpenAPI 返回 objectKey
+        var response = new StoreRuleViews.UploadResult(snapshot.imageKey(), snapshot.url(),
+                snapshot.contentType(), snapshot.sizeBytes());
+        return ResponseEntity.status(result.status()).body(ApiResponse.ok(response));
     }
 
     // ---------- 4.9 规则预览 ----------

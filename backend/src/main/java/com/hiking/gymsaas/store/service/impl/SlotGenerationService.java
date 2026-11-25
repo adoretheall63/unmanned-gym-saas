@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 /**
  * 时段生成（§4.14，并与 §4.10 规则应用共用）。
  *
+ * <p>容量模板：v1.1 schema 只有门店默认 capacity（没有 §20.9 的 capacity_schedule 字段），
+ * 因此按北京时间每小时应用门店当前容量/价格；INSERT IGNORE 保证已存在的时段（含 4.15 人工调整）不被覆盖，
+ * 人工覆盖优先于生成模板。</p>
  * <p>只补"含当天共 7 个自然日"内的**完整 60 分钟**时段；业务时间按 Asia/Shanghai、存储 UTC；
  * 跨午夜按起始日归档不截断；唯一键 (store_id,start_at,end_at) 防重；只生成开始时间仍在未来的时段。
  */

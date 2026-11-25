@@ -83,4 +83,25 @@ class StoreRulePlanTest {
         store.setOvertimeCapCent(3000L);
         return store;
     }
+    @Test
+    void crossMidnightCoverageUsesBeijingBusinessDay() {
+        // 窗口 22:00–04:00（北京时间）；UTC = 北京时间 - 8h
+        LocalTime open = LocalTime.of(22, 0);
+        LocalTime close = LocalTime.of(4, 0);
+        // 25 日 22:00–23:00 北京 == 25 日 14:00–15:00 UTC
+        assertTrue(StoreRulePlanner.covered(open, close, false, true,
+                LocalDateTime.of(2026, 11, 25, 14, 0), LocalDateTime.of(2026, 11, 25, 15, 0)));
+        // 26 日 00:00–01:00 北京 == 25 日 16:00–17:00 UTC，归属 25 日业务日
+        assertTrue(StoreRulePlanner.covered(open, close, false, true,
+                LocalDateTime.of(2026, 11, 25, 16, 0), LocalDateTime.of(2026, 11, 25, 17, 0)));
+        // 26 日 03:00–04:00 北京 == 25 日 19:00–20:00 UTC，仍在 25 日窗口内
+        assertTrue(StoreRulePlanner.covered(open, close, false, true,
+                LocalDateTime.of(2026, 11, 25, 19, 0), LocalDateTime.of(2026, 11, 25, 20, 0)));
+        // 26 日 04:00–05:00 北京 == 25 日 20:00–21:00 UTC，已超出窗口
+        assertFalse(StoreRulePlanner.covered(open, close, false, true,
+                LocalDateTime.of(2026, 11, 25, 20, 0), LocalDateTime.of(2026, 11, 25, 21, 0)));
+        // 25 日 21:00–22:00 北京 == 25 日 13:00–14:00 UTC，窗口开始前
+        assertFalse(StoreRulePlanner.covered(open, close, false, true,
+                LocalDateTime.of(2026, 11, 25, 13, 0), LocalDateTime.of(2026, 11, 25, 14, 0)));
+    }
 }

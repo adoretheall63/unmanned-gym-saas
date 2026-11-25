@@ -31,4 +31,7 @@ public interface StoreOpsMapper {
             + "AND status IN ('PENDING_PAYMENT','RESERVED','IN_USE','CANCEL_PENDING','NO_SHOW_PENDING') "
             + "AND end_at > #{now} ORDER BY id LIMIT 50")
     List<Long> futureOrderIds(@Param("storeId") long storeId, @Param("now") LocalDateTime now);
+    @Select("SELECT COUNT(*) FROM review_task WHERE store_id = #{storeId} "
+            + "AND status IN ('OPEN','PROCESSING')")
+    long openReviewTasks(@Param("storeId") long storeId);
 }

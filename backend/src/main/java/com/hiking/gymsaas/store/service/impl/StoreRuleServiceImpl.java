@@ -105,8 +105,17 @@ public class StoreRuleServiceImpl implements StoreRuleService {
                             .set(Store::getSlotPriceCent, input.slotPriceCent())
                             .set(Store::getOvertimePriceCent, input.overtimePriceCent())
                             .set(Store::getOvertimeCapCent, input.overtimeCapCent()));
-                    // 只更新未售未来时段；已售时段与订单规则快照保持不变
-                    slots.updateUnsoldRules(now, input.capacity(), input.slotPriceCent());
+                    // 只更新目标门店未售未来时段；已售时段与订单规则快照保持不变
+                    slots.updateUnsoldRules(id, now, input.capacity(), input.slotPriceCent());
+                    // 新规则下不再落在营业窗口内的未售时段：关闭而不是删除，保留历史
+                    int closed = 0;
+                    for (var slot : slots.futureUnsold(id, now)) {
+                        if (!StoreRulePlanner.covered(input.openTime(), input.closeTime(),
+                                Boolean.TRUE.equals(input.is24h()), Boolean.TRUE.equals(input.endsNextDay()),
+                                slot.getStartAt(), slot.getEndAt())) {
+                            closed += slots.closeUnsold(id, slot.getId(), now);
+                        }
+                    }
                     var updated = stores.selectById(id);
                     generation.generate(updated, now);
                     audit.append(merchantId, "STORE_RULES_APPLIED", "STORE", id, input.reason(),
@@ -160,8 +169,15 @@ public class StoreRuleServiceImpl implements StoreRuleService {
                     if (store == null) throw new BusinessException(ErrorCode.NOT_FOUND);
                     ConfigurationEtags.requireMatch(ifMatch, StoreRules.etag(store));
                     if (!Boolean.TRUE.equals(input.paused())) {
-                        // 恢复自动准入：当前读检查门店状态与在场人数/容量
+                        // 恢复自动准入：当前读检查门店状态、消息链路、待复核异常与在场人数/容量
                         if (!"OPEN".equals(store.getStatus())) {
+                            throw new BusinessException(ErrorCode.STATE_CONFLICT);
+                        }
+                        // 消息链路未知/异常时估计人数不可信，不能直接恢复为可自动准入
+                        if (!"HEALTHY".equals(store.getMessageHealth())) {
+                            throw new BusinessException(ErrorCode.OCCUPANCY_UNKNOWN);
+                        }
+                        if (ops.openReviewTasks(id) > 0) {
                             throw new BusinessException(ErrorCode.STATE_CONFLICT);
                         }
                         long inStore = ops.inStoreVisits(id);
@@ -187,9 +203,11 @@ public class StoreRuleServiceImpl implements StoreRuleService {
             java.time.LocalTime close, boolean is24h, boolean endsNextDay, int capacity, long slotPriceCent,
             long overtimePriceCent, long overtimeCapCent) {
         LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
-        List<com.hiking.gymsaas.store.model.entity.StoreSlot> committed = slots.futureCommitted(now);
-        List<com.hiking.gymsaas.store.model.entity.StoreSlot> unsold = slots.futureUnsold(now);
-        int maxReserved = slots.maxFutureReserved(now);
+        // 承诺量/未售统计严格限定目标门店，避免同一商家多门店互相污染预览摘要
+        List<com.hiking.gymsaas.store.model.entity.StoreSlot> committed =
+                slots.futureCommitted(store.getId(), now);
+        List<com.hiking.gymsaas.store.model.entity.StoreSlot> unsold = slots.futureUnsold(store.getId(), now);
+        int maxReserved = slots.maxFutureReserved(store.getId(), now);
 
         boolean capacityBelow = capacity < maxReserved;
         boolean scheduleChanged = committed.stream().anyMatch(slot ->

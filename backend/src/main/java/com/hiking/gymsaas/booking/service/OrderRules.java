@@ -53,4 +53,13 @@ public final class OrderRules {
     public static long baseAmount(Store store) {
         return store.getSlotPriceCent() == null ? 0 : store.getSlotPriceCent();
     }
+    /** 只接受严格早于支付截止的确认（Q034：恰好截止时刻视为过期）。 */
+    public static boolean paymentAllowed(LocalDateTime nowUtc, LocalDateTime payDeadline) {
+        return payDeadline != null && nowUtc.isBefore(payDeadline);
+    }
+
+    /** 未支付过期判定：截止时刻及之后都算过期。 */
+    public static boolean expired(LocalDateTime nowUtc, LocalDateTime payDeadline) {
+        return payDeadline == null || !nowUtc.isBefore(payDeadline);
+    }
 }

@@ -1,7 +1,6 @@
 package com.hiking.gymsaas.booking.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiking.gymsaas.booking.mapper.AdminOrderMapper;
 import com.hiking.gymsaas.booking.mapper.BookingMapper;
@@ -25,19 +24,19 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
- * §6 首闭环实现（Q030–Q039、Q085）。
+ * §6 首闭环实现（Q030–Q039、Q066、Q085）。
  *
- * <p>下单：锁顾客 → 锁时段 → 黑名单/信用限制/欠费/跨店重叠校验 → 原子占位（reserved_count + 1，
- * 条件 reserved_count &lt; capacity 防超卖）→ 写订单与规则快照；支付截止 = min(下单+15 分钟, 时段开始)。
- * <p>模拟支付：锁订单 → 截止前才可确认；首次写 MOCK 流水并把订单置 RESERVED；
- * 已支付再确认（含换幂等键）返回原流水，business_key 唯一键防重复收费；零元不建流水。
+ * <p>锁顺序与资格复核严格遵循 {@code database/transaction_patterns.sql}：
+ * 锁顾客 → 商家顾客关系(FOR UPDATE) → 门店配置(FOR SHARE) → 时段(FOR UPDATE) → 锁内当前时间 →
+ * 重叠订单(FOR UPDATE) → 条件占位；所有资格判断在锁内当前读。
+ * 支付确认用条件 UPDATE（status=PENDING_PAYMENT、capacity_held=1、pay_deadline &gt; now）与截止判断同锁完成；
+ * 未支付超时由 {@link OrderExpiryService} 定时回收名额。
  */
 @Service
 @Profile("!bootstrap")
@@ -65,24 +64,33 @@ public class OrderServiceImpl implements OrderService {
         long slotId = Ids.parse(input.slotId());
         return idempotency.execute("createOrder", "POST", "/api/v1/app/orders", key, input,
                 OrderViews.Order.class, () -> {
-                    LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
+                    // 先无锁读取归属，再按 transaction_patterns 的顺序加锁并全部当前读复核
+                    var slotProbe = reader.slotForRead(slotId);
+                    if (slotProbe == null) throw new BusinessException(ErrorCode.SLOT_UNAVAILABLE);
+                    var storeProbe = reader.storeForRead(slotProbe.getStoreId());
+                    if (storeProbe == null) throw new BusinessException(ErrorCode.NOT_FOUND);
+                    long merchantId = storeProbe.getMerchantId();
+
                     reader.lockCustomerUser(userId);
-                    var slot = reader.lockSlot(slotId);
-                    if (slot == null || !"OPEN".equals(slot.getStatus()) || slot.getStartAt() == null
+                    reader.ensureMerchantCustomer(merchantId, userId);
+                    var customer = reader.lockMerchantCustomer(merchantId, userId);
+                    var store = reader.lockStoreConfig(storeProbe.getId(), merchantId);
+                    if (store == null) throw new BusinessException(ErrorCode.SLOT_UNAVAILABLE);
+                    var slot = reader.lockSlotScoped(slotId, merchantId, store.getId());
+                    if (slot == null) throw new BusinessException(ErrorCode.SLOT_UNAVAILABLE);
+                    // 锁内当前时间：时段开始与支付截止都用同一个时间基准
+                    LocalDateTime now = reader.lockedNow();
+
+                    if (!"OPEN".equals(slot.getStatus()) || slot.getStartAt() == null
                             || !slot.getStartAt().isAfter(now)) {
                         throw new BusinessException(ErrorCode.SLOT_UNAVAILABLE);
                     }
-                    var store = reader.store(slot.getStoreId());
-                    if (store == null) throw new BusinessException(ErrorCode.NOT_FOUND);
-                    var merchant = reader.merchant(store.getMerchantId());
+                    var merchant = reader.merchant(merchantId);
                     if (merchant == null || !"ACTIVE".equals(merchant.status())
                             || !"OPEN".equals(store.getStatus())
                             || Boolean.TRUE.equals(store.getAdmissionPaused())) {
                         throw new BusinessException(ErrorCode.SLOT_UNAVAILABLE);
                     }
-                    // 首次预约建立商家顾客关系（booking_order 外键依赖该关系，Q017 黑名单按商家生效）
-                    reader.ensureMerchantCustomer(store.getMerchantId(), userId);
-                    var customer = reader.merchantCustomer(store.getMerchantId(), userId);
                     if (customer != null) {
                         if (Boolean.TRUE.equals(customer.blocked())) {
                             throw new BusinessException(ErrorCode.MERCHANT_BLOCKED);
@@ -92,17 +100,18 @@ public class OrderServiceImpl implements OrderService {
                             throw new BusinessException(ErrorCode.BOOKING_RESTRICTED);
                         }
                     }
-                    if (reader.outstandingPayments(store.getMerchantId(), userId) > 0) {
+                    if (reader.outstandingPayments(merchantId, userId) > 0) {
                         throw new BusinessException(ErrorCode.OUTSTANDING_PAYMENT);
                     }
-                    if (reader.overlappingOrders(userId, slot.getStartAt(), slot.getEndAt()) > 0) {
+                    if (!reader.lockOverlappingOrders(userId, slot.getStartAt(), slot.getEndAt()).isEmpty()) {
                         throw new BusinessException(ErrorCode.BOOKING_OVERLAP);
                     }
-                    if (reader.holdCapacity(slotId) != 1) {
+                    if (reader.holdCapacity(slotId, merchantId, store.getId()) != 1) {
                         throw new BusinessException(ErrorCode.SLOT_UNAVAILABLE);
                     }
+
                     var order = new BookingOrder();
-                    order.setMerchantId(store.getMerchantId());
+                    order.setMerchantId(merchantId);
                     order.setStoreId(store.getId());
                     order.setUserId(userId);
                     order.setSlotId(slotId);
@@ -153,36 +162,49 @@ public class OrderServiceImpl implements OrderService {
         return idempotency.execute("confirmMockPayment", "POST",
                 "/api/v1/app/orders/" + id + "/mock-payment", key, Map.of(), OrderViews.OrderConfirmation.class,
                 () -> {
-                    LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
-                    var order = orders.lockOrder(id);
-                    if (order == null || !order.getUserId().equals(userId)) {
+                    var probe = orders.selectById(id);
+                    if (probe == null || !probe.getUserId().equals(userId)) {
                         throw new BusinessException(ErrorCode.NOT_FOUND);
                     }
+                    var order = orders.lockOrderScoped(id, probe.getMerchantId(), userId);
+                    if (order == null) throw new BusinessException(ErrorCode.NOT_FOUND);
+                    // 支付边界用锁内 DB 当前时间，与订单行锁串行
+                    LocalDateTime now = reader.lockedNow();
                     boolean zero = order.getBaseAmountCent() == null || order.getBaseAmountCent() == 0;
                     if ("PENDING_PAYMENT".equals(order.getStatus())) {
-                        // 只接受截止之前完成的支付；截止 ≤ 时段开始，串行判断后至多一条转换成功
-                        if (!now.isBefore(order.getPayDeadline())) {
+                        if (!OrderRules.paymentAllowed(now, order.getPayDeadline())) {
+                            throw new BusinessException(ErrorCode.PAYMENT_EXPIRED);
+                        }
+                        if (orders.confirmOrder(id, order.getMerchantId(), userId, now) != 1) {
+                            // 行锁内状态已变（并发确认/过期），按最终状态返回或报过期
+                            var current = orders.selectById(id);
+                            if (current != null && List.of("RESERVED", "IN_USE", "FINISHED")
+                                    .contains(current.getStatus())) {
+                                return confirmation(current, zero);
+                            }
                             throw new BusinessException(ErrorCode.PAYMENT_EXPIRED);
                         }
                         PaymentRecord payment = zero ? null
-                                : payments.recordOrderFee(order.getMerchantId(), userId, id, order.getBaseAmountCent());
-                        orders.update(null, new LambdaUpdateWrapper<BookingOrder>().eq(BookingOrder::getId, id)
-                                .set(BookingOrder::getStatus, "RESERVED")
-                                .set(BookingOrder::getConfirmedAt, now));
+                                : payments.recordOrderFee(order.getMerchantId(), userId, id,
+                                        order.getBaseAmountCent());
                         var reloaded = orders.selectById(id);
                         return new IdempotencyService.Outcome<>(200, new OrderViews.OrderConfirmation(
                                 withStoreNames(List.of(reloaded)).get(0),
                                 payment == null ? null : payment(payment), zero));
                     }
                     if (List.of("RESERVED", "IN_USE", "FINISHED").contains(order.getStatus())) {
-                        // 换键重复确认：返回原结果，不重复收费
-                        PaymentRecord existing = payments.orderReceipt(id);
-                        return new IdempotencyService.Outcome<>(200, new OrderViews.OrderConfirmation(
-                                withStoreNames(List.of(order)).get(0),
-                                existing == null ? null : payment(existing), zero));
+                        // 换键重复确认：返回原流水，不重复收费
+                        return confirmation(order, zero);
                     }
                     throw new BusinessException(ErrorCode.PAYMENT_EXPIRED);
                 });
+    }
+
+    private IdempotencyService.Outcome<OrderViews.OrderConfirmation> confirmation(BookingOrder order,
+                                                                                  boolean zero) {
+        PaymentRecord existing = payments.orderReceipt(order.getId());
+        return new IdempotencyService.Outcome<>(200, new OrderViews.OrderConfirmation(
+                withStoreNames(List.of(order)).get(0), existing == null ? null : payment(existing), zero));
     }
 
     @Override

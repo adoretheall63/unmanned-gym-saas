@@ -50,4 +50,18 @@ class OrderRulesTest {
         assertEquals("演示门店", snapshot.get("storeName"));
         assertEquals(1000L, OrderRules.baseAmount(store));
     }
+    @Test
+    void paymentBoundaryIsStrictlyBeforeDeadline() {
+        LocalDateTime now = LocalDateTime.of(2026, 11, 25, 8, 0);
+        assertTrue(OrderRules.paymentAllowed(now, now.plusMinutes(1)));
+        assertFalse(OrderRules.expired(now, now.plusMinutes(1)));
+        // Q034：恰好截止时刻视为过期，不允许确认
+        assertFalse(OrderRules.paymentAllowed(now, now));
+        assertTrue(OrderRules.expired(now, now));
+        assertFalse(OrderRules.paymentAllowed(now, now.minusNanos(1)));
+        assertTrue(OrderRules.expired(now, now.minusNanos(1)));
+        // 没有截止时间（异常数据）也按过期处理
+        assertFalse(OrderRules.paymentAllowed(now, null));
+        assertTrue(OrderRules.expired(now, null));
+    }
 }

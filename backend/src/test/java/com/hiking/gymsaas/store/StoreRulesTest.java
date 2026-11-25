@@ -102,4 +102,38 @@ class StoreRulesTest {
         store.setImages(java.util.List.of());
         return store;
     }
+    @Test
+    void slotStateMatchesBookingRules() {
+        LocalDateTime now = LocalDateTime.of(2026, 11, 25, 0, 0);
+        StoreSlot slot = new StoreSlot();
+        slot.setCapacity(10);
+        slot.setReservedCount(0);
+        slot.setStatus("OPEN");
+        slot.setStartAt(now.plusHours(1));
+
+        var open = StoreRules.slotState(slot, "OPEN", false, now);
+        assertTrue(open.bookable());
+        assertNull(open.unavailableReason());
+
+        // 门店关闭 / 暂停准入：即使时段本身可售也不可预约
+        assertEquals("STORE_CLOSED", StoreRules.slotState(slot, "CLOSED", false, now).unavailableReason());
+        assertEquals("ADMISSION_PAUSED", StoreRules.slotState(slot, "OPEN", true, now).unavailableReason());
+
+        slot.setStatus("CLOSED");
+        assertEquals("SLOT_CLOSED", StoreRules.slotState(slot, "OPEN", false, now).unavailableReason());
+        slot.setStatus("OPEN");
+        slot.setStartAt(now.minusMinutes(1));
+        assertEquals("SLOT_STARTED", StoreRules.slotState(slot, "OPEN", false, now).unavailableReason());
+        slot.setStartAt(now.plusHours(1));
+        slot.setReservedCount(10);
+        assertEquals("SLOT_FULL", StoreRules.slotState(slot, "OPEN", false, now).unavailableReason());
+    }
+
+    @Test
+    void instantViewsUseUtcZ() {
+        var instant = StoreRules.utc(LocalDateTime.of(2026, 11, 25, 2, 0));
+        assertEquals("Z", instant.getOffset().getId());
+        assertEquals("2026-11-25T02:00Z", instant.toString());
+        assertNull(StoreRules.utc(null));
+    }
 }

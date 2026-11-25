@@ -6,6 +6,7 @@ import com.hiking.gymsaas.account.model.dto.StaffRequests;
 import com.hiking.gymsaas.account.model.entity.AdminUser;
 import com.hiking.gymsaas.account.model.vo.AuthViews;
 import com.hiking.gymsaas.account.model.vo.StaffViews;
+import com.hiking.gymsaas.account.service.PasswordRules;
 import com.hiking.gymsaas.account.service.StaffRules;
 import com.hiking.gymsaas.account.service.StaffService;
 import com.hiking.gymsaas.common.exception.BusinessException;
@@ -70,8 +71,10 @@ public class StaffServiceImpl implements StaffService {
     @PreAuthorize("hasRole('ADMIN')")
     public IdempotencyService.Outcome<Entry> create(StaffRequests.Create input, String key) {
         StaffRules.validatePermissions(input.role(), input.permissions());
+        PasswordRules.validate(input.initialPassword(), input.username());
         long merchantId = CurrentIdentity.merchantId();
-        return idempotency.execute("createStaff", "POST", "/api/v1/admin/staff", key, input, Entry.class, () -> {
+        return idempotency.execute("createStaff", "POST", "/api/v1/admin/staff", key,
+                StaffRules.createFingerprint(input), Entry.class, () -> {
             var staff = new AdminUser();
             staff.setMerchantId(merchantId);
             staff.setUsername(input.username());
@@ -94,10 +97,11 @@ public class StaffServiceImpl implements StaffService {
     public IdempotencyService.Outcome<Entry> updateRole(String staffId, StaffRequests.UpdateRole input,
                                                         String key, String ifMatch) {
         StaffRules.validatePermissions(input.role(), input.permissions());
+        if (ifMatch == null || ifMatch.isBlank()) throw new BusinessException(ErrorCode.PRECONDITION_REQUIRED);
         long id = Ids.parse(staffId);
         long merchantId = CurrentIdentity.merchantId();
-        return idempotency.execute("updateStaffRole", "PATCH", "/api/v1/admin/staff/" + id, key, input,
-                Entry.class, () -> {
+        return idempotency.execute("updateStaffRole", "PATCH", "/api/v1/admin/staff/" + id, key,
+                StaffRules.roleFingerprint(input, ifMatch), Entry.class, () -> {
                     var activeAdmins = mapper.lockActiveAdmins();
                     var staff = mapper.lockStaff(id);
                     if (staff == null) throw new BusinessException(ErrorCode.NOT_FOUND);
@@ -126,10 +130,11 @@ public class StaffServiceImpl implements StaffService {
     @PreAuthorize("hasRole('ADMIN')")
     public IdempotencyService.Outcome<Entry> updateStatus(String staffId, StaffRequests.UpdateStatus input,
                                                           String key, String ifMatch) {
+        if (ifMatch == null || ifMatch.isBlank()) throw new BusinessException(ErrorCode.PRECONDITION_REQUIRED);
         long id = Ids.parse(staffId);
         long merchantId = CurrentIdentity.merchantId();
         return idempotency.execute("updateStaffStatus", "PUT", "/api/v1/admin/staff/" + id + "/status", key,
-                input, Entry.class, () -> {
+                StaffRules.statusFingerprint(input, ifMatch), Entry.class, () -> {
                     var activeAdmins = mapper.lockActiveAdmins();
                     var staff = mapper.lockStaff(id);
                     if (staff == null) throw new BusinessException(ErrorCode.NOT_FOUND);
@@ -157,9 +162,13 @@ public class StaffServiceImpl implements StaffService {
                                                                         StaffRequests.ResetPassword input,
                                                                         String key) {
         long id = Ids.parse(staffId);
+        var target = mapper.tenantStaff(id);
+        if (target == null) throw new BusinessException(ErrorCode.NOT_FOUND);
+        PasswordRules.validate(input.newPassword(), target.getUsername());
         long merchantId = CurrentIdentity.merchantId();
         return idempotency.execute("resetStaffPassword", "POST",
-                "/api/v1/admin/staff/" + id + "/password-reset", key, input, AuthViews.Accepted.class, () -> {
+                "/api/v1/admin/staff/" + id + "/password-reset", key,
+                StaffRules.resetFingerprint(input), AuthViews.Accepted.class, () -> {
                     var staff = mapper.lockStaff(id);
                     if (staff == null) throw new BusinessException(ErrorCode.NOT_FOUND);
                     if (mapper.resetPassword(id, passwordEncoder.encode(input.newPassword())) != 1) {

@@ -1,9 +1,13 @@
 package com.hiking.gymsaas.account.service;
 
+import com.hiking.gymsaas.account.model.dto.StaffRequests;
 import com.hiking.gymsaas.common.exception.BusinessException;
 import com.hiking.gymsaas.common.exception.ErrorCode;
+import com.hiking.gymsaas.common.util.Hashes;
 import com.hiking.gymsaas.common.web.ConfigurationEtags;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -60,5 +64,46 @@ public final class StaffRules {
 
     public static boolean isActiveAdmin(String role, String status) {
         return ROLE_ADMIN.equals(role) && STATUS_ACTIVE.equals(status);
+    }
+
+    // ---------- 幂等指纹：覆盖完整业务语义（含凭据变更与 If-Match），且不含任何明文凭据 ----------
+
+    /** 凭据摘要只用于幂等指纹，不进入响应快照或审计详情。 */
+    public static String passwordDigest(String password) {
+        return Hashes.sha256(password);
+    }
+
+    public static Map<String, Object> createFingerprint(StaffRequests.Create input) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("username", input.username());
+        body.put("role", input.role());
+        body.put("permissions", new TreeSet<>(input.permissions()));
+        body.put("passwordDigest", passwordDigest(input.initialPassword()));
+        body.put("reason", input.reason());
+        return body;
+    }
+
+    public static Map<String, Object> resetFingerprint(StaffRequests.ResetPassword input) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("passwordDigest", passwordDigest(input.newPassword()));
+        body.put("reason", input.reason());
+        return body;
+    }
+
+    public static Map<String, Object> roleFingerprint(StaffRequests.UpdateRole input, String ifMatch) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("role", input.role());
+        body.put("permissions", new TreeSet<>(input.permissions()));
+        body.put("reason", input.reason());
+        body.put("ifMatch", ifMatch == null ? "" : ifMatch);
+        return body;
+    }
+
+    public static Map<String, Object> statusFingerprint(StaffRequests.UpdateStatus input, String ifMatch) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("status", input.status());
+        body.put("reason", input.reason());
+        body.put("ifMatch", ifMatch == null ? "" : ifMatch);
+        return body;
     }
 }
